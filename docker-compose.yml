@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  database:
+    container_name: database
+    image: mariadb:latest
+    ports:
+      - 127.0.0.1:3306:3306
+    volumes:
+      - ./Database/data:/var/lib/mysql:rw
+      - ./Database/init/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_USER: user
+      MARIADB_PASSWORD: userpassword
+    restart: always
