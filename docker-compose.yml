@@ -3,6 +3,8 @@ services:
   database:
     container_name: database
     image: mariadb:latest
+    expose: 
+      - 3306
     ports:
       - 127.0.0.1:3306:3306
     volumes:
@@ -12,4 +14,35 @@ services:
       MARIADB_ROOT_PASSWORD: password
       MARIADB_USER: user
       MARIADB_PASSWORD: userpassword
+    networks:
+      - backend
     restart: always
+
+  backend:
+    container_name: api
+    expose:
+      - 80
+    ports:
+      - 127.0.0.1:80:80
+    networks:
+      - backend
+    build:
+      context: ./PcmBackendApi
+    restart: always
+    
+  frontend:
+    container_name: webUi
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    networks:
+      - backend
+    build:
+      context: ./PcmFrontendWebUi
+    restart: always
+
+networks:
+  backend:
+    name: backend-nw
+    driver: bridge
