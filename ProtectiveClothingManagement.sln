@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcmBackendApi", "PcmBackendApi\PcmBackendApi.csproj", "{025BFC1E-33C8-463F-BE88-1863853322EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcmBackendApi", "PcmBackendApi\PcmBackendApi\PcmBackendApi.csproj", "{025BFC1E-33C8-463F-BE88-1863853322EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcmFrontendWebUi", "PcmFrontendWebUi\PcmFrontendWebUi\PcmFrontendWebUi.csproj", "{2B472ED9-FC1B-4D9E-80D9-F651570BC309}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +14,9 @@ Global
 		{025BFC1E-33C8-463F-BE88-1863853322EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{025BFC1E-33C8-463F-BE88-1863853322EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{025BFC1E-33C8-463F-BE88-1863853322EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B472ED9-FC1B-4D9E-80D9-F651570BC309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B472ED9-FC1B-4D9E-80D9-F651570BC309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B472ED9-FC1B-4D9E-80D9-F651570BC309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B472ED9-FC1B-4D9E-80D9-F651570BC309}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
