@@ -5,8 +5,8 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["PcmFrontendWebUi/PcmFrontendWebUi.csproj", "PcmFrontendWebUi/"]
-RUN dotnet restore "PcmFrontendWebUi/PcmFrontendWebUi.csproj"
+COPY ["PcmFrontendWebUi/PcmFrontendWebUi/PcmFrontendWebUi.csproj", "PcmFrontendWebUi/"]
+RUN dotnet restore "PcmFrontendWebUi/PcmFrontendWebUi/PcmFrontendWebUi.csproj"
 COPY . .
 WORKDIR "/src/PcmFrontendWebUi"
 RUN dotnet build "PcmFrontendWebUi.csproj" -c Release -o /app/build
