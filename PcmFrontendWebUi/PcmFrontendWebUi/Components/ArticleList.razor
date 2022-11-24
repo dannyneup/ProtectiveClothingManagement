@@ -1,0 +1,35 @@
+@using PcmFrontendWebUi.Models
+<MudTable Items="_articles" Hover="true" SortLabel="Sort By"
+          Filter="new Func<Article, bool>(ArticleFilter)">
+    <ToolBarContent>
+        <MudText Color="Color.Primary" Typo="Typo.h6">Artikel</MudText>
+        <MudSpacer/>
+        <MudTextField T="string" Placeholder="Durchsuchen"
+                      Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" @bind-Value="_searchString"/>
+        <MudIconButton Icon="@Icons.Filled.AddBox"/>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Category.Name)">Kategorie</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Size)">Größe</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Type.Name)">Typ</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Type.Manufacturer)">Hersteller</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Order.Number)">Bestellnummer</MudTableSortLabel>
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Kategorie">@context.Category.Name</MudTd>
+        <MudTd DataLabel="Größe">@context.Size</MudTd>
+        <MudTd DataLabel="Typ">@context.Type.Name</MudTd>
+        <MudTd DataLabel="Hersteller">@context.Type.Manufacturer</MudTd>
+        <MudTd DataLabel="Bestellnummer">@context.Order.Number</MudTd>
+    </RowTemplate>
+</MudTable>
