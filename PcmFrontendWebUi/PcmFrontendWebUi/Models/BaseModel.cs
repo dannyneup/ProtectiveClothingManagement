@@ -1,6 +1,8 @@
+using System.Text.Json.Serialization;
+
 namespace PcmFrontendWebUi.Models;
 
 public class ResponseBase
 {
-    public bool IsResponseSuccess { get; set; } = true;
+    [JsonIgnore] public bool? IsResponseSuccess { get; set; } = true;
 }

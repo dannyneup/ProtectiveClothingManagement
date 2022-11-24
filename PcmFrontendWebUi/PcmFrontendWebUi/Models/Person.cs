@@ -6,5 +6,5 @@ public class Person : ResponseBase
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public Apprenticeship Apprenticeship { get; set; }
-    public string emailAdress { get; set; }
+    public string EmailAddress { get; set; }
 }
