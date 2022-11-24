@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcmBackendApi", "PcmBackendApi\PcmBackendApi\PcmBackendApi.csproj", "{025BFC1E-33C8-463F-BE88-1863853322EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcmBackendApi", "PcmBackendApi\PcmBackendApi.csproj", "{025BFC1E-33C8-463F-BE88-1863853322EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcmFrontendWebUi", "PcmFrontendWebUi\PcmFrontendWebUi\PcmFrontendWebUi.csproj", "{2B472ED9-FC1B-4D9E-80D9-F651570BC309}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PcmFrontendWebUi", "PcmFrontendWebUi\PcmFrontendWebUi.csproj", "{2B472ED9-FC1B-4D9E-80D9-F651570BC309}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
