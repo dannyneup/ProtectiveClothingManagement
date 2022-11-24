@@ -1,20 +1,18 @@
 @using PcmFrontendWebUi.Controller
 <MudGrid>
     <MudItem xs="6">
-        <MudTextField @bind-Value="FirstName" Label="Vorname" Variant="Variant.Text"/>
+        <MudTextField @bind-Value="_firstName" Label="Vorname" Variant="Variant.Text"/>
     </MudItem>
     <MudItem xs="6">
-        <MudTextField @bind-Value="LastName" Label="Nachname" Variant="Variant.Text"/>
+        <MudTextField @bind-Value="_lastName" Label="Nachname" Variant="Variant.Text"/>
     </MudItem>
     <MudItem xs="6" sm="6">
-        <MudAutocomplete T="string" @bind-Value="ApprenticeshipName" Label="Aubildung/Studium" SearchFunc="@SerachApprenticeshipAutocomplete" ShowProgressIndicator="true">
-            <ProgressIndicatorTemplate>
+        <MudAutocomplete T="string" @bind-Value="_apprenticeshipName" Label="Aubildung/Studium" SearchFunc="@SearchApprenticeshipAutocomplete" ShowProgressIndicator="true">
                 <MudProgressLinear Size="Size.Small" Indeterminate="true" Color="Color.Error"/>
-            </ProgressIndicatorTemplate>
         </MudAutocomplete>
     </MudItem>
     <MudItem xs="6" md="6">
-        <MudTextField @bind-Value="EmailAddress" Label="e-mail Adresse" Validation="new Func<string, bool>(MailValidationController.IsValidEmail)"/>
+        <MudTextField @bind-Value="_emailAddress" Label="e-mail Adresse" Validation="@MailValidationController.IsValidEmail"/>
     </MudItem>
     <MudItem xs="12" Style="text-align: right;">
         <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Style="margin-right: 1vw">Abbrechen</MudButton>

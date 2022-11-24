@@ -7,22 +7,26 @@ namespace PcmFrontendWebUi.Components;
 public partial class NewPerson : ComponentBase
 {
     [Inject] public IRepository<Apprenticeship, int> ApprenticeshipRepository { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string EmailAddress { get; set; }
-    public string ApprenticeshipName { get; set; }
-
-    private IEnumerable<Apprenticeship> _apprenticeships;
+    private string _firstName;
+    private string _lastName;
+    private string _emailAddress;
+    private string _apprenticeshipName;
+    private List<string> _apprenticeshipNames;
     private bool _processing = false;
 
-    private async Task<IEnumerable<string>> SerachApprenticeshipAutocomplete(string value)
+    protected override async Task OnInitializedAsync()
     {
-        _apprenticeships = await ApprenticeshipRepository.GetAll();
+        var apprenticeships = await ApprenticeshipRepository.GetAll();
+        _apprenticeshipNames = apprenticeships.Select(o => o.Name).ToList();
+    }
 
-        var apprenticeshipNames = _apprenticeships.Select(o => o.Name).ToList();
+    private Task<IEnumerable<string>> SearchApprenticeshipAutocomplete(string value)
+    {
         if (string.IsNullOrEmpty(value))
-            return apprenticeshipNames;
-        return apprenticeshipNames.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+            return Task.FromResult<IEnumerable<string>>(_apprenticeshipNames);
+        var filtered = _apprenticeshipNames.Where(x => x
+            .Contains(value, StringComparison.InvariantCultureIgnoreCase));
+        return Task.FromResult(filtered);
     }
     
     async Task SaveNewPerson()
