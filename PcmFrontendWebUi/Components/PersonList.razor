@@ -1,0 +1,35 @@
+@using PcmFrontendWebUi.Models
+<MudTable Items="_persons" Hover="true" SortLabel="Sort By"
+          Filter="new Func<Person, bool>(PersonFilter)">
+    <ToolBarContent>
+        <MudText Color="Color.Primary" Typo="Typo.h6">Personen</MudText>
+        <MudSpacer/>
+        <MudTextField T="string" Placeholder="Durchsuchen"
+                      Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" @bind-Value="_searchString"/>
+        <MudIconButton Icon="@Icons.Filled.AddBox"/>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Person, object>(x => x.Id)">Personal-Nummer</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Person, object>(x => x.FirstName)">Vorname</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Person, object>(x => x.LastName)">Name</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Person, object>(x => x.Apprenticeship.Name)">Ausbildung/Studium</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Person, object>(x => x.EmailAddress)">eMail-Adresse</MudTableSortLabel>
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Personal-Nummer">@context.Id</MudTd>
+        <MudTd DataLabel="Vorname">@context.FirstName</MudTd>
+        <MudTd DataLabel="Nachname">@context.LastName</MudTd>
+        <MudTd DataLabel="Ausbildung/Studium">@context.Apprenticeship.Name</MudTd>
+        <MudTd DataLabel="eMail-Adresse">@context.EmailAddress</MudTd>
+    </RowTemplate>
+</MudTable>

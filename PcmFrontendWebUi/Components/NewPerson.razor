@@ -1,0 +1,33 @@
+@using PcmFrontendWebUi.Controller
+<MudGrid>
+    <MudItem xs="6">
+        <MudTextField @bind-Value="FirstName" Label="Vorname" Variant="Variant.Text"/>
+    </MudItem>
+    <MudItem xs="6">
+        <MudTextField @bind-Value="LastName" Label="Nachname" Variant="Variant.Text"/>
+    </MudItem>
+    <MudItem xs="6" sm="6">
+        <MudAutocomplete T="string" @bind-Value="ApprenticeshipName" Label="Aubildung/Studium" SearchFunc="@SerachApprenticeshipAutocomplete" ShowProgressIndicator="true">
+            <ProgressIndicatorTemplate>
+                <MudProgressLinear Size="Size.Small" Indeterminate="true" Color="Color.Error"/>
+            </ProgressIndicatorTemplate>
+        </MudAutocomplete>
+    </MudItem>
+    <MudItem xs="6" md="6">
+        <MudTextField @bind-Value="EmailAddress" Label="e-mail Adresse" Validation="new Func<string, bool>(MailValidationController.IsValidEmail)"/>
+    </MudItem>
+    <MudItem xs="12" Style="text-align: right;">
+        <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Style="margin-right: 1vw">Abbrechen</MudButton>
+        <MudButton Disabled="@_processing" OnClick="SaveNewPerson" Variant="Variant.Filled" Color="Color.Primary">
+            @if (_processing)
+            {
+                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
+                <MudText Class="ms-2">Speichert...</MudText>
+            }
+            else
+            {
+                <MudText>Speichern</MudText>
+            }
+        </MudButton>
+    </MudItem>
+</MudGrid>
