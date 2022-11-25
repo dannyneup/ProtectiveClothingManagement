@@ -355,13 +355,13 @@
       "responseMode": "DISABLE_RULES"
     },
     {
-      "uuid": "f93caf97-2f47-47d8-906b-a0cfc94e4c2d",
+      "uuid": "4c950cb9-f082-4bc8-8d60-70843b9c588e",
       "documentation": "",
       "method": "get",
       "endpoint": "order/0",
       "responses": [
         {
-          "uuid": "e3de88b1-89f8-440a-b7eb-17b78a05efac",
+          "uuid": "b2c81c3b-aab3-4773-86ad-f98460e7cf40",
           "body": "{\n  \"id\": 0,\n  \"shop\": \"Amazon\",\n  \"Number\": \"12345\",\n  \"Date\": \"2022-11-23\"\n}",
           "latency": 0,
           "statusCode": 200,
@@ -382,13 +382,13 @@
       "responseMode": null
     },
     {
-      "uuid": "5bb0fb68-08c2-4566-85f4-9fe071a7e741",
+      "uuid": "f93caf97-2f47-47d8-906b-a0cfc94e4c2d",
       "documentation": "",
       "method": "get",
       "endpoint": "order/1",
       "responses": [
         {
-          "uuid": "9dd82737-da88-4feb-94ea-d16ca3e740c1",
+          "uuid": "e3de88b1-89f8-440a-b7eb-17b78a05efac",
           "body": "{\n  \"id\": 1,\n  \"shop\": \"Max Schön\",\n  \"Number\": \"X48Z2\",\n  \"Date\": \"2022-11-23\"\n}",
           "latency": 0,
           "statusCode": 200,
