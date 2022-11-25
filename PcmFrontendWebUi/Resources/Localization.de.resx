@@ -21,7 +21,22 @@
     <data name="firstName" xml:space="preserve">
         <value>Vorname</value>
     </data>
-    <data name="surname" xml:space="preserve">
+    <data name="LastName" xml:space="preserve">
         <value>Nachname</value>
+    </data>
+    <data name="apprenticeship" xml:space="preserve">
+        <value>Aubildung/Studium</value>
+    </data>
+    <data name="emailAddress" xml:space="preserve">
+        <value>e-mail Addresse</value>
+    </data>
+    <data name="emailNotValid" xml:space="preserve">
+        <value>e-mail Addresse ungültig</value>
+    </data>
+    <data name="save" xml:space="preserve">
+        <value>Speichern</value>
+    </data>
+    <data name="saving" xml:space="preserve">
+        <value>Speichert</value>
     </data>
 </root>
