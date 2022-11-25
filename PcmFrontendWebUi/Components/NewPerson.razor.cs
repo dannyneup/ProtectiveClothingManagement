@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using PcmFrontendWebUi.Models;
 using PcmFrontendWebUi.Repositories;
 
@@ -24,11 +25,10 @@ public partial class NewPerson : ComponentBase
     {
         if (string.IsNullOrEmpty(value))
             return Task.FromResult<IEnumerable<string>>(_apprenticeshipNames);
-        var filtered = _apprenticeshipNames.Where(x => x
-            .Contains(value, StringComparison.InvariantCultureIgnoreCase));
+        var filtered = _apprenticeshipNames.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
         return Task.FromResult(filtered);
     }
-    
+
     async Task SaveNewPerson()
     {
         _processing = true;
