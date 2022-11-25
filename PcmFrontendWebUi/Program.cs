@@ -13,6 +13,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
 builder.Services.AddHttpClient();
+builder.Services.AddLocalization();
+
+//Dependency injection
 builder.Services.AddScoped<IRepository<Person, int>, PersonRepository>();
 builder.Services.AddScoped<IRepository<Article, int>, ArticleRepository>();
 builder.Services.AddScoped<IRepository<Order, int>, OrderRepository>();
@@ -20,6 +23,9 @@ builder.Services.AddScoped<IRepository<ArticleType, int>, ArticleTypeRepository>
 builder.Services.AddScoped<IRepository<Apprenticeship, int>, ApprenticeshipRepository>();
 
 var app = builder.Build();
+app.UseRequestLocalization(new RequestLocalizationOptions()
+    .AddSupportedCultures(new[] {"en-US", "de-DE"})
+    .AddSupportedUICultures(new[] {"en-US", "de-DE"}));
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
