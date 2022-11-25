@@ -1,3 +1,5 @@
+using System.Net.Mime;
+using System.Text;
 using System.Text.Json;
 using PcmFrontendWebUi.Models;
 
@@ -6,6 +8,7 @@ namespace PcmFrontendWebUi.Repositories;
 public class ArticleRepository : IRepository<Article, int>
 {
     private readonly HttpClient _httpClient;
+    private static string _articleEndpoint = $"{Endpoints.BaseUrl}{Endpoints.Article}";
 
 
     public ArticleRepository(HttpClient httpClient)
@@ -15,7 +18,7 @@ public class ArticleRepository : IRepository<Article, int>
 
     public async Task<IEnumerable<Article>> GetAll()
     {
-        using var responseMessage = await _httpClient.GetAsync($"{Endpoints.BaseUrl}{Endpoints.Article}");
+        using var responseMessage = await _httpClient.GetAsync($"{_articleEndpoint}");
         if (responseMessage.IsSuccessStatusCode)
         {
             var responseString = await responseMessage.Content.ReadAsStringAsync();
@@ -31,7 +34,7 @@ public class ArticleRepository : IRepository<Article, int>
 
     public async Task<Article> Get(int id)
     {
-        using var responseMessage = await _httpClient.GetAsync($"{Endpoints.BaseUrl}{Endpoints.Article}/{id}");
+        using var responseMessage = await _httpClient.GetAsync($"{_articleEndpoint}/{id}");
         if (responseMessage.IsSuccessStatusCode)
         {
             var article = await responseMessage.Content.ReadFromJsonAsync<Article>();
@@ -41,13 +44,19 @@ public class ArticleRepository : IRepository<Article, int>
         return new Article {IsResponseSuccess = false};
     }
 
-    public Task<bool> Insert(Article entity)
+    public async Task<bool> Insert(Article entity)
     {
-        throw new NotImplementedException();
+        var json = new StringContent(JsonSerializer.Serialize(entity),
+            Encoding.UTF8,
+            MediaTypeNames.Application.Json);
+        using var responseMessage = await _httpClient.PostAsync(_articleEndpoint, json);
+        return responseMessage.IsSuccessStatusCode;
     }
 
-    public Task<bool> Delete(int id)
+
+    public async Task<bool> Delete(int id)
     {
-        throw new NotImplementedException();
+        using var responseMessage = await _httpClient.DeleteAsync($"{_articleEndpoint}/{id}");
+        return responseMessage.IsSuccessStatusCode;
     }
 }

@@ -6,7 +6,12 @@
         <MudSpacer/>
         <MudTextField T="string" Placeholder="@Localization.search"
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" @bind-Value="_searchString"/>
-        <MudIconButton Icon="@Icons.Filled.AddBox"/>
+        <MudIconButton Icon="@Icons.Filled.AddBox" @onclick="ToggleNewArticlePopover"/>
+        <MudPopover Open="_newArticlePopupIsOpen" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
+            <div style="margin: 1em;">
+                <p>test</p>
+            </div>
+        </MudPopover>
     </ToolBarContent>
     <HeaderContent>
         <MudTh>

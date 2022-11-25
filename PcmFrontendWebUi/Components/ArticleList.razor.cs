@@ -7,8 +7,8 @@ namespace PcmFrontendWebUi.Components;
 public partial class ArticleList : ComponentBase
 {
     private IEnumerable<Article> _articles = new List<Article>();
-
     private string _searchString = "";
+    private bool _newArticlePopupIsOpen;
 
     [Inject] public IRepository<Article, int> ArticleRepository { get; set; }
     [Inject] public IRepository<Order, int> OrderRepository { get; set; }
@@ -37,5 +37,10 @@ public partial class ArticleList : ComponentBase
         properties.RemoveAll(x => x == null);
         var matchedProperty = properties.FirstOrDefault(x => x.ToLower().Contains(_searchString.ToLower()));
         return matchedProperty != null;
+    }
+
+    private void ToggleNewArticlePopover()
+    {
+        _newArticlePopupIsOpen = !_newArticlePopupIsOpen;
     }
 }

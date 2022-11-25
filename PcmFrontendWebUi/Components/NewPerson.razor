@@ -11,10 +11,10 @@
         <MudAutocomplete T="string" @bind-Value="_apprenticeshipName" Label="@Localization.apprenticeship" SearchFunc="@SearchApprenticeshipAutocomplete"/>
     </MudItem>
     <MudItem xs="6">
-        <MudTextField @bind-Value="_emailAddress" Label="@Localization.emailAddress" Validation="@(new EmailAddressAttribute() {ErrorMessage = $"{Localization.emailNotValid}"})"/>
+        <MudTextField @bind-Value="_emailAddress" Label="@Localization.emailAddress" Validation="@(new EmailAddressAttribute() {ErrorMessage = $@"{Localization.emailNotValid}"})"/>
     </MudItem>
     <MudItem xs="12" Style="text-align: right;">
-        <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Style="margin-right: 1vw">Abbrechen</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Style="margin-right: 1vw">@Localization.cancel</MudButton>
         <MudButton Disabled="@_processing" OnClick="SaveNewPerson" Variant="Variant.Filled" Color="Color.Primary">
             @if (_processing)
             {

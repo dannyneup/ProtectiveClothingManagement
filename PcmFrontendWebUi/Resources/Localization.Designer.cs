@@ -140,5 +140,23 @@ namespace PcmFrontendWebUi.Resources {
                 return ResourceManager.GetString("articles", resourceCulture);
             }
         }
+        
+        internal static string person {
+            get {
+                return ResourceManager.GetString("person", resourceCulture);
+            }
+        }
+        
+        internal static string style {
+            get {
+                return ResourceManager.GetString("style", resourceCulture);
+            }
+        }
+        
+        internal static string cancel {
+            get {
+                return ResourceManager.GetString("cancel", resourceCulture);
+            }
+        }
     }
 }

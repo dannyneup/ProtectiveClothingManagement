@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Components;
-using MudBlazor;
 using PcmFrontendWebUi.Models;
 using PcmFrontendWebUi.Repositories;
 
@@ -7,13 +6,13 @@ namespace PcmFrontendWebUi.Components;
 
 public partial class NewPerson : ComponentBase
 {
-    [Inject] public IRepository<Apprenticeship, int> ApprenticeshipRepository { get; set; }
-    private string _firstName;
-    private string _lastName;
-    private string _emailAddress;
     private string _apprenticeshipName;
     private List<string> _apprenticeshipNames;
+    private string _emailAddress;
+    private string _firstName;
+    private string _lastName;
     private bool _processing = false;
+    [Inject] public IRepository<Apprenticeship, int> ApprenticeshipRepository { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -29,7 +28,7 @@ public partial class NewPerson : ComponentBase
         return Task.FromResult(filtered);
     }
 
-    async Task SaveNewPerson()
+    private async Task SaveNewPerson()
     {
         _processing = true;
         await Task.Delay(2000);

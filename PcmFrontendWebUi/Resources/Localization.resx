@@ -66,4 +66,13 @@
     <data name="articles" xml:space="preserve">
         <value>Articles</value>
     </data>
+    <data name="person" xml:space="preserve">
+        <value>Person</value>
+    </data>
+    <data name="style" xml:space="preserve">
+        <value>Style</value>
+    </data>
+    <data name="cancel" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
 </root>

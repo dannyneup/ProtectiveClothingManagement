@@ -1,3 +1,6 @@
+using System.Net.Mime;
+using System.Text;
+using System.Text.Json;
 using PcmFrontendWebUi.Models;
 
 namespace PcmFrontendWebUi.Repositories;
@@ -5,6 +8,7 @@ namespace PcmFrontendWebUi.Repositories;
 public class ArticleTypeRepository : IRepository<ArticleType, int>
 {
     private readonly HttpClient _httpClient;
+    private static string _articleTypeEndpoint = $"{Endpoints.BaseUrl}{Endpoints.ArticleType}";
 
 
     public ArticleTypeRepository(HttpClient httpClient)
@@ -12,14 +16,25 @@ public class ArticleTypeRepository : IRepository<ArticleType, int>
         _httpClient = httpClient;
     }
 
-    public Task<IEnumerable<ArticleType>> GetAll()
+    public async Task<IEnumerable<ArticleType>> GetAll()
     {
-        throw new NotImplementedException();
+        using var responseMessage = await _httpClient.GetAsync(_articleTypeEndpoint);
+        if (responseMessage.IsSuccessStatusCode)
+        {
+            var responseString = await responseMessage.Content.ReadAsStringAsync();
+            using var doc = JsonDocument.Parse(responseString);
+            var root = doc.RootElement.GetProperty("articleTypes");
+            var articleTypes = root.Deserialize<List<ArticleType>>(new JsonSerializerOptions
+                {PropertyNameCaseInsensitive = true});
+            return articleTypes;
+        }
+
+        return new List<ArticleType>();
     }
 
     public async Task<ArticleType> Get(int id)
     {
-        using var responseMessage = await _httpClient.GetAsync($"{Endpoints.BaseUrl}{Endpoints.ArticleType}/{id}");
+        using var responseMessage = await _httpClient.GetAsync($"{_articleTypeEndpoint}/{id}");
         if (responseMessage.IsSuccessStatusCode)
         {
             var articleType = await responseMessage.Content.ReadFromJsonAsync<ArticleType>();
@@ -29,13 +44,18 @@ public class ArticleTypeRepository : IRepository<ArticleType, int>
         return new ArticleType {IsResponseSuccess = false};
     }
 
-    public Task<bool> Insert(ArticleType entity)
+    public async Task<bool> Insert(ArticleType entity)
     {
-        throw new NotImplementedException();
+        var json = new StringContent(JsonSerializer.Serialize(entity),
+            Encoding.UTF8,
+            MediaTypeNames.Application.Json);
+        using var responseMessage = await _httpClient.PostAsync(_articleTypeEndpoint, json);
+        return responseMessage.IsSuccessStatusCode;
     }
 
-    public Task<bool> Delete(int id)
+    public async Task<bool> Delete(int id)
     {
-        throw new NotImplementedException();
+        using var responseMessage = await _httpClient.DeleteAsync($"{_articleTypeEndpoint}/{id}");
+        return responseMessage.IsSuccessStatusCode;
     }
 }

@@ -8,4 +8,5 @@ public class Endpoints
     public const string Order = "/order";
     public const string ArticleType = "/articletype";
     public const string Apprenticeship = "/apprenticeship";
+    public const string ArticleCategory = "/articlecategory";
 }
