@@ -2,34 +2,34 @@
 <MudTable Items="_articles" Hover="true" SortLabel="Sort By"
           Filter="new Func<Article, bool>(ArticleFilter)">
     <ToolBarContent>
-        <MudText Color="Color.Primary" Typo="Typo.h6">Artikel</MudText>
+        <MudText Color="Color.Primary" Typo="Typo.h6">@Localization.articles</MudText>
         <MudSpacer/>
-        <MudTextField T="string" Placeholder="Durchsuchen"
+        <MudTextField T="string" Placeholder="@Localization.search"
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" @bind-Value="_searchString"/>
         <MudIconButton Icon="@Icons.Filled.AddBox"/>
     </ToolBarContent>
     <HeaderContent>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Category.Name)">Kategorie</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Category.Name)">@Localization.category</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Size)">Größe</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Size)">@Localization.size</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Type.Name)">Typ</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Type.Name)">@Localization.type</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Type.Manufacturer)">Hersteller</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Type.Manufacturer)">@Localization.manufacturer</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Order.Number)">Bestellnummer</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Order.Number)">@Localization.orderNumber</MudTableSortLabel>
         </MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Kategorie">@context.Category.Name</MudTd>
-        <MudTd DataLabel="Größe">@context.Size</MudTd>
-        <MudTd DataLabel="Typ">@context.Type.Name</MudTd>
-        <MudTd DataLabel="Hersteller">@context.Type.Manufacturer</MudTd>
-        <MudTd DataLabel="Bestellnummer">@context.Order.Number</MudTd>
+        <MudTd DataLabel="@Localization.category">@context.Category.Name</MudTd>
+        <MudTd DataLabel="@Localization.size">@context.Size</MudTd>
+        <MudTd DataLabel="@Localization.type">@context.Type.Name</MudTd>
+        <MudTd DataLabel="@Localization.manufacturer">@context.Type.Manufacturer</MudTd>
+        <MudTd DataLabel="@Localization.orderNumber">@context.Order.Number</MudTd>
     </RowTemplate>
 </MudTable>
