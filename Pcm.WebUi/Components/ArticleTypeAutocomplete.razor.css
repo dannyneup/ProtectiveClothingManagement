@@ -1,0 +1,23 @@
+.itemTemplate {
+    display: flex;
+    width: available;
+}
+
+.itemContainerText {
+    width: 95%;
+}
+
+.itemContainerButton {
+    margin: auto;
+}
+
+.noItemsTemplate {
+    margin: 1.5ex;
+}
+
+.breakOnOverflow {
+    width: auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}

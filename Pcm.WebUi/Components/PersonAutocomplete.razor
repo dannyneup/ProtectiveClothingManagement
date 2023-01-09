@@ -1,0 +1,14 @@
+@using Pcm.Core.Entities
+<MudAutocomplete T="IPerson" Value="@Value" ValueChanged="@(newPerson => OnValueChanged(newPerson))" 
+                 Label="@Localization.person" 
+                 SearchFunc="@SearchPersonAutocomplete" ResetValueOnEmptyText="true"
+                 Required="Required">
+    <ItemTemplate>
+        <div class="itemTemplate">
+            <div class="itemContainerText">
+                <MudText Typo="Typo.body1">@context.ToString()</MudText>
+                <MudText Typo="Typo.body2">@context.Apprenticeship.Name</MudText>
+            </div>
+        </div>
+    </ItemTemplate>
+</MudAutocomplete>

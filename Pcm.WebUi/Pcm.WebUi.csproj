@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <RootNamespace>Pcm.WebUi</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MudBlazor" Version="6.0.13" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Components\PersonList.cs">
+            <DependentUpon>PersonList.razor</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\Localization.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Localization.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="Resources\Localization.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Localization.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\Localization.de.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Localization.de.Designer.cs</LastGenOutput>
+            <DependentUpon>Localization.resx</DependentUpon>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Pcm.Application\Pcm.Application.csproj" />
+      <ProjectReference Include="..\Pcm.Core\Pcm.Core.csproj" />
+      <ProjectReference Include="..\Pcm.Infrastructure\Pcm.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>

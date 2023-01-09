@@ -1,0 +1,10 @@
+@using Pcm.WebUi.Models
+<MudAutocomplete T="ArticleCategory" Value="@Value" ValueChanged="ValueChanged" Label="@Localization.category" SearchFunc="@SearchArticleCategoryAutocomplete">
+    <ItemTemplate>
+        <div style="display: flex; width: available">
+            <div style="width: 95%">
+                <MudText id="test">@context</MudText>
+            </div>
+        </div>
+    </ItemTemplate>
+</MudAutocomplete>
