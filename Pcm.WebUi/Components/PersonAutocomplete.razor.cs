@@ -2,36 +2,36 @@ using Microsoft.AspNetCore.Components;
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
 using Pcm.WebUi.Controller;
-using Pcm.WebUi.Models;
 using Pcm.Infrastructure.Repositories;
+using Pcm.Infrastructure.Entities;
 
 namespace Pcm.WebUi.Components;
 
 public partial class PersonAutocomplete : ComponentBase
 {
-    private IEnumerable<IPerson> _persons;
+    private IEnumerable<Person> _persons;
 
-    [Parameter] public IPerson Value { get; set; }
-    [Parameter] public EventCallback<IPerson> ValueChanged { get; set; }
+    [Parameter] public Person Value { get; set; }
+    [Parameter] public EventCallback<Person> ValueChanged { get; set; }
     [Parameter] public bool Required { get; set; } = false;
     [Inject] public IRepository<IPerson, int> PersonRepository { get; set; }
 
     protected override async void OnInitialized()
     {
         var persons = await PersonRepository.GetAll();
-        _persons = persons;
+        _persons = persons as IEnumerable<Person>;
     }
 
-    private async Task<IEnumerable<IPerson>> SearchPersonAutocomplete(string searchString)
+    private async Task<IEnumerable<Person>> SearchPersonAutocomplete(string searchString)
     {
         if (string.IsNullOrEmpty(searchString))
-            return _persons;
+            return _persons as IEnumerable<Person>;
         var searchWords = StringHandleController.CreateWordArray(searchString);
         var filteredArticleTypes = filterPersonsByWords(searchWords);
         return filteredArticleTypes;
     }
 
-    private IEnumerable<IPerson> filterPersonsByWords(string[] searchWords)
+    private IEnumerable<Person> filterPersonsByWords(string[] searchWords)
     {
         var filtered = _persons;
         
@@ -54,7 +54,7 @@ public partial class PersonAutocomplete : ComponentBase
         return filtered.Distinct();
     }
 
-    private async void OnValueChanged(IPerson newPerson)
+    private async void OnValueChanged(Person newPerson)
     {
         Value = newPerson;
         await ValueChanged.InvokeAsync(Value);

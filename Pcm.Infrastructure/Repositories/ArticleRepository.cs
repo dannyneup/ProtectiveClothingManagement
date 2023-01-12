@@ -3,11 +3,12 @@ using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
 using Pcm.Application.Interfaces;
+using Pcm.Core.Entities;
 using Pcm.Infrastructure.Entities;
 
 namespace Pcm.Infrastructure.Repositories;
 
-public class ArticleRepository : IRepository<Article, int>
+public class ArticleRepository : IRepository<IArticle, int>
 {
     private static readonly string _articleEndpoint = $"{Endpoints.BaseUrl}{Endpoints.Article}";
     private readonly HttpClient _httpClient;
@@ -18,7 +19,7 @@ public class ArticleRepository : IRepository<Article, int>
         _httpClient = httpClient;
     }
 
-    public async Task<IEnumerable<Article>> GetAll()
+    public async Task<IEnumerable<IArticle>> GetAll()
     {
         using var responseMessage = await _httpClient.GetAsync($"{_articleEndpoint}");
         if (responseMessage.IsSuccessStatusCode)
@@ -34,7 +35,7 @@ public class ArticleRepository : IRepository<Article, int>
         return new List<Article>();
     }
 
-    public async Task<Article> Get(int id)
+    public async Task<IArticle> Get(int id)
     {
         using var responseMessage = await _httpClient.GetAsync($"{_articleEndpoint}/{id}");
         if (responseMessage.IsSuccessStatusCode)
@@ -46,7 +47,7 @@ public class ArticleRepository : IRepository<Article, int>
         return new Article {IsResponseSuccess = false};
     }
 
-    public async Task<bool> Insert(Article entity)
+    public async Task<bool> Insert(IArticle entity)
     {
         var json = new StringContent(JsonSerializer.Serialize(entity),
             Encoding.UTF8,

@@ -12,8 +12,7 @@
         <MudAutocomplete T="string" @bind-Value="_style" Label="@Localization.style" SearchFunc="@SearchStyleAutocomplete"/>
     </MudItem>
     <MudText>@_person</MudText>
-
-
+    
     <MudItem xs="12" Style="text-align: right;">
         <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Style="margin-right: 1vw">@Localization.cancel</MudButton>
         <MudButton Disabled="@_processing" OnClick="SaveNewArticle" Variant="Variant.Filled" Color="Color.Primary">

@@ -1,10 +1,11 @@
 using System.Net.Http.Json;
 using Pcm.Application.Interfaces;
+using Pcm.Core.Entities;
 using Pcm.Infrastructure.Entities;
 
 namespace Pcm.Infrastructure.Repositories;
 
-public class OrderRepository : IRepository<Order, int>
+public class OrderRepository : IRepository<IOrder, int>
 {
     private readonly HttpClient _httpClient;
 
@@ -13,12 +14,12 @@ public class OrderRepository : IRepository<Order, int>
         _httpClient = httpClient;
     }
 
-    public Task<IEnumerable<Order>> GetAll()
+    public Task<IEnumerable<IOrder>> GetAll()
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Order> Get(int id)
+    public async Task<IOrder> Get(int id)
     {
         using var responseMessage = await _httpClient.GetAsync($"{Endpoints.BaseUrl}{Endpoints.Order}/{id}");
         if (responseMessage.IsSuccessStatusCode)
@@ -30,7 +31,7 @@ public class OrderRepository : IRepository<Order, int>
         return new Order {IsResponseSuccess = false};
     }
 
-    public Task<bool> Insert(Order entity)
+    public Task<bool> Insert(IOrder entity)
     {
         throw new NotImplementedException();
     }

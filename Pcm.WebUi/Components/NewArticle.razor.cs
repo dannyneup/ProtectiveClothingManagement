@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Components;
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
-using Pcm.WebUi.Models;
 using Pcm.Infrastructure.Repositories;
+using Pcm.Infrastructure.Entities;
 
 namespace Pcm.WebUi.Components;
 
 public partial class NewArticle : ComponentBase
 {
-    private IArticleCategory _articleCategory;
-    private IEnumerable<IArticle> _articles;
-    private IArticleType _articleType;
+    private ArticleCategory _articleCategory;
+    private IEnumerable<Article> _articles;
+    private ArticleType _articleType;
 
     private bool _isVisible = false;
     private string _manufacturer;
@@ -34,7 +34,7 @@ public partial class NewArticle : ComponentBase
 
     private ArticleTypeAutocomplete _articleTypeAutocompleteRef;
 
-    private async Task name(IArticleCategory category)
+    private async Task name(ArticleCategory category)
     {
         _articleCategory = category;
         await _articleTypeAutocompleteRef.Update(category);
@@ -46,7 +46,7 @@ public partial class NewArticle : ComponentBase
     protected override async void OnInitialized()
     {
         var articles = await ArticleRepository.GetAll();
-        _articles = articles;
+        _articles = (IEnumerable<Article>) articles;
     }
 
     private Task<IEnumerable<string>> SearchStyleAutocomplete(string value)

@@ -3,11 +3,12 @@ using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
 using Pcm.Application.Interfaces;
+using Pcm.Core.Entities;
 using Pcm.Infrastructure.Entities;
 
 namespace Pcm.Infrastructure.Repositories;
 
-public class ArticleTypeRepository : IRepository<ArticleType, int>
+public class ArticleTypeRepository : IRepository<IArticleType, int>
 {
     private static readonly string _articleTypeEndpoint = $"{Endpoints.BaseUrl}{Endpoints.ArticleType}";
     private readonly HttpClient _httpClient;
@@ -18,7 +19,7 @@ public class ArticleTypeRepository : IRepository<ArticleType, int>
         _httpClient = httpClient;
     }
 
-    public async Task<IEnumerable<ArticleType>> GetAll()
+    public async Task<IEnumerable<IArticleType>> GetAll()
     {
         using var responseMessage = await _httpClient.GetAsync(_articleTypeEndpoint);
         if (responseMessage.IsSuccessStatusCode)
@@ -31,10 +32,10 @@ public class ArticleTypeRepository : IRepository<ArticleType, int>
             return articleTypes;
         }
 
-        return new List<ArticleType>();
+        return new List<IArticleType>();
     }
 
-    public async Task<ArticleType> Get(int id)
+    public async Task<IArticleType> Get(int id)
     {
         using var responseMessage = await _httpClient.GetAsync($"{_articleTypeEndpoint}/{id}");
         if (responseMessage.IsSuccessStatusCode)
@@ -46,7 +47,7 @@ public class ArticleTypeRepository : IRepository<ArticleType, int>
         return new ArticleType {IsResponseSuccess = false};
     }
 
-    public async Task<bool> Insert(ArticleType entity)
+    public async Task<bool> Insert(IArticleType entity)
     {
         var json = new StringContent(JsonSerializer.Serialize(entity),
             Encoding.UTF8,

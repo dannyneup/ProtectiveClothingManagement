@@ -3,8 +3,7 @@ using MudBlazor.Services;
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
 using Pcm.Infrastructure.Repositories;
-using Pcm.WebUi.Models;
-
+using Pcm.WebUi.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,12 +18,12 @@ builder.Services.AddLocalization();
 
 //Dependency injection
 builder.Services.AddScoped<IRepository<IPerson, int>, PersonRepository>();
-//builder.Services.AddScoped<IRepository<Article, int>, ArticleRepository>();
-//builder.Services.AddScoped<IRepository<ArticleCategory, int>, ArticleCategoryRepository>();
-//builder.Services.AddScoped<IRepository<ArticleType, int>, ArticleTypeRepository>();
-//builder.Services.AddScoped<IRepository<Order, int>, OrderRepository>();
-//builder.Services.AddScoped<IRepository<Apprenticeship, int>, ApprenticeshipRepository>();
-//builder.Services.AddScoped<INewArticleViewModel, NewArticleViewModel>();
+builder.Services.AddScoped<IRepository<IArticle, int>, ArticleRepository>();
+builder.Services.AddScoped<IRepository<IArticleCategory, int>, ArticleCategoryRepository>();
+builder.Services.AddScoped<IRepository<IArticleType, int>, ArticleTypeRepository>();
+builder.Services.AddScoped<IRepository<IOrder, int>, OrderRepository>();
+builder.Services.AddScoped<IRepository<IApprenticeship, int>, ApprenticeshipRepository>();
+builder.Services.AddScoped<INewArticleViewModel, NewArticleViewModel>();
 
 var app = builder.Build();
 app.UseRequestLocalization(new RequestLocalizationOptions()

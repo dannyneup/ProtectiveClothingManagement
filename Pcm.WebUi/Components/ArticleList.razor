@@ -1,4 +1,4 @@
-@using Pcm.WebUi.Models
+@using Pcm.Infrastructure.Entities
 <MudTable T="Article" Items="_articles" Hover="true" SortLabel="Sort By"
           Filter="new Func<Article, bool>(ArticleFilter)">
     <ToolBarContent>
@@ -8,9 +8,6 @@
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" @bind-Value="_searchString"/>
         <MudIconButton Icon="@Icons.Filled.AddBox" @onclick="ToggleNewArticlePopover"/>
         <MudPopover Open="_newArticlePopupIsOpen" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
-            <div style="margin: 1em;">
-                <p>test</p>
-            </div>
         </MudPopover>
     </ToolBarContent>
     <HeaderContent>

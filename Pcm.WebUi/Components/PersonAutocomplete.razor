@@ -1,5 +1,5 @@
-@using Pcm.Core.Entities
-<MudAutocomplete T="IPerson" Value="@Value" ValueChanged="@(newPerson => OnValueChanged(newPerson))" 
+@using Pcm.Infrastructure.Entities
+<MudAutocomplete T="Person" Value="@Value" ValueChanged="@(newPerson => OnValueChanged(newPerson))" 
                  Label="@Localization.person" 
                  SearchFunc="@SearchPersonAutocomplete" ResetValueOnEmptyText="true"
                  Required="Required">

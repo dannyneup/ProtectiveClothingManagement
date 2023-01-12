@@ -3,11 +3,12 @@ using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
 using Pcm.Application.Interfaces;
+using Pcm.Core.Entities;
 using Pcm.Infrastructure.Entities;
 
 namespace Pcm.Infrastructure.Repositories;
 
-public class ArticleCategoryRepository : IRepository<ArticleCategory, int>
+public class ArticleCategoryRepository : IRepository<IArticleCategory, int>
 {
     private static readonly string _articleCategoryEndpoint = $"{Endpoints.BaseUrl}{Endpoints.ArticleCategory}";
     private readonly HttpClient _httpClient;
@@ -18,7 +19,7 @@ public class ArticleCategoryRepository : IRepository<ArticleCategory, int>
         _httpClient = httpClient;
     }
 
-    public async Task<IEnumerable<ArticleCategory>> GetAll()
+    public async Task<IEnumerable<IArticleCategory>> GetAll()
     {
         using var responseMessage = await _httpClient.GetAsync($"{_articleCategoryEndpoint}");
         if (responseMessage.IsSuccessStatusCode)
@@ -34,7 +35,7 @@ public class ArticleCategoryRepository : IRepository<ArticleCategory, int>
         return new List<ArticleCategory>();
     }
 
-    public async Task<ArticleCategory> Get(int id)
+    public async Task<IArticleCategory> Get(int id)
     {
         using var responseMessage = await _httpClient.GetAsync($"{_articleCategoryEndpoint}/{id}");
         if (responseMessage.IsSuccessStatusCode)
@@ -46,7 +47,7 @@ public class ArticleCategoryRepository : IRepository<ArticleCategory, int>
         return new ArticleCategory {IsResponseSuccess = false};
     }
 
-    public async Task<bool> Insert(ArticleCategory entity)
+    public async Task<bool> Insert(IArticleCategory entity)
     {
         var json = new StringContent(JsonSerializer.Serialize(entity),
             Encoding.UTF8,

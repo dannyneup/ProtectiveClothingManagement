@@ -4,34 +4,32 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
-using Pcm.Infrastructure.Entities;
 using Pcm.WebUi.Controller;
-using Pcm.WebUi.Models;
 using Pcm.Infrastructure.Repositories;
-using ArticleCategory = Pcm.WebUi.Models.ArticleCategory;
+using Pcm.Infrastructure.Entities;
 
 namespace Pcm.WebUi.Components;
 
 public partial class ArticleTypeAutocomplete : ComponentBase
 {
-    [Parameter] public EventCallback<IArticleType> ValueChanged { get; set; }
+    [Parameter] public EventCallback<ArticleType> ValueChanged { get; set; }
 
-    [Parameter] public IArticleType Value { get; set; }
+    [Parameter] public ArticleType Value { get; set; }
 
     [Inject] public IRepository<IArticleType, int> ArticleTypeRepository { get; set; }
     
-    private List<IArticleType> _articleTypes = new();
+    private List<ArticleType> _articleTypes = new();
 
     private string _manufacturer;
     private IEnumerable<string> _manufacturers;
 
     private ArticleCategory _articleCategory = new();
-    private MudAutocomplete<IArticleType> _articleTypeAutocomplete;
+    private MudAutocomplete<ArticleType> _articleTypeAutocomplete;
 
 
-    public async Task Update(IArticleCategory category)
+    public async Task Update(ArticleCategory category)
     {
-        _articleCategory = (ArticleCategory) category;
+        _articleCategory = category;
         await InvokeAsync(StateHasChanged);
     }
 
@@ -41,14 +39,14 @@ public partial class ArticleTypeAutocomplete : ComponentBase
         foreach (var aT in articleTypes)
         {
             var result = await ArticleTypeRepository.Get(aT.Id);
-            _articleTypes.Add(result);
+            _articleTypes.Add(result as ArticleType);
         }
         var manufacturers = _articleTypes.Select(aT => aT.Manufacturer);
         _manufacturers = manufacturers.Distinct();
-        Value = articleTypes.First();
+        Value = articleTypes.First() as ArticleType;
     }
 
-    private async Task<IEnumerable<IArticleType>> SearchArticleTypeNameAutocomplete(string searchString)
+    private async Task<IEnumerable<ArticleType>> SearchArticleTypeNameAutocomplete(string searchString)
     {
         if (string.IsNullOrEmpty(searchString) && _articleCategory.Name == "")
             return _articleTypes;
@@ -57,9 +55,9 @@ public partial class ArticleTypeAutocomplete : ComponentBase
         return filteredArticleTypes;
     }
 
-    private List<IArticleType> filterArticleTypesByWords(string[] searchWords)
+    private List<ArticleType> filterArticleTypesByWords(string[] searchWords)
     {
-        List<IArticleType> filteredArticleTypes = new();
+        List<ArticleType> filteredArticleTypes = new();
         foreach (var word in searchWords)
         {
             var matches = _articleTypes.Where(x =>
@@ -78,7 +76,7 @@ public partial class ArticleTypeAutocomplete : ComponentBase
         return Task.FromResult(filtered);
     }
 
-    private async Task OnValueChanged(IArticleType newValue)
+    private async Task OnValueChanged(ArticleType newValue)
     {
         Value = newValue;
         await ValueChanged.InvokeAsync(Value);

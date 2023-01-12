@@ -1,4 +1,6 @@
-namespace Pcm.WebUi.Models;
+using Pcm.Infrastructure.Entities;
+
+namespace Pcm.WebUi.ViewModels;
 
 public interface INewArticleViewModel
 {

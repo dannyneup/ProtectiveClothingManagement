@@ -3,11 +3,12 @@ using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
 using Pcm.Application.Interfaces;
+using Pcm.Core.Entities;
 using Pcm.Infrastructure.Entities;
 
 namespace Pcm.Infrastructure.Repositories;
 
-public class ApprenticeshipRepository : IRepository<Apprenticeship, int>
+public class ApprenticeshipRepository : IRepository<IApprenticeship, int>
 {
     private readonly string _apprenticeshipEndpoint = $"{Endpoints.BaseUrl}{Endpoints.Apprenticeship}";
     private readonly HttpClient _httpClient;
@@ -17,7 +18,7 @@ public class ApprenticeshipRepository : IRepository<Apprenticeship, int>
         _httpClient = httpClient;
     }
 
-    public async Task<IEnumerable<Apprenticeship>> GetAll()
+    public async Task<IEnumerable<IApprenticeship>> GetAll()
     {
         using var responseMessage = await _httpClient.GetAsync(_apprenticeshipEndpoint);
         if (responseMessage.IsSuccessStatusCode)
@@ -30,10 +31,10 @@ public class ApprenticeshipRepository : IRepository<Apprenticeship, int>
             return apprenticeships;
         }
 
-        return new List<Apprenticeship>();
+        return new List<IApprenticeship>();
     }
 
-    public async Task<Apprenticeship> Get(int id)
+    public async Task<IApprenticeship> Get(int id)
     {
         using var responseMessage = await _httpClient.GetAsync($"{_apprenticeshipEndpoint}/{id}");
         if (responseMessage.IsSuccessStatusCode)
@@ -45,7 +46,7 @@ public class ApprenticeshipRepository : IRepository<Apprenticeship, int>
         return new Apprenticeship {IsResponseSuccess = false};
     }
 
-    public async Task<bool> Insert(Apprenticeship entity)
+    public async Task<bool> Insert(IApprenticeship entity)
     {
         var json = new StringContent(JsonSerializer.Serialize(entity),
             Encoding.UTF8,

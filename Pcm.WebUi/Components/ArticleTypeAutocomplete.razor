@@ -1,5 +1,5 @@
-@using Pcm.Core.Entities
-<MudAutocomplete T="IArticleType" Value="@Value" ValueChanged="@(async (x) => await OnValueChanged(x))" 
+@using Pcm.Infrastructure.Entities
+<MudAutocomplete T="ArticleType" Value="@Value" ValueChanged="@(async (x) => await OnValueChanged(x))" 
                  @ref="_articleTypeAutocomplete"
                  Label="@Localization.type" 
                  SearchFunc="SearchArticleTypeNameAutocomplete">

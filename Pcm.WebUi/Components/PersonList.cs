@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
-using Pcm.WebUi.Models;
-using Pcm.Infrastructure.Repositories;
+using Pcm.Infrastructure.Entities;
 
 namespace Pcm.WebUi.Components;
 
@@ -16,7 +15,7 @@ public partial class PersonList : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        _persons = (List<Person>) await PersonRepository.GetAll();
+        _persons = await PersonRepository.GetAll() as IEnumerable<Person>;
     }
 
     private bool PersonFilter(IPerson person)
