@@ -12,7 +12,7 @@
     </ToolBarContent>
     <HeaderContent>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Category.Name)">@Localization.category</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Type.Category.Name)">@Localization.category</MudTableSortLabel>
         </MudTh>
         <MudTh>
             <MudTableSortLabel SortBy="new Func<Article, object>(x => x.Size)">@Localization.size</MudTableSortLabel>
@@ -28,7 +28,7 @@
         </MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="@Localization.category">@context.Category.Name</MudTd>
+        <MudTd DataLabel="@Localization.category">@context.Type.Category.Name</MudTd>
         <MudTd DataLabel="@Localization.size">@context.Size</MudTd>
         <MudTd DataLabel="@Localization.type">@context.Type.Name</MudTd>
         <MudTd DataLabel="@Localization.manufacturer">@context.Type.Manufacturer</MudTd>

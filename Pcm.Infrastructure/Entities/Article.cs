@@ -11,8 +11,6 @@ public class Article : ResponseBase, IArticle
     [JsonConverter(typeof(ConcreteTypeConverter<ArticleType, IArticleType>))]
     public IArticleType Type { get; set; }
     public string Style { get; set; }
-    [JsonConverter(typeof(ConcreteTypeConverter<ArticleCategory, IArticleCategory>))]
-    public IArticleCategory Category { get; set; }
     public string Size { get; set; }
     [JsonConverter(typeof(ConcreteTypeConverter<Order, IOrder>))]
     public IOrder Order { get; set; }

@@ -239,7 +239,7 @@
       "responses": [
         {
           "uuid": "8e3e149e-54ef-4d65-989f-9cb6f1d4e77c",
-          "body": "{\n  \"articles\": [\n    {\n      \"id\": 0,\n      \"type\": {\n        \"id\": 0,\n        \"name\": \"tolle Latzhose\"\n      },\n      \"style\": \"blau\",\n      \"category\": {\n        \"id\": 0,\n        \"name\": \"Latzhose\"\n      },\n      \"size\": \"M\",\n      \"order\": {\n        \"id\": 0\n      },\n      \"status\": \"bestellt\",\n      \"statusChanged\": \"2022-11-23\"\n    },\n    {\n      \"id\": 1,\n      \"type\": {\n        \"id\": 1,\n        \"name\": \"mega tolle Latzhose\"\n      },\n      \"style\": \"schwarz\",\n      \"category\": {\n        \"id\": 0,\n        \"name\": \"Latzhose\"\n      },\n      \"size\": \"M\",\n      \"order\": {\n        \"id\": 1\n      },\n      \"status\": \"bestellt\",\n      \"statusChanged\": \"2022-11-23\"\n    }\n  ]\n}",
+          "body": "{\n  \"articles\": [\n    {\n      \"id\": 0,\n      \"type\": {\n        \"id\": 0,\n        \"name\": \"tolle Latzhose\"\n      },\n      \"style\": \"blau\",\n      \"size\": \"M\",\n      \"order\": {\n        \"id\": 0\n      },\n      \"status\": \"bestellt\",\n      \"statusChanged\": \"2022-11-23\"\n    },\n    {\n      \"id\": 1,\n      \"type\": {\n        \"id\": 1,\n        \"name\": \"mega tolle Latzhose\"\n      },\n      \"style\": \"schwarz\",\n      \"size\": \"M\",\n      \"order\": {\n        \"id\": 1\n      },\n      \"status\": \"bestellt\",\n      \"statusChanged\": \"2022-11-23\"\n    }\n  ]\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -379,7 +379,7 @@
       "responses": [
         {
           "uuid": "4e1e204c-5e93-4997-9c33-f2cd13f3a218",
-          "body": "{\n  \"articleTypes\": [\n    {\n      \"id\": 0,\n      \"name\": \"tolle Latzhose\",\n      \"manufacturer\": \"Hersteller\"\n    },\n    {\n      \"id\": 1,\n      \"name\": \"mega tolle Latzhose\",\n      \"manufacturer\": \"anderer Hersteller\"\n    }\n  ]\n}",
+          "body": "{\n  \"articleTypes\": [\n    {\n      \"id\": 0,\n      \"name\": \"tolle Latzhose\",\n      \"manufacturer\": \"Hersteller\",\n      \"category\": {\n        \"id\": 0,\n        \"name\": \"Latzhose\"\n      }\n    },\n    {\n      \"id\": 1,\n      \"name\": \"mega tolle Latzhose\",\n      \"manufacturer\": \"anderer Hersteller\",\n      \"category\": {\n        \"id\": 1,\n        \"name\": \"Lichtbogenschutz-Latzhose\"\n      }\n    }\n  ]\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -406,7 +406,7 @@
       "responses": [
         {
           "uuid": "d8d87544-a3ea-419c-85f0-6555dedee2de",
-          "body": "{\n  \"id\": 0,\n  \"name\": \"tolle Latzhose\",\n  \"manufacturer\": \"Hersteller\",\n  \"articleCategory\": {\n    \"id\": 1\n  },\n  \"style\": \"blau\"\n}",
+          "body": "{\n  \"id\": 0,\n  \"name\": \"tolle Latzhose\",\n  \"manufacturer\": \"Hersteller\",\n  \"category\": {\n    \"id\": 0,\n    \"name\": \"Latzhose\"\n  }\n}",
           "latency": 200,
           "statusCode": 200,
           "label": "",
@@ -433,7 +433,7 @@
       "responses": [
         {
           "uuid": "52e2bb48-888a-4d9b-ad64-6752343447d1",
-          "body": "{\n  \"id\": 1,\n  \"name\": \"mega tolle Latzhose\",\n  \"manufacturer\": \"anderer Hersteller\",\n  \"articleCategory\": {\n    \"id\": 0\n  },\n  \"style\": \"rot\"\n}",
+          "body": "{\n  \"id\": 1,\n  \"name\": \"mega tolle Latzhose\",\n  \"manufacturer\": \"anderer Hersteller\",\n  \"category\": {\n    \"id\": 1,\n    \"name\": \"Lichtbogenschutz-Latzhose\"\n  }\n}",
           "latency": 200,
           "statusCode": 200,
           "label": "",

@@ -5,7 +5,6 @@ public interface IArticle : IResponseBase
     int Id { get; set; }
     IArticleType Type { get; set; }
     string Style { get; set; }
-    IArticleCategory Category { get; set; }
     string Size { get; set; }
     IOrder Order { get; set; }
     string Status { get; set; }

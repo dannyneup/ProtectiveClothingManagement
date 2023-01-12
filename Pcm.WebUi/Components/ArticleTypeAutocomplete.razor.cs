@@ -17,30 +17,35 @@ public partial class ArticleTypeAutocomplete : ComponentBase
     [Parameter] public ArticleType Value { get; set; }
 
     [Inject] public IRepository<IArticleType, int> ArticleTypeRepository { get; set; }
+    [Inject] public IRepository<IArticleCategory, int> ArticleCategoryRepository { get; set; }
+    
+    public ArticleCategory ArticleCategory { get; set; }
     
     private List<ArticleType> _articleTypes = new();
 
     private string _manufacturer;
     private IEnumerable<string> _manufacturers;
 
-    private ArticleCategory _articleCategory = new();
     private MudAutocomplete<ArticleType> _articleTypeAutocomplete;
 
 
     public async Task Update(ArticleCategory category)
     {
-        _articleCategory = category;
+        ArticleCategory = category;
         await InvokeAsync(StateHasChanged);
     }
 
     protected override async void OnInitialized()
     {
         var articleTypes = await ArticleTypeRepository.GetAll();
-        foreach (var aT in articleTypes)
-        {
-            var result = await ArticleTypeRepository.Get(aT.Id);
-            _articleTypes.Add(result as ArticleType);
-        }
+        _articleTypes = articleTypes as List<ArticleType>;
+        var articleCategories = await ArticleCategoryRepository.GetAll();
+        //foreach (var articleType in _articleTypes)
+        //{
+        //    articleType.ArticleCategory = articleCategories.Where(x => 
+        //        x.Id == articleType.ArticleCategory.Id) 
+        //        as ArticleCategory;
+        //}
         var manufacturers = _articleTypes.Select(aT => aT.Manufacturer);
         _manufacturers = manufacturers.Distinct();
         Value = articleTypes.First() as ArticleType;
@@ -48,10 +53,11 @@ public partial class ArticleTypeAutocomplete : ComponentBase
 
     private async Task<IEnumerable<ArticleType>> SearchArticleTypeNameAutocomplete(string searchString)
     {
-        if (string.IsNullOrEmpty(searchString) && _articleCategory.Name == "")
+        if (string.IsNullOrEmpty(searchString) && ArticleCategory.Name == "")
             return _articleTypes;
+        var filteredArticleTypes = _articleTypes.Where(x => x.Category == ArticleCategory);
         var searchWords = StringHandleController.CreateWordArray(searchString);
-        var filteredArticleTypes = filterArticleTypesByWords(searchWords);
+        filteredArticleTypes = filterArticleTypesByWords(searchWords);
         return filteredArticleTypes;
     }
 

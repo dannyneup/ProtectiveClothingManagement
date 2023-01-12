@@ -11,10 +11,15 @@ public partial class ArticleCategoryAutocomplete : ComponentBase
     
     private IEnumerable<ArticleCategory> _articleCategories;
     
-    [Parameter] public ArticleCategory Value { get; set; }
-    [Parameter] public EventCallback<ArticleCategory> ValueChanged { get; set; }
+    [Parameter] 
+    public ArticleCategory Value { get; set; }
+    [Parameter] 
+    public EventCallback<ArticleCategory> ValueChanged { get; set; }
 
-    [Inject] private IRepository<IArticleCategory, int> ArticleCategoryRepository { get; set; }
+    [Parameter] public bool ResetValueOnEmptyText { get; set; } = false;
+
+    [Inject] 
+    private IRepository<IArticleCategory, int> ArticleCategoryRepository { get; set; }
 
     protected override async void OnInitialized()
     {

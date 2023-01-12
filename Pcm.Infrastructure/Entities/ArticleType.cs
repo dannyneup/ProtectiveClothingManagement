@@ -10,7 +10,7 @@ public class ArticleType : ResponseBase, IArticleType
     public string Name { get; set; }
     public string Manufacturer { get; set; }
     [JsonConverter(typeof(ConcreteTypeConverter<ArticleCategory, IArticleCategory>))]
-    public IArticleCategory ArticleCategory { get; set; }
+    public IArticleCategory Category { get; set; }
     public string Style { get; set; }
 
     protected bool Equals(ArticleType other)

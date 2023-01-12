@@ -15,14 +15,15 @@ public partial class ArticleList : ComponentBase
     [Inject] public IRepository<IArticle, int> ArticleRepository { get; set; }
     [Inject] public IRepository<IOrder, int> OrderRepository { get; set; }
     [Inject] public IRepository<IArticleType, int> ArticleTypeRepository { get; set; }
+    [Inject] public IRepository<IArticleCategory, int> ArticleCategoryRepository { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         _articles = await ArticleRepository.GetAll() as List<Article>;
         foreach (var article in _articles)
         {
-            article.Order = await OrderRepository.Get(article.Id);
-            article.Type = await ArticleTypeRepository.Get(article.Id);
+            article.Order = await OrderRepository.Get(article.Order.Id);
+            article.Type = await ArticleTypeRepository.Get(article.Order.Id);
         }
     }
 
@@ -31,7 +32,7 @@ public partial class ArticleList : ComponentBase
         if (string.IsNullOrWhiteSpace(_searchString))
             return true;
         var properties = new List<string>();
-        properties.Add(article.Category.Name);
+        properties.Add(article.Type.Category.Name);
         properties.Add(article.Size);
         properties.Add(article.Type.Name);
         properties.Add(article.Type.Manufacturer);

@@ -1,5 +1,9 @@
 @using Pcm.Infrastructure.Entities
-<MudAutocomplete T="ArticleCategory" Value="@Value" ValueChanged="ValueChanged" Label="@Localization.category" SearchFunc="@SearchArticleCategoryAutocomplete">
+<MudAutocomplete T="ArticleCategory" 
+                 Value="@Value" ValueChanged="ValueChanged" 
+                 Label="@Localization.category" 
+                 SearchFunc="@SearchArticleCategoryAutocomplete"
+                 ResetValueOnEmptyText="@ResetValueOnEmptyText">
     <ItemTemplate>
         <div style="display: flex; width: available">
             <div style="width: 95%">
