@@ -1,14 +1,11 @@
-using System.Reflection;
-using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
-using Pcm.Infrastructure.Repositories;
 using Pcm.Infrastructure.Entities;
 using Pcm.WebUi.Controller;
 
-namespace Pcm.WebUi.Components;
+namespace Pcm.WebUi.Components.Autocompletes;
 
 public partial class ArticleTypeAutocomplete : ComponentBase
 {

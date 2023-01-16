@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Components;
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
-using Pcm.Infrastructure.Repositories;
 using Pcm.Infrastructure.Entities;
 
-namespace Pcm.WebUi.Components;
+namespace Pcm.WebUi.Components.Lists;
 
 public partial class ArticleList : ComponentBase
 {
