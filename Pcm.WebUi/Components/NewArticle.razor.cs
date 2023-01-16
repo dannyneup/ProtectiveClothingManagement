@@ -34,10 +34,10 @@ public partial class NewArticle : ComponentBase
 
     private ArticleTypeAutocomplete _articleTypeAutocompleteRef;
 
-    private async Task name(ArticleCategory category)
+    private async Task articleCategoryChanged(ArticleCategory category)
     {
         _articleCategory = category;
-        await _articleTypeAutocompleteRef.Update(category);
+        _articleTypeAutocompleteRef.SelectedArticleCategory = category;
     }
 
     [Inject] public IRepository<IArticle, int> ArticleRepository { get; set; }

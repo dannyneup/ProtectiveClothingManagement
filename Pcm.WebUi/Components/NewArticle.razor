@@ -3,7 +3,7 @@
         <PersonAutocomplete @bind-Value="_person"/>
     </MudItem>
     <MudItem xs="4">
-        <ArticleCategoryAutocomplete ValueChanged="name" Value="@_articleCategory" ResetValueOnEmptyText="true"/>
+        <ArticleCategoryAutocomplete ValueChanged="articleCategoryChanged" Value="@_articleCategory" ResetValueOnEmptyText="true"/>
     </MudItem>
     <MudItem xs="4">
         <ArticleTypeAutocomplete @ref="_articleTypeAutocompleteRef" @bind-Value="_articleType"/>

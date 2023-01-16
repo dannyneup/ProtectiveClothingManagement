@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
-using Pcm.WebUi.Controller;
 using Pcm.Infrastructure.Repositories;
 using Pcm.Infrastructure.Entities;
+using Pcm.WebUi.Controller;
 
 namespace Pcm.WebUi.Components;
 
@@ -19,7 +19,7 @@ public partial class ArticleTypeAutocomplete : ComponentBase
     [Inject] public IRepository<IArticleType, int> ArticleTypeRepository { get; set; }
     [Inject] public IRepository<IArticleCategory, int> ArticleCategoryRepository { get; set; }
     
-    public ArticleCategory ArticleCategory { get; set; }
+    public ArticleCategory SelectedArticleCategory { get; set; }
     
     private List<ArticleType> _articleTypes = new();
 
@@ -28,50 +28,49 @@ public partial class ArticleTypeAutocomplete : ComponentBase
 
     private MudAutocomplete<ArticleType> _articleTypeAutocomplete;
 
-
-    public async Task Update(ArticleCategory category)
-    {
-        ArticleCategory = category;
-        await InvokeAsync(StateHasChanged);
-    }
-
     protected override async void OnInitialized()
     {
         var articleTypes = await ArticleTypeRepository.GetAll();
         _articleTypes = articleTypes as List<ArticleType>;
-        var articleCategories = await ArticleCategoryRepository.GetAll();
-        //foreach (var articleType in _articleTypes)
-        //{
-        //    articleType.ArticleCategory = articleCategories.Where(x => 
-        //        x.Id == articleType.ArticleCategory.Id) 
-        //        as ArticleCategory;
-        //}
         var manufacturers = _articleTypes.Select(aT => aT.Manufacturer);
         _manufacturers = manufacturers.Distinct();
-        Value = articleTypes.First() as ArticleType;
     }
 
     private async Task<IEnumerable<ArticleType>> SearchArticleTypeNameAutocomplete(string searchString)
     {
-        if (string.IsNullOrEmpty(searchString) && ArticleCategory.Name == "")
+        var searchStringNullOrEmpty = string.IsNullOrEmpty(searchString);
+        if (searchStringNullOrEmpty && SelectedArticleCategory == null)
             return _articleTypes;
-        var filteredArticleTypes = _articleTypes.Where(x => x.Category == ArticleCategory);
+        var filteredArticleTypes = FilterArticleTypesByArticleCategory(_articleTypes, SelectedArticleCategory);
+        if (searchStringNullOrEmpty)
+        {
+            return filteredArticleTypes;
+        }
         var searchWords = StringHandleController.CreateWordArray(searchString);
-        filteredArticleTypes = filterArticleTypesByWords(searchWords);
+        filteredArticleTypes = FilterArticleTypesByWords(filteredArticleTypes, searchWords);
         return filteredArticleTypes;
     }
+    private List<ArticleType> FilterArticleTypesByArticleCategory(IEnumerable<ArticleType> articleTypes, ArticleCategory articleCategory)
+    {
+        if (articleCategory == null)
+        {
+            return _articleTypes.ToList();
+        }
+        var filteredArticleTypes = articleTypes.Where(x => x.Category.Id == articleCategory.Id);
+        return filteredArticleTypes.ToList();
+    }
 
-    private List<ArticleType> filterArticleTypesByWords(string[] searchWords)
+    private List<ArticleType> FilterArticleTypesByWords(List<ArticleType> articleTypes, string[] searchWords)
     {
         List<ArticleType> filteredArticleTypes = new();
         foreach (var word in searchWords)
         {
-            var matches = _articleTypes.Where(x =>
+            var matches = articleTypes.Where(x =>
                 x.Name.Contains(word) ||
                 x.Manufacturer.Contains(word));
             filteredArticleTypes.AddRange(matches);
         }
-        return filteredArticleTypes;
+        return filteredArticleTypes.Distinct().ToList();
     }
 
     private Task<IEnumerable<string>> SearchManufacturerAutocomplete(string value)
