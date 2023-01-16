@@ -9,13 +9,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MudBlazor" Version="6.0.13" />
+        <PackageReference Include="MudBlazor" Version="6.1.7" />
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="Components\PersonList.cs">
-            <DependentUpon>PersonList.razor</DependentUpon>
-        </Compile>
         <Compile Update="Resources\Localization.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
