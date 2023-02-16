@@ -8,7 +8,7 @@ namespace Pcm.WebUi.Components.Lists;
 public partial class PersonList : ComponentBase
 {
     private bool _newPersonPopOverIsOpen = false;
-    private IEnumerable<Person> _persons = new List<Person>();
+    private IEnumerable<Person>? _persons = new List<Person>();
     private string _searchString = "";
     [Inject] public IRepository<IPerson, int> PersonRepository { get; set; }
 

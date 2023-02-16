@@ -96,4 +96,7 @@
     <data name="createNewTQuestion" xml:space="preserve">
         <value>Create new {0}?</value>
     </data>
+    <data name="dashboard" xml:space="preserve">
+        <value>Dashboard</value>
+    </data>
 </root>

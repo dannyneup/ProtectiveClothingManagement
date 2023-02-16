@@ -1,6 +1,6 @@
 {
   "uuid": "c055d0f0-20b0-479c-b690-fd606ad24cba",
-  "lastMigration": 24,
+  "lastMigration": 25,
   "name": "Pcm",
   "endpointPrefix": "",
   "latency": 0,
@@ -51,15 +51,7 @@
           "filePath": "",
           "databucketID": "",
           "sendFileAsBody": false,
-          "rules": [
-            {
-              "target": "params",
-              "modifier": "",
-              "value": "",
-              "invert": false,
-              "operator": "equals"
-            }
-          ],
+          "rules": [],
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
@@ -110,31 +102,6 @@
       "endpoint": "person/1552",
       "responses": [
         {
-          "uuid": "38436476-051c-4427-8a6c-252919ae1157",
-          "body": "{\n  \"id\": 1552,\n  \"firstName\": \"Danny\",\n  \"lastName\": \"Neupauer\",\n  \"apprenticeship\": {\n    \"id\": 0,\n    \"name\": \"DS Wirtschaftsinformatik\"\n  },\n  \"emailAddress\": \"dannyneupauer@gmail.com\"\n}",
-          "latency": 10,
-          "statusCode": 200,
-          "label": "default",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [
-            {
-              "target": "params",
-              "modifier": "",
-              "value": "",
-              "invert": false,
-              "operator": "equals"
-            }
-          ],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": true
-        },
-        {
           "uuid": "ac016676-8ee2-44e8-a7bd-6f007d38899f",
           "body": "{\n  \"id\": 1,\n  \"firstName\": \"Max\",\n  \"lastName\": \"Muster\",\n  \"apprenticeship\": \"DS Wirtschaftsinformatik\",\n  \"emailAdress\": \"mustermail@gmail.com\"\n}",
           "latency": 5000,
@@ -149,7 +116,7 @@
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
-          "default": false
+          "default": true
         },
         {
           "uuid": "c630f830-3114-4cd7-a433-96c11556d752",
@@ -407,7 +374,7 @@
         {
           "uuid": "d8d87544-a3ea-419c-85f0-6555dedee2de",
           "body": "{\n  \"id\": 0,\n  \"name\": \"tolle Latzhose\",\n  \"manufacturer\": \"Hersteller\",\n  \"category\": {\n    \"id\": 0,\n    \"name\": \"Latzhose\"\n  }\n}",
-          "latency": 200,
+          "latency": 0,
           "statusCode": 200,
           "label": "",
           "headers": [],
@@ -434,7 +401,7 @@
         {
           "uuid": "52e2bb48-888a-4d9b-ad64-6752343447d1",
           "body": "{\n  \"id\": 1,\n  \"name\": \"mega tolle Latzhose\",\n  \"manufacturer\": \"anderer Hersteller\",\n  \"category\": {\n    \"id\": 1,\n    \"name\": \"Lichtbogenschutz-Latzhose\"\n  }\n}",
-          "latency": 200,
+          "latency": 0,
           "statusCode": 200,
           "label": "",
           "headers": [],
@@ -720,5 +687,272 @@
       "value": ""
     }
   ],
-  "data": []
+  "data": [],
+  "folders": [
+    {
+      "uuid": "93dabfcc-d84c-4616-8be6-1d2fc9439c10",
+      "name": "person",
+      "collapsed": true,
+      "children": [
+        {
+          "type": "folder",
+          "uuid": "679de4e7-aef1-4964-add0-e779818f542f"
+        },
+        {
+          "type": "folder",
+          "uuid": "1df3a1b7-68b8-4ec3-9c3e-5b507a82db4a"
+        }
+      ]
+    },
+    {
+      "uuid": "679de4e7-aef1-4964-add0-e779818f542f",
+      "name": "get",
+      "collapsed": false,
+      "children": [
+        {
+          "type": "route",
+          "uuid": "e32a9e7c-d2ca-43df-968a-3df10fc03225"
+        },
+        {
+          "type": "route",
+          "uuid": "0500ee53-f81f-4c90-a0be-1878c497b666"
+        }
+      ]
+    },
+    {
+      "uuid": "1df3a1b7-68b8-4ec3-9c3e-5b507a82db4a",
+      "name": "post",
+      "collapsed": false,
+      "children": [
+        {
+          "type": "route",
+          "uuid": "5ceebc07-a0f3-4394-acab-5adb90c0fb4f"
+        }
+      ]
+    },
+    {
+      "uuid": "c5092b09-a206-4689-9c31-d23321c08f57",
+      "name": "article",
+      "collapsed": true,
+      "children": [
+        {
+          "type": "folder",
+          "uuid": "424e90b9-c6f1-4704-a6b8-7094c66df34d"
+        },
+        {
+          "type": "folder",
+          "uuid": "fd266a02-444f-45f4-ba1d-9891828f48d4"
+        }
+      ]
+    },
+    {
+      "uuid": "424e90b9-c6f1-4704-a6b8-7094c66df34d",
+      "name": "get",
+      "collapsed": false,
+      "children": [
+        {
+          "type": "route",
+          "uuid": "8a6db9f4-9718-4f24-84f4-8958267458b0"
+        },
+        {
+          "type": "route",
+          "uuid": "0a3bdba2-1037-419d-8a4e-0e9f1d81d1dc"
+        },
+        {
+          "type": "route",
+          "uuid": "58f4aeef-1a90-498d-a96a-1b1a549e9798"
+        }
+      ]
+    },
+    {
+      "uuid": "fd266a02-444f-45f4-ba1d-9891828f48d4",
+      "name": "post",
+      "collapsed": false,
+      "children": [
+        {
+          "type": "route",
+          "uuid": "f2bc4e59-d6f6-469e-b895-3e243fbabd8b"
+        }
+      ]
+    },
+    {
+      "uuid": "99cbf24b-e822-420c-9cac-776c4c0b42ae",
+      "name": "articletype",
+      "collapsed": true,
+      "children": [
+        {
+          "type": "folder",
+          "uuid": "931d6ba4-c150-4601-8b34-14a595fd6a1d"
+        },
+        {
+          "type": "folder",
+          "uuid": "10939fbb-1ebd-4957-9a0f-a50d3b2b55b3"
+        }
+      ]
+    },
+    {
+      "uuid": "931d6ba4-c150-4601-8b34-14a595fd6a1d",
+      "name": "get",
+      "collapsed": false,
+      "children": [
+        {
+          "type": "route",
+          "uuid": "dc0a16d4-4a46-4ba3-848d-8b7e2321b3b2"
+        },
+        {
+          "type": "route",
+          "uuid": "075d5ff4-211c-4011-a159-5c47d45b2ff9"
+        },
+        {
+          "type": "route",
+          "uuid": "6cf3267c-11b4-4c6f-bd45-680d36bd2be9"
+        }
+      ]
+    },
+    {
+      "uuid": "10939fbb-1ebd-4957-9a0f-a50d3b2b55b3",
+      "name": "post",
+      "collapsed": false,
+      "children": []
+    },
+    {
+      "uuid": "09f41e23-8261-4091-bc30-e71f1ecf6803",
+      "name": "order",
+      "collapsed": true,
+      "children": [
+        {
+          "type": "folder",
+          "uuid": "9b05ffc1-04ae-4f81-83cd-b94def948c37"
+        },
+        {
+          "type": "folder",
+          "uuid": "4aae556a-f650-4cde-8bad-474236b79d20"
+        }
+      ]
+    },
+    {
+      "uuid": "9b05ffc1-04ae-4f81-83cd-b94def948c37",
+      "name": "get",
+      "collapsed": false,
+      "children": [
+        {
+          "type": "route",
+          "uuid": "75cf58c3-41b1-4edb-9cb6-4a0cce951501"
+        },
+        {
+          "type": "route",
+          "uuid": "4c950cb9-f082-4bc8-8d60-70843b9c588e"
+        },
+        {
+          "type": "route",
+          "uuid": "f93caf97-2f47-47d8-906b-a0cfc94e4c2d"
+        }
+      ]
+    },
+    {
+      "uuid": "4aae556a-f650-4cde-8bad-474236b79d20",
+      "name": "post",
+      "collapsed": false,
+      "children": [
+        {
+          "type": "route",
+          "uuid": "b288301b-0326-4af0-a847-9e85069dc887"
+        }
+      ]
+    },
+    {
+      "uuid": "6c68ba79-e5a7-4dc4-b681-c4d6bf3c28f7",
+      "name": "articlecategory",
+      "collapsed": true,
+      "children": [
+        {
+          "type": "folder",
+          "uuid": "c42c45d2-60e1-423a-b33e-54cb7c2eddef"
+        },
+        {
+          "type": "folder",
+          "uuid": "b5ec20bb-fcb6-46f8-98a2-f27ee2ebc6fc"
+        }
+      ]
+    },
+    {
+      "uuid": "c42c45d2-60e1-423a-b33e-54cb7c2eddef",
+      "name": "get",
+      "collapsed": false,
+      "children": [
+        {
+          "type": "route",
+          "uuid": "e8a72e34-da05-42b5-8c23-23579075b13b"
+        }
+      ]
+    },
+    {
+      "uuid": "b5ec20bb-fcb6-46f8-98a2-f27ee2ebc6fc",
+      "name": "post",
+      "collapsed": false,
+      "children": []
+    },
+    {
+      "uuid": "4cb110bd-f04d-44d7-9407-62daac024a91",
+      "name": "apprenticeship",
+      "collapsed": true,
+      "children": [
+        {
+          "type": "folder",
+          "uuid": "fd18f6d2-1937-48e3-9612-cf4a26dd732d"
+        },
+        {
+          "type": "folder",
+          "uuid": "5a249aa7-1686-413e-8f1d-d7e39bc6c819"
+        }
+      ]
+    },
+    {
+      "uuid": "fd18f6d2-1937-48e3-9612-cf4a26dd732d",
+      "name": "get",
+      "collapsed": false,
+      "children": [
+        {
+          "type": "route",
+          "uuid": "7fd63ab0-8467-418a-ae06-dbaac716203e"
+        }
+      ]
+    },
+    {
+      "uuid": "5a249aa7-1686-413e-8f1d-d7e39bc6c819",
+      "name": "post",
+      "collapsed": false,
+      "children": []
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "2494e6af-c949-4f96-a8a3-53a44ec87fba"
+    },
+    {
+      "type": "folder",
+      "uuid": "93dabfcc-d84c-4616-8be6-1d2fc9439c10"
+    },
+    {
+      "type": "folder",
+      "uuid": "c5092b09-a206-4689-9c31-d23321c08f57"
+    },
+    {
+      "type": "folder",
+      "uuid": "99cbf24b-e822-420c-9cac-776c4c0b42ae"
+    },
+    {
+      "type": "folder",
+      "uuid": "6c68ba79-e5a7-4dc4-b681-c4d6bf3c28f7"
+    },
+    {
+      "type": "folder",
+      "uuid": "09f41e23-8261-4091-bc30-e71f1ecf6803"
+    },
+    {
+      "type": "folder",
+      "uuid": "4cb110bd-f04d-44d7-9407-62daac024a91"
+    }
+  ]
 }

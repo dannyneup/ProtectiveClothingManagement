@@ -8,7 +8,11 @@
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" @bind-Value="_searchString"/>
         <MudIconButton Icon="@Icons.Filled.AddBox" @onclick="ToggleNewArticlePopover"/>
         <MudPopover Open="_newArticlePopupIsOpen" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
-        </MudPopover>
+                    <div style="margin: 1em;">
+                        <NewArticle />
+                    </div>
+                </MudPopover>
+                <MudOverlay Visible="_newArticlePopupIsOpen" OnClick="ToggleNewArticlePopover" DarkBackground="true"/>
     </ToolBarContent>
     <HeaderContent>
         <MudTh>

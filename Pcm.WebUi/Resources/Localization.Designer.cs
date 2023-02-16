@@ -188,5 +188,11 @@ namespace Pcm.WebUi.Resources {
                 return ResourceManager.GetString("createNewTQuestion", resourceCulture);
             }
         }
+        
+        internal static string dashboard {
+            get {
+                return ResourceManager.GetString("dashboard", resourceCulture);
+            }
+        }
     }
 }

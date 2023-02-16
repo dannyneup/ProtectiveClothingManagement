@@ -8,7 +8,7 @@ namespace Pcm.WebUi.Components.Autocompletes
 {
     public partial class PersonAutocomplete : ComponentBase
     {
-        private IEnumerable<Person> _persons;
+        private IEnumerable<Person>? _persons;
 
         [Parameter] public Person Value { get; set; }
         [Parameter] public EventCallback<Person> ValueChanged { get; set; }
