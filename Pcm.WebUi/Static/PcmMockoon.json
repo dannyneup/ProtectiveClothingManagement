@@ -637,7 +637,7 @@
         {
           "uuid": "49a61695-9b1a-40f0-bd4d-1fb63917a03f",
           "body": "{\n  \"apprenticeships\": [\n    {\n      \"id\": 0,\n      \"name\": \"DS Wirtschaftsinformatik\"\n    },\n    {\n      \"id\": 1,\n      \"name\": \"Musterausbildung\"\n    }\n  ]\n}",
-          "latency": 2000,
+          "latency": 0,
           "statusCode": 200,
           "label": "",
           "headers": [],
@@ -895,7 +895,7 @@
     {
       "uuid": "4cb110bd-f04d-44d7-9407-62daac024a91",
       "name": "apprenticeship",
-      "collapsed": true,
+      "collapsed": false,
       "children": [
         {
           "type": "folder",
