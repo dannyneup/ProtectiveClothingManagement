@@ -6,17 +6,18 @@
 <MudSnackbarProvider/>
 
 <MudLayout>
-    <MudAppBar Elevation="0">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@(e => DrawerToggle())"/>
-    </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
-        <MudDrawerHeader>
-            <MudText Typo="Typo.h6">Pcm.WebUi</MudText>
-        </MudDrawerHeader>
-        <NavMenu/>
+    <MudDrawer Width="60px" Class="py-3" Elevation="1" Variant="DrawerVariant.Mini">
+        <div style="height: 52px">
+            <img src="logo.svg" width="40px" style="margin-left: 10px"/>
+        </div>
+        <MudNavMenu>
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.SpaceDashboard"/>
+            <MudNavLink Href="/persons" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person"/>
+            <MudNavLink Href="/articles" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Checkroom"/>
+        </MudNavMenu>
     </MudDrawer>
     <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Large" Class="my-16">
+        <MudContainer MaxWidth="MaxWidth.Large">
             @Body
         </MudContainer>
     </MudMainContent>
