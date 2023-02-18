@@ -194,5 +194,23 @@ namespace Pcm.WebUi.Resources {
                 return ResourceManager.GetString("dashboard", resourceCulture);
             }
         }
+        
+        internal static string apprentices {
+            get {
+                return ResourceManager.GetString("apprentices", resourceCulture);
+            }
+        }
+        
+        internal static string name {
+            get {
+                return ResourceManager.GetString("name", resourceCulture);
+            }
+        }
+        
+        internal static string apprenticeships {
+            get {
+                return ResourceManager.GetString("apprenticeships", resourceCulture);
+            }
+        }
     }
 }

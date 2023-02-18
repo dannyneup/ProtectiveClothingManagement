@@ -636,7 +636,7 @@
       "responses": [
         {
           "uuid": "49a61695-9b1a-40f0-bd4d-1fb63917a03f",
-          "body": "{\n  \"apprenticeships\": [\n    {\n      \"id\": 0,\n      \"name\": \"DS Wirtschaftsinformatik\"\n    },\n    {\n      \"id\": 1,\n      \"name\": \"Musterausbildung\"\n    }\n  ]\n}",
+          "body": "{\n  \"apprenticeships\": [\n    {\n      \"id\": 0,\n      \"name\": \"Wirtschaftsinformatik\",\n      \"type\": \"Duales Studium\"\n    },\n    {\n      \"id\": 1,\n      \"name\": \"Industriekaufmann/-frau\",\n      \"type\": \"Ausbildung\"\n    }\n  ]\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
