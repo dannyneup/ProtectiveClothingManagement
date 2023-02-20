@@ -1,5 +1,4 @@
-﻿@using MudBlazor.Utilities
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 
 <MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" Theme="CustomTheme"/>
 <MudDialogProvider/>
@@ -14,6 +13,9 @@
             <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.SpaceDashboard"/>
             <MudNavLink Href="/persons" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person"/>
             <MudNavLink Href="/articles" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Checkroom"/>
+            <MudNavLink Href="/apprenticeships" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.BusinessCenter"/>
+            <MudNavLink Href="/orders" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ShoppingBag"/>
+            <MudNavLink Href="/requests" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.NoteAdd"/>
         </MudNavMenu>
     </MudDrawer>
     <MudMainContent>
@@ -24,16 +26,17 @@
 </MudLayout>
 
 @code {
-    
-    MudTheme CustomTheme = new MudTheme()
+
+    readonly MudTheme CustomTheme = new()
     {
-        Palette =new Palette(){
+        Palette = new Palette
+        {
             Primary = "#0087a8",
             Secondary = "#bba590",
             Tertiary = "#859d66",
             AppbarBackground = "#0087a8"
         },
-        PaletteDark = new PaletteDark()
+        PaletteDark = new PaletteDark
         {
             Primary = "#0087a8",
             Secondary = "#bba590",

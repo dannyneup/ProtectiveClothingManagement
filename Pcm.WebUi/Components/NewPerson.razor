@@ -7,7 +7,7 @@
         <MudTextField @bind-Value="_lastName" Label="@Localization.LastName" Variant="Variant.Text"/>
     </MudItem>
     <MudItem xs="6">
-        <MudAutocomplete T="string" @bind-Value="_apprenticeshipName" Label="@Localization.apprenticeship" SearchFunc="@SearchApprenticeshipAutocomplete"/>
+        <ApprenticeshipAutocomplete @bind-Value="_apprenticeship"/>
     </MudItem>
     <MudItem xs="6">
         <MudTextField @bind-Value="_emailAddress" Label="@Localization.emailAddress" Validation="@(new EmailAddressAttribute {ErrorMessage = $@"{Localization.emailNotValid}"})"/>

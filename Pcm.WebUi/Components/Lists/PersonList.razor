@@ -1,19 +1,7 @@
 @using Pcm.Infrastructure.Entities
-<MudTable Items="_persons" Hover="true" SortLabel="Sort By"
-          Filter="new Func<Person, bool>(PersonFilter)">
-    <ToolBarContent>
-        <MudText Color="Color.Primary" Typo="Typo.h6">@Localization.persons</MudText>
-        <MudSpacer/>
-        <MudTextField T="string" Placeholder="@Localization.search"
-                      Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" @bind-Value="_searchString"/>
-        <MudIconButton Icon="@Icons.Filled.AddBox" @onclick="ToggleNewPersonPopover"/>
-        <MudPopover Open="_newPersonPopOverIsOpen" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
-            <div style="margin: 1em;">
-                <NewPerson/>
-            </div>
-        </MudPopover>
-        <MudOverlay Visible="_newPersonPopOverIsOpen" OnClick="ToggleNewPersonPopover" DarkBackground="true"/>
-        </ToolBarContent>
+<MudTable Items="_persons" Hover="true" SortLabel="@Localization.sortBy"
+          Filter="new Func<Person, bool>(PersonFilter)"
+          Elevation="Elevation">
     <HeaderContent>
         <MudTh>
             <MudTableSortLabel SortBy="new Func<Person, object>(x => x.Id)">@Localization.personnelNumber</MudTableSortLabel>

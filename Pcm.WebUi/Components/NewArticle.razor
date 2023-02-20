@@ -1,19 +1,18 @@
-@using Pcm.WebUi.Components.Autocompletes
-<MudGrid>
-    <MudItem xs="4">
+<MudGrid Justify="Justify.FlexStart">
+    <MudItem xs="6">
         <PersonAutocomplete @bind-Value="_person"/>
     </MudItem>
-    <MudItem xs="4">
+    <MudItem xs="6">
         <ArticleCategoryAutocomplete ValueChanged="articleCategoryChanged" Value="@_articleCategory" ResetValueOnEmptyText="true"/>
     </MudItem>
-    <MudItem xs="4">
+    <MudItem xs="6">
         <ArticleTypeAutocomplete @ref="_articleTypeAutocompleteRef" @bind-Value="_articleType"/>
     </MudItem>
-    <MudItem xs="4">
+    <MudItem xs="6">
         <MudAutocomplete T="string" @bind-Value="_style" Label="@Localization.style" SearchFunc="@SearchStyleAutocomplete"/>
     </MudItem>
     <MudText>@_person</MudText>
-    
+
     <MudItem xs="12" Style="text-align: right;">
         <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Style="margin-right: 1vw">@Localization.cancel</MudButton>
         <MudButton Disabled="@_processing" OnClick="SaveNewArticle" Variant="Variant.Filled" Color="Color.Primary">

@@ -212,5 +212,29 @@ namespace Pcm.WebUi.Resources {
                 return ResourceManager.GetString("apprenticeships", resourceCulture);
             }
         }
+        
+        internal static string shop {
+            get {
+                return ResourceManager.GetString("shop", resourceCulture);
+            }
+        }
+        
+        internal static string date {
+            get {
+                return ResourceManager.GetString("date", resourceCulture);
+            }
+        }
+        
+        internal static string belongingApprentices {
+            get {
+                return ResourceManager.GetString("belongingApprentices", resourceCulture);
+            }
+        }
+        
+        internal static string sortBy {
+            get {
+                return ResourceManager.GetString("sortBy", resourceCulture);
+            }
+        }
     }
 }

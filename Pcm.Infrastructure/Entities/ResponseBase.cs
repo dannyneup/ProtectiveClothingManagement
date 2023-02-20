@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Pcm.Core.Entities;
 
 namespace Pcm.Infrastructure.Entities;
 

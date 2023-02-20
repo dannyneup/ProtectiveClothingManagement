@@ -1,8 +1,6 @@
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
 using Pcm.Infrastructure.Entities;
-using Pcm.Infrastructure.Repositories;
-
 
 namespace Pcm.WebUi.ViewModels;
 
@@ -13,9 +11,9 @@ public class NewArticleViewModel : INewArticleViewModel
         _articleTypeRepository = articleTypeRepository;
     }
 
+    private IRepository<IArticleType, int> _articleTypeRepository { get; }
+
     public ArticleType Value { get; set; }
 
     public ArticleCategory ArticleCategory { get; set; }
-
-    private IRepository<IArticleType, int> _articleTypeRepository { get; set; }
 }

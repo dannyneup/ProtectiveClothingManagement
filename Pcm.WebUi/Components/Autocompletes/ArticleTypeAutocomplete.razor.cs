@@ -9,21 +9,20 @@ namespace Pcm.WebUi.Components.Autocompletes;
 
 public partial class ArticleTypeAutocomplete : ComponentBase
 {
+    private MudAutocomplete<ArticleType> _articleTypeAutocomplete;
+
+    private List<ArticleType> _articleTypes = new();
+
+    private string _manufacturer;
+    private IEnumerable<string> _manufacturers;
     [Parameter] public EventCallback<ArticleType> ValueChanged { get; set; }
 
     [Parameter] public ArticleType Value { get; set; }
 
     [Inject] public IRepository<IArticleType, int> ArticleTypeRepository { get; set; }
     [Inject] public IRepository<IArticleCategory, int> ArticleCategoryRepository { get; set; }
-    
+
     public ArticleCategory SelectedArticleCategory { get; set; }
-    
-    private List<ArticleType> _articleTypes = new();
-
-    private string _manufacturer;
-    private IEnumerable<string> _manufacturers;
-
-    private MudAutocomplete<ArticleType> _articleTypeAutocomplete;
 
     protected override async void OnInitialized()
     {
@@ -39,20 +38,16 @@ public partial class ArticleTypeAutocomplete : ComponentBase
         if (searchStringNullOrEmpty && SelectedArticleCategory == null)
             return _articleTypes;
         var filteredArticleTypes = FilterArticleTypesByArticleCategory(_articleTypes, SelectedArticleCategory);
-        if (searchStringNullOrEmpty)
-        {
-            return filteredArticleTypes;
-        }
+        if (searchStringNullOrEmpty) return filteredArticleTypes;
         var searchWords = StringHandleController.CreateWordArray(searchString);
         filteredArticleTypes = FilterArticleTypesByWords(filteredArticleTypes, searchWords);
         return filteredArticleTypes;
     }
-    private List<ArticleType> FilterArticleTypesByArticleCategory(IEnumerable<ArticleType> articleTypes, ArticleCategory articleCategory)
+
+    private List<ArticleType> FilterArticleTypesByArticleCategory(IEnumerable<ArticleType> articleTypes,
+        ArticleCategory articleCategory)
     {
-        if (articleCategory == null)
-        {
-            return _articleTypes.ToList();
-        }
+        if (articleCategory == null) return _articleTypes.ToList();
         var filteredArticleTypes = articleTypes.Where(x => x.Category.Id == articleCategory.Id);
         return filteredArticleTypes.ToList();
     }
@@ -67,6 +62,7 @@ public partial class ArticleTypeAutocomplete : ComponentBase
                 x.Manufacturer.Contains(word));
             filteredArticleTypes.AddRange(matches);
         }
+
         return filteredArticleTypes.Distinct().ToList();
     }
 
@@ -83,5 +79,4 @@ public partial class ArticleTypeAutocomplete : ComponentBase
         Value = newValue;
         await ValueChanged.InvokeAsync(Value);
     }
-    
 }

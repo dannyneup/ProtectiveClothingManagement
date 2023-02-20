@@ -1,6 +1,6 @@
 @using Pcm.Infrastructure.Entities
-<MudAutocomplete T="Apprenticeship" Value="@Value" ValueChanged="@(newApprenticeship => OnValueChanged(newApprenticeship))" 
-                 Label="@Localization.apprenticeship" 
+<MudAutocomplete T="Apprenticeship" Value="@Value" ValueChanged="@(newApprenticeship => OnValueChanged(newApprenticeship))"
+                 Label="@Localization.apprenticeship"
                  SearchFunc="@SearchApprenticeshipAutocomplete" ResetValueOnEmptyText="true"
                  Required="Required">
     <ItemTemplate>

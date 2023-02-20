@@ -10,5 +10,7 @@ public class ConcreteTypeConverter<C, I> : JsonConverter<I> where C : class, I
         return JsonSerializer.Deserialize<C>(ref reader, options);
     }
 
-    public override void Write(Utf8JsonWriter writer, I value, JsonSerializerOptions options) { }
+    public override void Write(Utf8JsonWriter writer, I value, JsonSerializerOptions options)
+    {
+    }
 }

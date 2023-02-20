@@ -1,15 +1,14 @@
 using Microsoft.AspNetCore.Components;
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
-using Pcm.Infrastructure.Repositories;
 using Pcm.Infrastructure.Entities;
 
 namespace Pcm.WebUi.Components;
 
 public partial class NewPerson : ComponentBase
 {
-    private string _apprenticeshipName;
-    private List<string> _apprenticeshipNames;
+    private Apprenticeship _apprenticeship;
+    private IEnumerable<Apprenticeship> _apprenticeships;
     private string _emailAddress;
     private string _firstName;
     private string _lastName;
@@ -18,16 +17,7 @@ public partial class NewPerson : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        var apprenticeships = await ApprenticeshipRepository.GetAll();
-        _apprenticeshipNames = apprenticeships.Select(o => o.Name).ToList();
-    }
-
-    private Task<IEnumerable<string>> SearchApprenticeshipAutocomplete(string value)
-    {
-        if (string.IsNullOrEmpty(value))
-            return Task.FromResult<IEnumerable<string>>(_apprenticeshipNames);
-        var filtered = _apprenticeshipNames.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
-        return Task.FromResult(filtered);
+        _apprenticeships = await ApprenticeshipRepository.GetAll() as IEnumerable<Apprenticeship>;
     }
 
     private async Task SaveNewPerson()

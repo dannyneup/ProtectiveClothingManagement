@@ -1,0 +1,33 @@
+@using Pcm.Infrastructure.Entities
+<MudTable T="Order" Items="_orders" Hover="true" SortLabel="Sort By"
+          Filter="new Func<Order, bool>(OrderFilter)">
+    <ToolBarContent>
+        <MudText Color="Color.Primary" Typo="Typo.h6">@Localization.articles</MudText>
+        <MudSpacer/>
+        <MudTextField T="string" Placeholder="@Localization.search"
+                      Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" @bind-Value="_searchString"/>
+        <MudIconButton Icon="@Icons.Filled.AddBox" @onclick="ToggleNewOrderPopover"/>
+        <MudPopover Open="_newOrderPopupIsOpen" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight" RelativeWidth="true">
+            <div style="margin: 1em;">
+                <NewArticle/>
+            </div>
+        </MudPopover>
+        <MudOverlay Visible="_newOrderPopupIsOpen" OnClick="ToggleNewOrderPopover" DarkBackground="true"/>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Order, object>(x => x.Shop)">@Localization.shop</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Order, object>(x => x.Date)">@Localization.date</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Order, object>(x => x.Number)">@Localization.orderNumber</MudTableSortLabel>
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="@Localization.shop">@context.Shop</MudTd>
+        <MudTd DataLabel="@Localization.date">@context.Date</MudTd>
+        <MudTd DataLabel="@Localization.orderNumber">@context.Number</MudTd>
+    </RowTemplate>
+</MudTable>

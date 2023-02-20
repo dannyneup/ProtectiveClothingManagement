@@ -6,12 +6,13 @@ namespace Pcm.Infrastructure.Entities;
 
 public class ArticleType : ResponseBase, IArticleType
 {
+    public string Style { get; set; }
     public int Id { get; set; }
     public string Name { get; set; }
     public string Manufacturer { get; set; }
+
     [JsonConverter(typeof(ConcreteTypeConverter<ArticleCategory, IArticleCategory>))]
     public IArticleCategory Category { get; set; }
-    public string Style { get; set; }
 
     protected bool Equals(ArticleType other)
     {

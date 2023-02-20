@@ -82,13 +82,13 @@
         <value>Cancel</value>
     </data>
     <data name="yes" xml:space="preserve">
-        <value>yes</value>
+        <value>Yes</value>
     </data>
     <data name="createNewTQuestionWithName" xml:space="preserve">
         <value>Create new {0} ‘{1}‘?</value>
     </data>
     <data name="no" xml:space="preserve">
-        <value>no</value>
+        <value>No</value>
     </data>
     <data name="articleType" xml:space="preserve">
         <value>article-type</value>
@@ -98,5 +98,26 @@
     </data>
     <data name="dashboard" xml:space="preserve">
         <value>Dashboard</value>
+    </data>
+    <data name="apprentices" xml:space="preserve">
+        <value>Apprentices</value>
+    </data>
+    <data name="name" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="apprenticeships" xml:space="preserve">
+        <value>Apprenticeships</value>
+    </data>
+    <data name="shop" xml:space="preserve">
+        <value>Shop</value>
+    </data>
+    <data name="date" xml:space="preserve">
+        <value>Date</value>
+    </data>
+    <data name="belongingApprentices" xml:space="preserve">
+        <value>Belonging apprentices</value>
+    </data>
+    <data name="sortBy" xml:space="preserve">
+        <value>Sort by</value>
     </data>
 </root>

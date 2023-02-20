@@ -1,7 +1,7 @@
 @using Pcm.Infrastructure.Entities
-<MudAutocomplete T="ArticleType" Value="@Value" ValueChanged="@(async (x) => await OnValueChanged(x))" 
+<MudAutocomplete T="ArticleType" Value="@Value" ValueChanged="@(async x => await OnValueChanged(x))"
                  @ref="_articleTypeAutocomplete"
-                 Label="@Localization.type" 
+                 Label="@Localization.type"
                  SearchFunc="SearchArticleTypeNameAutocomplete">
     <ItemTemplate>
         <div class="itemTemplate">
@@ -15,7 +15,9 @@
         <div Class="mud-list-item-gutters">
             <MudAutocomplete T="string" @bind-Value="_manufacturer" Label="@Localization.manufacturer" Required="true" FullWidth="true" SearchFunc="SearchManufacturerAutocomplete"/>
             <div class="d-flex mud-list-item">
-                <MudText Class="overflow-hidden  breakOnOverflow">@String.Format(Localization.createNewTQuestionWithName, Localization.articleType, _articleTypeAutocomplete.Text)<wbr></MudText>
+                <MudText Class="overflow-hidden  breakOnOverflow">
+                    @string.Format(Localization.createNewTQuestionWithName, Localization.articleType, _articleTypeAutocomplete.Text)<wbr>
+                </MudText>
                 <MudSpacer/>
                 <MudButton Style="margin-right: 0.5vw" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small">@Localization.yes</MudButton>
                 <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Size="Size.Small">@Localization.no</MudButton>

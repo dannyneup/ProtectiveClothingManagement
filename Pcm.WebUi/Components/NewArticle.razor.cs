@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
-using Pcm.Infrastructure.Repositories;
 using Pcm.Infrastructure.Entities;
 using Pcm.WebUi.Components.Autocompletes;
 
@@ -12,6 +11,8 @@ public partial class NewArticle : ComponentBase
     private ArticleCategory _articleCategory;
     private IEnumerable<Article> _articles;
     private ArticleType _articleType;
+
+    private ArticleTypeAutocomplete _articleTypeAutocompleteRef;
 
     private bool _isVisible = false;
     private string _manufacturer;
@@ -33,16 +34,14 @@ public partial class NewArticle : ComponentBase
     private string _style;
     private IEnumerable<string> _styles;
 
-    private ArticleTypeAutocomplete _articleTypeAutocompleteRef;
+    [Inject] public IRepository<IArticle, int> ArticleRepository { get; set; }
+    [Inject] public IRepository<IArticleCategory, int> ArticleCategoryRepository { get; set; }
 
     private async Task articleCategoryChanged(ArticleCategory category)
     {
         _articleCategory = category;
         _articleTypeAutocompleteRef.SelectedArticleCategory = category;
     }
-
-    [Inject] public IRepository<IArticle, int> ArticleRepository { get; set; }
-    [Inject] public IRepository<IArticleCategory, int> ArticleCategoryRepository { get; set; }
 
     protected override async void OnInitialized()
     {

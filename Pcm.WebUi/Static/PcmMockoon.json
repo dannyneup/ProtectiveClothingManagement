@@ -42,7 +42,7 @@
       "responses": [
         {
           "uuid": "e03de54f-1088-47cc-b436-8e0ceb1a4c5d",
-          "body": "{\n  \"persons\": [\n    {\n      \"id\": 1552,\n      \"firstName\": \"Danny\",\n      \"lastName\": \"Neupauer\",\n      \"apprenticeship\": {\n        \"id\": 0,\n        \"name\": \"DS Wirtschaftsinformatik\"\n      },\n      \"emailAddress\": \"dannyneupauer@gmail.com\"\n    },\n    {\n      \"id\": 99999,\n      \"firstName\": \"Max\",\n      \"lastName\": \"Muster\",\n      \"apprenticeship\": {\n        \"id\": 0,\n        \"name\": \"Musterausbildung\"\n      },\n      \"emailAddress\": \"maxmuster@gmail.com\"\n    },\n    {\n      \"id\": 33999,\n      \"firstName\": \"Danny\",\n      \"lastName\": \"Muster\",\n      \"apprenticeship\": {\n        \"id\": 0,\n        \"name\": \"Musterausbildung\"\n      },\n      \"emailAddress\": \"dannymuster@gmail.com\"\n    }\n  ]\n}",
+          "body": "{\n  \"persons\": [\n    {\n      \"id\": 1552,\n      \"firstName\": \"Danny\",\n      \"lastName\": \"Neupauer\",\n      \"apprenticeship\": {\n        \"id\": 0,\n        \"name\": \"Wirtschaftsinformatik\",\n        \"type\": \"Duales Studium\"\n      },\n      \"emailAddress\": \"dannyneupauer@gmail.com\"\n    },\n    {\n      \"id\": 99999,\n      \"firstName\": \"Max\",\n      \"lastName\": \"Muster\",\n      \"apprenticeship\": {\n        \"id\": 0,\n        \"name\": \"Musterausbildung\",\n        \"type\": \"Ausbildung\"\n      },\n      \"emailAddress\": \"maxmuster@gmail.com\"\n    },\n    {\n      \"id\": 33999,\n      \"firstName\": \"Danny\",\n      \"lastName\": \"Muster\",\n      \"apprenticeship\": {\n        \"id\": 0,\n        \"name\": \"Musterausbildung\",\n        \"type\": \"Ausbildung\"\n      },\n      \"emailAddress\": \"dannymuster@gmail.com\"\n    }\n  ]\n}",
           "latency": 10,
           "statusCode": 200,
           "label": "default",
@@ -103,7 +103,7 @@
       "responses": [
         {
           "uuid": "ac016676-8ee2-44e8-a7bd-6f007d38899f",
-          "body": "{\n  \"id\": 1,\n  \"firstName\": \"Max\",\n  \"lastName\": \"Muster\",\n  \"apprenticeship\": \"DS Wirtschaftsinformatik\",\n  \"emailAdress\": \"mustermail@gmail.com\"\n}",
+          "body": "{\n  \"id\": 1,\n  \"firstName\": \"Max\",\n  \"lastName\": \"Muster\",\n  \"apprenticeship\": {\n        \"id\": 0,\n        \"name\": \"Wirtschaftsinformatik\"\n        \"type\": \"Duales Studium\"\n  },\n  \"emailAdress\": \"mustermail@gmail.com\"\n}",
           "latency": 5000,
           "statusCode": 200,
           "label": "latenz",
@@ -636,7 +636,7 @@
       "responses": [
         {
           "uuid": "49a61695-9b1a-40f0-bd4d-1fb63917a03f",
-          "body": "{\n  \"apprenticeships\": [\n    {\n      \"id\": 0,\n      \"name\": \"Wirtschaftsinformatik\",\n      \"type\": \"Duales Studium\"\n    },\n    {\n      \"id\": 1,\n      \"name\": \"Industriekaufmann/-frau\",\n      \"type\": \"Ausbildung\"\n    }\n  ]\n}",
+          "body": "{\n  \"apprenticeships\": [\n    {\n      \"id\": 0,\n      \"name\": \"Wirtschaftsinformatik\",\n      \"type\": \"Duales Studium\",\n      \"apprentices\": [\n        {\n          \"id\": 1552,\n          \"firstName\": \"Danny\",\n          \"lastName\": \"Neupauer\"\n        }\n      ]\n    },\n    {\n      \"id\": 1,\n      \"name\": \"Industriekaufmann/-frau\",\n      \"type\": \"Ausbildung\",\n      \"apprentices\": [\n        {\n          \"id\": 99999,\n          \"firstName\": \"Max\",\n          \"lastName\": \"Muster\"\n        },\n        {\n          \"id\": 33999,\n          \"firstName\": \"Danny\",\n          \"lastName\": \"Muster\"\n        }\n      ]\n    }\n  ]\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -692,7 +692,7 @@
     {
       "uuid": "93dabfcc-d84c-4616-8be6-1d2fc9439c10",
       "name": "person",
-      "collapsed": true,
+      "collapsed": false,
       "children": [
         {
           "type": "folder",
