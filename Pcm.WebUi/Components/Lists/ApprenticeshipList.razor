@@ -1,60 +1,40 @@
 @using Pcm.Infrastructure.Entities
-@using MudBlazor.Extensions
 
-<MudLayout>
-    <MudDrawer @bind-Open="@_drawerIsOpen" Elevation="1" Variant="@DrawerVariant.Temporary" Anchor="Anchor.End" Width="40%" Class="M-">
-        <MudText Typo="Typo.h6">@Localization.belongingApprentices</MudText>
-        <MudTable T="Person" Items="_selectedApprenticeship.Apprentices.As<List<Person>>()">
-            <HeaderContent>
-                <MudTh>
-                    <MudTableSortLabel SortBy="new Func<Person, object>(x => x.Apprenticeship)">@Localization.personnelNumber</MudTableSortLabel>
-                </MudTh>
-                <MudTh>
-                    <MudTableSortLabel SortBy="new Func<Person, object>(x => x.FirstName)">@Localization.firstName</MudTableSortLabel>
-                </MudTh>
-                <MudTh>
-                    <MudTableSortLabel SortBy="new Func<Person, object>(x => x.LastName)">@Localization.LastName</MudTableSortLabel>
-                </MudTh>
-            </HeaderContent>
-            <RowTemplate Context="personContext">
-                <MudTd DataLabel="@Localization.name">@personContext.Id</MudTd>
-                <MudTd DataLabel="@Localization.type">@personContext.FirstName</MudTd>
-                <MudTd DataLabel="@Localization.apprentices">@personContext.LastName</MudTd>
-            </RowTemplate>
-        </MudTable>
-    </MudDrawer>
-    <MudMainContent>
-        <MudTable T="Apprenticeship" Items="_apprenticeships" Hover="true" SortLabel="Sort By"
-                          Filter="new Func<Apprenticeship, bool>(ApprenticeshipFilter)"
-                          OnRowClick="OnRowClick">
-                    <ToolBarContent>
-                        <MudText Color="Color.Primary" Typo="Typo.h6">@Localization.apprenticeships</MudText>
-                        <MudSpacer/>
-                        <MudTextField T="string" Placeholder="@Localization.search"
-                                      Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" @bind-Value="_searchString"/>
-                        <MudIconButton Icon="@Icons.Filled.AddBox" @onclick="ToggleNewApprenticeshipPopover"/>
-                        <MudPopover Open="_newApprenticeshipPopOverIsOpen" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
-                            <div style="margin: 1em;">
-                            </div>
-                        </MudPopover>
-                        <MudOverlay Visible="_newApprenticeshipPopOverIsOpen" OnClick="ToggleNewApprenticeshipPopover" DarkBackground="true"/>
-                    </ToolBarContent>
-                    <HeaderContent>
-                        <MudTh>
-                            <MudTableSortLabel SortBy="new Func<Apprenticeship, object>(x => x.Name)">@Localization.apprenticeship</MudTableSortLabel>
-                        </MudTh>
-                        <MudTh>
-                            <MudTableSortLabel SortBy="new Func<Apprenticeship, object>(x => x.Type)">@Localization.type</MudTableSortLabel>
-                        </MudTh>
-                        <MudTh>
-                            <MudTableSortLabel SortBy="new Func<Apprenticeship, object>(x => x.Apprentices.Count())">@Localization.apprentices</MudTableSortLabel>
-                        </MudTh>
-                    </HeaderContent>
-                    <RowTemplate>
-                        <MudTd DataLabel="@Localization.name">@context.Name</MudTd>
-                        <MudTd DataLabel="@Localization.type">@context.Type</MudTd>
-                        <MudTd DataLabel="@Localization.apprentices">@context.Apprentices.Count()</MudTd>
-                    </RowTemplate>
-                </MudTable>
-    </MudMainContent>
-</MudLayout>
+
+<MudTable T="Apprenticeship" Items="_apprenticeships" Hover="true" SortLabel="Sort By"
+          Filter="new Func<Apprenticeship, bool>(ApprenticeshipFilter)"
+          OnRowClick="OnRowClick">
+    <ToolBarContent>
+        <MudText Color="Color.Primary" Typo="Typo.h6">@Localization.apprenticeships</MudText>
+        <MudSpacer/>
+        <MudTextField T="string" Placeholder="@Localization.search"
+                      Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" @bind-Value="_searchString"/>
+        <MudIconButton Icon="@Icons.Filled.AddBox" @onclick="ToggleNewApprenticeshipPopover"/>
+        <MudOverlay Visible="_newApprenticeshipPopOverIsOpen" OnClick="ToggleNewApprenticeshipPopover" DarkBackground="true"/>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Apprenticeship, object>(x => x.Name)">@Localization.apprenticeship</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Apprenticeship, object>(x => x.Type)">@Localization.type</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Apprenticeship, object>(x => x.Apprentices.Count())">@Localization.apprentices</MudTableSortLabel>
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="@Localization.name">@context.Name</MudTd>
+        <MudTd DataLabel="@Localization.type">@context.Type</MudTd>
+        <MudTd DataLabel="@Localization.apprentices">@context.Apprentices.Count()</MudTd>
+    </RowTemplate>
+</MudTable>
+
+<MudPopover Open="_newApprenticeshipPopOverIsOpen" RelativeWidth="true">
+    <div style="margin: 1em; width: 50%;">
+    </div>
+</MudPopover>
+
+<MudPopover Open="_detailPopupIsOpen">
+    <ApprenticeshipDetails Apprenticeship="_selectedApprenticeship"/>
+</MudPopover>

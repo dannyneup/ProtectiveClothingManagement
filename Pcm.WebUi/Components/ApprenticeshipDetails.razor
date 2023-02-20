@@ -1,0 +1,20 @@
+@using Pcm.Infrastructure.Entities
+<MudText Typo="Typo.h6">@Localization.belongingApprentices</MudText>
+<MudTable T="Person" Items="Apprenticeship.Apprentices as List<Person>">
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Person, object>(x => x.Apprenticeship)">@Localization.personnelNumber</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Person, object>(x => x.FirstName)">@Localization.firstName</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<Person, object>(x => x.LastName)">@Localization.LastName</MudTableSortLabel>
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="@Localization.name">@context.Id</MudTd>
+        <MudTd DataLabel="@Localization.type">@context.FirstName</MudTd>
+        <MudTd DataLabel="@Localization.apprentices">@context.LastName</MudTd>
+    </RowTemplate>
+</MudTable>

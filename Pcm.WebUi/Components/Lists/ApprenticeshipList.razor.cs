@@ -11,7 +11,7 @@ public partial class ApprenticeshipList : ComponentBase
     private IEnumerable<Apprenticeship>? _apprenticeships = new List<Apprenticeship>();
     private bool _newApprenticeshipPopOverIsOpen;
     private string? _searchString;
-    private bool _drawerIsOpen = false;
+    private bool _detailPopupIsOpen = false;
     private Apprenticeship _selectedApprenticeship = new Apprenticeship();
 
     [Inject] public IRepository<IApprenticeship, int> ApprenticeshipRepository { get; set; }
@@ -39,7 +39,7 @@ public partial class ApprenticeshipList : ComponentBase
 
     private void OnRowClick(TableRowClickEventArgs<Apprenticeship> rowClickEvent)
     {
-        _drawerIsOpen = !_drawerIsOpen;
+        _detailPopupIsOpen = !_detailPopupIsOpen;
         _selectedApprenticeship = rowClickEvent.Item;
     }
 }

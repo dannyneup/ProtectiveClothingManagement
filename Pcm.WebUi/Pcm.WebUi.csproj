@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MudBlazor" Version="6.1.7"/>
+        <PackageReference Include="MudBlazor" Version="6.1.7" />
     </ItemGroup>
 
     <ItemGroup>
@@ -33,9 +33,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Pcm.Application\Pcm.Application.csproj"/>
-        <ProjectReference Include="..\Pcm.Core\Pcm.Core.csproj"/>
-        <ProjectReference Include="..\Pcm.Infrastructure\Pcm.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Pcm.Application\Pcm.Application.csproj" />
+        <ProjectReference Include="..\Pcm.Core\Pcm.Core.csproj" />
+        <ProjectReference Include="..\Pcm.Infrastructure\Pcm.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
