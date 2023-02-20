@@ -35,6 +35,11 @@
     </div>
 </MudPopover>
 
-<MudPopover Open="_detailPopupIsOpen">
-    <ApprenticeshipDetails Apprenticeship="_selectedApprenticeship"/>
+<MudPopover Open="_detailPopupIsOpen" OverflowBehavior="OverflowBehavior.FlipAlways" AnchorOrigin="Origin.CenterCenter" TransformOrigin="Origin.TopCenter" Paper="false">
+    <MudPaper Outlined="true" Class="px-4 py-8">
+        <ApprenticeshipDetails Apprenticeship="_selectedApprenticeship"/>
+        <h2>RTFM</h2>
+    </MudPaper>
 </MudPopover>
+
+
