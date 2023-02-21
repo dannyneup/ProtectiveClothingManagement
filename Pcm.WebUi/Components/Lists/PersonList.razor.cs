@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Components;
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
@@ -17,7 +16,6 @@ public partial class PersonList : ComponentBase
     protected override async Task OnInitializedAsync()
     {
         _persons = await PersonRepository.GetAll() as IEnumerable<Person>;
-        
     }
 
     private bool PersonFilter(IPerson person)

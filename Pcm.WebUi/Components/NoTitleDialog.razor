@@ -1,0 +1,23 @@
+<MudDialog IsVisible="@IsVisible" Options="@Options">
+    <DialogContent>
+        @Component
+    </DialogContent>
+</MudDialog>
+
+@code {
+    
+    
+    [Parameter]
+    public DialogOptions Options { get; set; }
+    [Parameter]
+    public RenderFragment Component { get; set; }
+    [Parameter]
+    public bool IsVisible { get; set; }
+
+}
+
+<style>
+    .mud-dialog-title{
+        display: none;
+    }
+</style>

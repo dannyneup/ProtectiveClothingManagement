@@ -1,5 +1,9 @@
 @using Pcm.Infrastructure.Entities
-
+<MudDialog bind-IsVisible="true">
+    <DialogContent>
+        <ApprenticeshipDetails Apprenticeship="_selectedApprenticeship"/>
+    </DialogContent>
+</MudDialog>
 
 <MudTable T="Apprenticeship" Items="_apprenticeships" Hover="true" SortLabel="Sort By"
           Filter="new Func<Apprenticeship, bool>(ApprenticeshipFilter)"
@@ -9,8 +13,7 @@
         <MudSpacer/>
         <MudTextField T="string" Placeholder="@Localization.search"
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" @bind-Value="_searchString"/>
-        <MudIconButton Icon="@Icons.Filled.AddBox" @onclick="ToggleNewApprenticeshipPopover"/>
-        <MudOverlay Visible="_newApprenticeshipPopOverIsOpen" OnClick="ToggleNewApprenticeshipPopover" DarkBackground="true"/>
+        <MudIconButton Icon="@Icons.Filled.AddBox" @onclick="(()=>_showDialog = !_showDialog)"/>
     </ToolBarContent>
     <HeaderContent>
         <MudTh>
@@ -30,16 +33,8 @@
     </RowTemplate>
 </MudTable>
 
-<MudPopover Open="_newApprenticeshipPopOverIsOpen" RelativeWidth="true">
-    <div style="margin: 1em; width: 50%;">
-    </div>
-</MudPopover>
-
-<MudPopover Open="_detailPopupIsOpen" OverflowBehavior="OverflowBehavior.FlipAlways" AnchorOrigin="Origin.CenterCenter" TransformOrigin="Origin.TopCenter" Paper="false">
-    <MudPaper Outlined="true" Class="px-4 py-8">
-        <ApprenticeshipDetails Apprenticeship="_selectedApprenticeship"/>
-        <h2>RTFM</h2>
-    </MudPaper>
-</MudPopover>
-
-
+<NoTitleDialog IsVisible="_detailPopupIsOpen" Options="new DialogOptions(){MaxWidth = MaxWidth.ExtraLarge}">
+    <Component>
+        <ApprenticeshipDetails Apprenticeship="_selectedApprenticeship" Height="40vw" FixedHeader="true"/>
+    </Component>
+</NoTitleDialog>

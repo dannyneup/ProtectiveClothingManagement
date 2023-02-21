@@ -1,6 +1,7 @@
 @using Pcm.Infrastructure.Entities
-<MudText Typo="Typo.h6">@Localization.belongingApprentices</MudText>
-<MudTable T="Person" Items="Apprenticeship.Apprentices as List<Person>">
+<MudText Typo="Typo.h6" Color="Color.Primary">@Localization.belongingApprentices</MudText>
+<MudTable T="Person" Items="Apprenticeship.Apprentices as List<Person>" 
+          Height="@Height" FixedHeader="@FixedHeader">
     <HeaderContent>
         <MudTh>
             <MudTableSortLabel SortBy="new Func<Person, object>(x => x.Apprenticeship)">@Localization.personnelNumber</MudTableSortLabel>
