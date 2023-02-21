@@ -1,12 +1,13 @@
 @using Pcm.Infrastructure.Entities
+@using Pcm.Infrastructure.ResponseModels
 <MudDialog bind-IsVisible="true">
     <DialogContent>
-        <ApprenticeshipDetails Apprenticeship="_selectedApprenticeship"/>
+        <ApprenticeshipDetails Apprentices="_selectedApprenticeshipResponseModel.Apprentices"/>
     </DialogContent>
 </MudDialog>
 
-<MudTable T="Apprenticeship" Items="_apprenticeships" Hover="true" SortLabel="Sort By"
-          Filter="new Func<Apprenticeship, bool>(ApprenticeshipFilter)"
+<MudTable T="ApprenticeshipResponseModel" Items="_apprenticeships" Hover="true" SortLabel="Sort By"
+          Filter="new Func<ApprenticeshipResponseModel, bool>(ApprenticeshipFilter)"
           OnRowClick="OnRowClick">
     <ToolBarContent>
         <MudText Color="Color.Primary" Typo="Typo.h6">@Localization.apprenticeships</MudText>
@@ -17,13 +18,13 @@
     </ToolBarContent>
     <HeaderContent>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<Apprenticeship, object>(x => x.Name)">@Localization.apprenticeship</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<ApprenticeshipResponseModel, object>(x => x.Name)">@Localization.apprenticeship</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<Apprenticeship, object>(x => x.Type)">@Localization.type</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<ApprenticeshipResponseModel, object>(x => x.Type)">@Localization.type</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<Apprenticeship, object>(x => x.Apprentices.Count())">@Localization.apprentices</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<ApprenticeshipResponseModel, object>(x => x.Apprentices.Count())">@Localization.apprentices</MudTableSortLabel>
         </MudTh>
     </HeaderContent>
     <RowTemplate>
@@ -35,6 +36,6 @@
 
 <NoTitleDialog IsVisible="_detailPopupIsOpen" Options="new DialogOptions(){MaxWidth = MaxWidth.ExtraLarge}">
     <Component>
-        <ApprenticeshipDetails Apprenticeship="_selectedApprenticeship" Height="40vw" FixedHeader="true"/>
+        <ApprenticeshipDetails Apprentices="_selectedApprenticeshipResponseModel.Apprentices" Height="40vw" FixedHeader="true"/>
     </Component>
 </NoTitleDialog>

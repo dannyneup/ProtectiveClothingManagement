@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Net.Mime;
 using System.Text;
@@ -5,6 +6,7 @@ using System.Text.Json;
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
 using Pcm.Infrastructure.Entities;
+using Pcm.Infrastructure.ResponseModels;
 
 namespace Pcm.Infrastructure.Repositories;
 
@@ -20,18 +22,16 @@ public class ApprenticeshipRepository : IRepository<IApprenticeship, int>
 
     public async Task<IEnumerable<IApprenticeship>> GetAll()
     {
-        using var responseMessage = await _httpClient.GetAsync(_apprenticeshipEndpoint);
-        if (responseMessage.IsSuccessStatusCode)
+        try
         {
-            var responseString = await responseMessage.Content.ReadAsStringAsync();
-            using var doc = JsonDocument.Parse(responseString);
-            var root = doc.RootElement.GetProperty("apprenticeships");
-            var apprenticeships = root.Deserialize<List<Apprenticeship>>(new JsonSerializerOptions
-                {PropertyNameCaseInsensitive = true});
-            return apprenticeships;
+            var options = new JsonSerializerOptions {PropertyNameCaseInsensitive = true};
+            return await _httpClient.GetFromJsonAsync<List<ApprenticeshipResponseModel>>(_apprenticeshipEndpoint, options);
         }
-
-        return new List<IApprenticeship>();
+        catch (Exception e) when (e is HttpRequestException or JsonException)
+        {
+            Debug.WriteLine(e);
+            return new List<ApprenticeshipResponseModel>();
+        }
     }
 
     public async Task<IApprenticeship> Get(int id)
@@ -39,11 +39,11 @@ public class ApprenticeshipRepository : IRepository<IApprenticeship, int>
         using var responseMessage = await _httpClient.GetAsync($"{_apprenticeshipEndpoint}/{id}");
         if (responseMessage.IsSuccessStatusCode)
         {
-            var apprenticeship = await responseMessage.Content.ReadFromJsonAsync<Apprenticeship>();
+            var apprenticeship = await responseMessage.Content.ReadFromJsonAsync<ApprenticeshipResponseModel>();
             return apprenticeship;
         }
 
-        return new Apprenticeship {IsResponseSuccess = false};
+        return new ApprenticeshipResponseModel {IsResponseSuccess = false};
     }
 
     public async Task<bool> Insert(IApprenticeship entity)

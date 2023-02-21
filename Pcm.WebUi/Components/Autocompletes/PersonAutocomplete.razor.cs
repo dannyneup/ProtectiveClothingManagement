@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
 using Pcm.Infrastructure.Entities;
+using Pcm.Infrastructure.ResponseModels;
 using Pcm.WebUi.Controller;
 
 namespace Pcm.WebUi.Components.Autocompletes;
@@ -19,7 +20,7 @@ public partial class PersonAutocomplete : ComponentBase
     protected override async void OnInitialized()
     {
         _persons = await PersonRepository.GetAll() as IEnumerable<Person>;
-        var apprenticeships = await ApprenticeshipRepository.GetAll() as IEnumerable<Apprenticeship>;
+        var apprenticeships = await ApprenticeshipRepository.GetAll() as IEnumerable<ApprenticeshipResponseModel>;
         if (apprenticeships == null) return;
         foreach (var person in _persons)
             person.Apprenticeship = apprenticeships.First(x => person.Apprenticeship.Id.Equals(x.Id));

@@ -2,8 +2,7 @@ namespace Pcm.Core.Entities;
 
 public interface IApprenticeship : IResponseBase
 {
-    int Id { get; set; }
-    string Name { get; set; }
-    string Type { get; set; }
-    IEnumerable<IPerson>? Apprentices { get; set; }
+    int Id { get; init; }
+    string Name { get; init;}
+    string Type { get; init;}
 }

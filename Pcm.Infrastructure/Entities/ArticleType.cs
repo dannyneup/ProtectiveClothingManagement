@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using Pcm.Core.Entities;
-using Pcm.Infrastructure.JsonConverters;
 
 namespace Pcm.Infrastructure.Entities;
 
@@ -11,7 +10,6 @@ public class ArticleType : ResponseBase, IArticleType
     public string Name { get; set; }
     public string Manufacturer { get; set; }
 
-    [JsonConverter(typeof(ConcreteTypeConverter<ArticleCategory, IArticleCategory>))]
     public IArticleCategory Category { get; set; }
 
     protected bool Equals(ArticleType other)

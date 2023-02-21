@@ -2,13 +2,14 @@ using Microsoft.AspNetCore.Components;
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
 using Pcm.Infrastructure.Entities;
+using Pcm.Infrastructure.ResponseModels;
 
 namespace Pcm.WebUi.Components;
 
 public partial class NewPerson : ComponentBase
 {
-    private Apprenticeship _apprenticeship;
-    private IEnumerable<Apprenticeship> _apprenticeships;
+    private ApprenticeshipResponseModel _apprenticeshipResponseModel;
+    private IEnumerable<ApprenticeshipResponseModel> _apprenticeships;
     private string _emailAddress;
     private string _firstName;
     private string _lastName;
@@ -17,7 +18,7 @@ public partial class NewPerson : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        _apprenticeships = await ApprenticeshipRepository.GetAll() as IEnumerable<Apprenticeship>;
+        _apprenticeships = await ApprenticeshipRepository.GetAll() as IEnumerable<ApprenticeshipResponseModel>;
     }
 
     private async Task SaveNewPerson()

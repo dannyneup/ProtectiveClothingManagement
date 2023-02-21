@@ -1,5 +1,6 @@
 @using Pcm.Infrastructure.Entities
-<MudAutocomplete T="Apprenticeship" Value="@Value" ValueChanged="@(newApprenticeship => OnValueChanged(newApprenticeship))"
+@using Pcm.Infrastructure.ResponseModels
+<MudAutocomplete T="ApprenticeshipResponseModel" Value="@Value" ValueChanged="@(newApprenticeship => OnValueChanged(newApprenticeship))"
                  Label="@Localization.apprenticeship"
                  SearchFunc="@SearchApprenticeshipAutocomplete" ResetValueOnEmptyText="true"
                  Required="Required">

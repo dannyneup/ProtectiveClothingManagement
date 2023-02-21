@@ -2,25 +2,26 @@ using Microsoft.AspNetCore.Components;
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
 using Pcm.Infrastructure.Entities;
+using Pcm.Infrastructure.ResponseModels;
 using Pcm.WebUi.Controller;
 
 namespace Pcm.WebUi.Components.Autocompletes;
 
 public partial class ApprenticeshipAutocomplete : ComponentBase
 {
-    private IEnumerable<Apprenticeship>? _apprenticeships;
+    private IEnumerable<ApprenticeshipResponseModel>? _apprenticeships;
 
-    [Parameter] public Apprenticeship Value { get; set; }
-    [Parameter] public EventCallback<Apprenticeship> ValueChanged { get; set; }
+    [Parameter] public ApprenticeshipResponseModel Value { get; set; }
+    [Parameter] public EventCallback<ApprenticeshipResponseModel> ValueChanged { get; set; }
     [Parameter] public bool Required { get; set; } = false;
     [Inject] public IRepository<IApprenticeship, int> ApprenticeshipRepository { get; set; }
 
     protected override async void OnInitialized()
     {
-        _apprenticeships = await ApprenticeshipRepository.GetAll() as IEnumerable<Apprenticeship>;
+        _apprenticeships = await ApprenticeshipRepository.GetAll() as IEnumerable<ApprenticeshipResponseModel>;
     }
 
-    private async Task<IEnumerable<Apprenticeship>> SearchApprenticeshipAutocomplete(string searchString)
+    private async Task<IEnumerable<ApprenticeshipResponseModel>> SearchApprenticeshipAutocomplete(string searchString)
     {
         if (string.IsNullOrEmpty(searchString))
             return _apprenticeships;
@@ -29,7 +30,7 @@ public partial class ApprenticeshipAutocomplete : ComponentBase
         return filteredApprenticeships;
     }
 
-    private IEnumerable<Apprenticeship> FilterApprenticeshipsByWords(string[] searchWords)
+    private IEnumerable<ApprenticeshipResponseModel> FilterApprenticeshipsByWords(string[] searchWords)
     {
         var filtered = _apprenticeships;
 
@@ -44,9 +45,9 @@ public partial class ApprenticeshipAutocomplete : ComponentBase
         return filtered.Distinct();
     }
 
-    private async void OnValueChanged(Apprenticeship newApprenticeship)
+    private async void OnValueChanged(ApprenticeshipResponseModel newApprenticeshipResponseModel)
     {
-        Value = newApprenticeship;
+        Value = newApprenticeshipResponseModel;
         await ValueChanged.InvokeAsync(Value);
     }
 }

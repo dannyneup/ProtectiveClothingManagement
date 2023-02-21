@@ -4,17 +4,18 @@ using MudBlazor;
 using Pcm.Application.Interfaces;
 using Pcm.Core.Entities;
 using Pcm.Infrastructure.Entities;
+using Pcm.Infrastructure.ResponseModels;
 
 namespace Pcm.WebUi.Components.Lists;
 
-public partial class ApprenticeshipList : ComponentBase
+public partial class ApprenticeshipTable : ComponentBase
 {
     private bool _anyPopoverIsOpen;
-    private IEnumerable<Apprenticeship>? _apprenticeships = new List<Apprenticeship>();
+    private IEnumerable<ApprenticeshipResponseModel>? _apprenticeships = new List<ApprenticeshipResponseModel>();
     private bool _detailPopupIsOpen = false;
     private bool _newApprenticeshipPopOverIsOpen = false;
     private string? _searchString;
-    private Apprenticeship _selectedApprenticeship = new();
+    private ApprenticeshipResponseModel _selectedApprenticeshipResponseModel = new();
     private bool _showDialog;
 
     [Inject] public IRepository<IApprenticeship, int> ApprenticeshipRepository { get; set; }
@@ -22,7 +23,7 @@ public partial class ApprenticeshipList : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        _apprenticeships = await ApprenticeshipRepository.GetAll() as IEnumerable<Apprenticeship>;
+        _apprenticeships = await ApprenticeshipRepository.GetAll() as IEnumerable<ApprenticeshipResponseModel>;
     }
 
     private bool ApprenticeshipFilter(IApprenticeship apprenticeship)
@@ -36,9 +37,9 @@ public partial class ApprenticeshipList : ComponentBase
         return matchedProperty != null;
     }
 
-    private void OnRowClick(TableRowClickEventArgs<Apprenticeship> rowClickEvent)
+    private void OnRowClick(TableRowClickEventArgs<ApprenticeshipResponseModel> rowClickEvent)
     {
         _detailPopupIsOpen = !_detailPopupIsOpen;
-        _selectedApprenticeship = rowClickEvent.Item;
+        _selectedApprenticeshipResponseModel = rowClickEvent.Item;
     }
 }
