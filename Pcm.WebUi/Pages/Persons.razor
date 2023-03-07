@@ -1,17 +1,19 @@
 @page "/persons"
+@using Pcm.WebUi.Components.Dialogs
+@using Pcm.WebUi.Components.ModelEditors
 <MudCard>
     <MudCardHeader>
         <MudText Color="Color.Primary" Typo="Typo.h6">@Localization.persons</MudText>
         <MudSpacer/>
         <MudTextField T="string" Placeholder="@Localization.search"
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" @bind-Value="_searchString" Disabled="_newPersonPopOverIsOpen"/>
-        <MudIconButton Icon="@Icons.Filled.AddBox" @onclick="ToggleNewPersonPopover"/>
+        <MudIconButton Icon="@Icons.Filled.AddBox" @onclick="OpenNewPersonPopover"/>
     </MudCardHeader>
     <MudPopover Open="_newPersonPopOverIsOpen" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight" RelativeWidth="true">
         <div style="margin: 1em;">
             <NewPerson/>
         </div>
     </MudPopover>
-    <MudOverlay Visible="_newPersonPopOverIsOpen" OnClick="ToggleNewPersonPopover" DarkBackground="true"/>
+    <MudOverlay Visible="_newPersonPopOverIsOpen" OnClick="OpenNewPersonPopover" DarkBackground="true"/>
     <PersonList SearchString="@_searchString"/>
 </MudCard>

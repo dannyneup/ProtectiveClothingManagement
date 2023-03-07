@@ -2,7 +2,7 @@ version: "3.7"
 services:
   database:
     container_name: database
-    image: mariadb:latest
+    image: mysql:latest
     expose: 
       - 3306
     ports:
@@ -11,9 +11,7 @@ services:
       - ./Database/data:/var/lib/mysql:rw
       - ./Database/init/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     environment:
-      MARIADB_ROOT_PASSWORD: password
-      MARIADB_USER: user
-      MARIADB_PASSWORD: userpassword
+      MYSQL_ROOT_PASSWORD: password
     networks:
       - backend
     restart: always

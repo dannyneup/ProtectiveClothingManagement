@@ -1,0 +1,13 @@
+@using Pcm.Infrastructure.ResponseModels
+<MudAutocomplete T="string" Value="@Value" ValueChanged="@(newTrainingType => OnValueChanged(newTrainingType))"
+                 Label="@Localization.trainingType"
+                 SearchFunc="@SearchTrainingTypeAutocomplete" ResetValueOnEmptyText="true"
+                 Required="Required">
+    <ItemTemplate>
+        <div class="itemTemplate">
+            <div class="itemContainerText">
+                <MudText Typo="Typo.body1">@context</MudText>
+            </div>
+        </div>
+    </ItemTemplate>
+</MudAutocomplete>

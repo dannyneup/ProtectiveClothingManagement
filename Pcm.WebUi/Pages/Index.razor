@@ -1,3 +1,10 @@
 ﻿@page "/"
+@using Pcm.Infrastructure.ResponseModels
 
-<ApprenticeshipList/>
+<TrainingEditor @bind-Training="_training" @bind-Loadout="_loadOut"/>
+
+@code
+{
+    private TrainingResponseModel _training = new();
+    private List<LoadOutPartResponseModel> _loadOut;
+}

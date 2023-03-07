@@ -1,13 +1,18 @@
+using System.Security.AccessControl;
+
 namespace Pcm.Infrastructure.Repositories;
 
 public class Endpoints
 {
-    public const string BaseUrl = "http://localhost:3001";
-    public const string Person = "/person";
-    public const string Article = "/article";
-    public const string Order = "/order";
-    public const string ArticleType = "/articletype";
-    public const string Apprenticeship = "/apprenticeship";
-    public const string ArticleCategory = "/articlecategory";
-    public const string Style = "/style";
+    private const string HostUrl = "http://localhost";
+    private const string Port = "3001";
+    private const string ApiVersion = "v1";
+    public const string BaseUrl = $"{HostUrl}:{Port}/{ApiVersion}";
+    
+    public const string Persons = "/persons";
+    public const string PersonInfos = "/person-infos";
+    public const string Training = "/trainings";
+    public const string TrainingInfo = "/training-infos";
+    public const string LoadOut = "/loadout";
+    public const string ItemCategory = "/categories";
 }

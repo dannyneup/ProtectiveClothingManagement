@@ -1,0 +1,47 @@
+@using Pcm.Infrastructure.ResponseModels
+
+<MudTable T="TrainingInfoResponseModel" Items="_trainings" Hover="true" SortLabel="Sort By"
+          Filter="TrainingFilter"
+          OnRowClick="OnRowClick"
+          EditButtonPosition="TableEditButtonPosition.End"
+          Context="rowObj">
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<TrainingInfoResponseModel, object>(x => x.Name)">@Localization.trainingName</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<TrainingInfoResponseModel, object>(x => x.Type)">@Localization.trainingName</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<TrainingInfoResponseModel, object>(x => x.TraineeCount)">@Localization.traineeCount</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="new Func<TrainingInfoResponseModel, object>(x => x.YearCount)">@Localization.yearCount</MudTableSortLabel>
+        </MudTh>
+        <MudTd/>
+    </HeaderContent>
+    <ColGroup>
+        <col/>
+        <col/>
+        <col class="smallWidthColumn"/>
+        <col class="smallWidthColumn"/>
+        <col class="buttonColumn"/>
+    </ColGroup>
+    <RowTemplate>
+        <MudTd DataLabel="@Localization.name">@rowObj.Name</MudTd>
+        <MudTd DataLabel="@Localization.type">@rowObj.Type</MudTd>
+        <MudTd DataLabel="@Localization.traineeCount">@rowObj.TraineeCount</MudTd>
+        <MudTd DataLabel="@Localization.yearCount">@rowObj.YearCount</MudTd>
+        <MudTd>
+            <MudMenu Icon="@Icons.Material.Filled.MoreHoriz"
+                     Class="moreIcon">
+                <MudMenuItem OnClick="() => OnRowEdit(rowObj)">
+                    @Localization.edit
+                </MudMenuItem>
+                <MudMenuItem OnClick="() => OnRowDelete(rowObj)">
+                    @Localization.delete
+                </MudMenuItem>
+            </MudMenu>
+        </MudTd>
+    </RowTemplate>
+</MudTable>

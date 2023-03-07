@@ -1,5 +1,5 @@
-@using Pcm.Infrastructure.Entities
-<MudAutocomplete T="Person" Value="@Value" ValueChanged="@(newPerson => OnValueChanged(newPerson))"
+@using Pcm.Infrastructure.ResponseModels
+<MudAutocomplete T="PersonInfoResponseModel" Value="@Value" ValueChanged="@(newPerson => OnValueChanged(newPerson))"
                  Label="@Localization.person"
                  SearchFunc="@SearchPersonAutocomplete" ResetValueOnEmptyText="true"
                  Required="Required">
@@ -7,7 +7,7 @@
         <div class="itemTemplate">
             <div class="itemContainerText">
                 <MudText Typo="Typo.body1">@context.ToString()</MudText>
-                <MudText Typo="Typo.body2">@context.Apprenticeship.Type - @context.Apprenticeship.Name</MudText>
+                <MudText Typo="Typo.body2">@context.TrainingType - @context.TrainingName</MudText>
             </div>
         </div>
     </ItemTemplate>

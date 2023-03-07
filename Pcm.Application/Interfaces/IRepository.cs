@@ -1,9 +1,10 @@
 namespace Pcm.Application.Interfaces;
 
-public interface IRepository<T1, T2> where T1 : class
+public interface IRepository<TResponse, TRequest>
 {
-    Task<IEnumerable<T1>> GetAll();
-    Task<T1> Get(T2 id);
-    Task<bool> Insert(T1 entity);
-    Task<bool> Delete(T2 id);
+    Task<IEnumerable<TResponse>> GetAll();
+    Task<TResponse> Get(int id);
+    Task<TResponse> Insert(TRequest requestModel);
+    Task<TResponse> Update(TResponse responseModel);
+    Task<bool> Delete(int id);
 }

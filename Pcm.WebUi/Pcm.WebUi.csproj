@@ -34,8 +34,13 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Pcm.Application\Pcm.Application.csproj" />
-        <ProjectReference Include="..\Pcm.Core\Pcm.Core.csproj" />
+        <ProjectReference Include="..\Core\Core.csproj" />
         <ProjectReference Include="..\Pcm.Infrastructure\Pcm.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Components\Dialogs\Details\TrainingDetails.razor" />
+      <_ContentIncludedByDefault Remove="Components\Lists\Helpers\EditableTable.razor" />
     </ItemGroup>
 
 </Project>

@@ -1,8 +1,12 @@
-﻿@inherits LayoutComponentBase
+﻿@using Colors = Pcm.Core.Colors
+@using Pcm.Infrastructure.ResponseModels
+@inherits LayoutComponentBase
 
 <MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" Theme="CustomTheme"/>
 <MudDialogProvider
-    CloseOnEscapeKey="true"/>
+    CloseButton="true"
+    FullWidth="true"
+    MaxWidth="MaxWidth.Large"/>
 <MudSnackbarProvider/>
 
 <MudLayout>
@@ -14,7 +18,7 @@
             <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.SpaceDashboard"/>
             <MudNavLink Href="/persons" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person"/>
             <MudNavLink Href="/articles" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Checkroom"/>
-            <MudNavLink Href="/apprenticeships" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.BusinessCenter"/>
+            <MudNavLink Href="/trainings" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.BusinessCenter"/>
             <MudNavLink Href="/orders" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ShoppingBag"/>
             <MudNavLink Href="/requests" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.NoteAdd"/>
         </MudNavMenu>
@@ -32,9 +36,9 @@
     {
         Palette = new Palette
         {
-            Primary = "#0087a8",
-            Secondary = "#bba590",
-            Tertiary = "#859d66",
+            Primary = Colors.Primary,
+            Secondary = Colors.Secondary,
+            Tertiary = Colors.Tertiary,
             AppbarBackground = "#0087a8"
         },
         PaletteDark = new PaletteDark
@@ -44,14 +48,6 @@
             Tertiary = "#859d66"
         }
     };
-
-
-    bool _drawerOpen = true;
-
-    void DrawerToggle()
-    {
-        _drawerOpen = !_drawerOpen;
-    }
 
     private bool _isDarkMode;
     private MudThemeProvider _mudThemeProvider;

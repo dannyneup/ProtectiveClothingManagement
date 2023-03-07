@@ -51,15 +51,9 @@ namespace Pcm.WebUi.Resources {
             }
         }
         
-        internal static string LastName {
+        internal static string trainingName {
             get {
-                return ResourceManager.GetString("LastName", resourceCulture);
-            }
-        }
-        
-        internal static string apprenticeship {
-            get {
-                return ResourceManager.GetString("apprenticeship", resourceCulture);
+                return ResourceManager.GetString("trainingName", resourceCulture);
             }
         }
         
@@ -195,12 +189,6 @@ namespace Pcm.WebUi.Resources {
             }
         }
         
-        internal static string apprentices {
-            get {
-                return ResourceManager.GetString("apprentices", resourceCulture);
-            }
-        }
-        
         internal static string name {
             get {
                 return ResourceManager.GetString("name", resourceCulture);
@@ -225,15 +213,153 @@ namespace Pcm.WebUi.Resources {
             }
         }
         
-        internal static string belongingApprentices {
+        internal static string belongingTrainees {
             get {
-                return ResourceManager.GetString("belongingApprentices", resourceCulture);
+                return ResourceManager.GetString("belongingTrainees", resourceCulture);
             }
         }
         
         internal static string sortBy {
             get {
                 return ResourceManager.GetString("sortBy", resourceCulture);
+            }
+        }
+        
+        internal static string trainingType {
+            get {
+                return ResourceManager.GetString("trainingType", resourceCulture);
+            }
+        }
+        
+        internal static string training {
+            get {
+                return ResourceManager.GetString("training", resourceCulture);
+            }
+        }
+        
+        internal static string trainees {
+            get {
+                return ResourceManager.GetString("trainees", resourceCulture);
+            }
+        }
+        
+        internal static string lastName {
+            get {
+                return ResourceManager.GetString("lastName", resourceCulture);
+            }
+        }
+        
+        internal static string trainings {
+            get {
+                return ResourceManager.GetString("trainings", resourceCulture);
+            }
+        }
+        
+        internal static string group {
+            get {
+                return ResourceManager.GetString("group", resourceCulture);
+            }
+        }
+        
+        internal static string defaultLoadout {
+            get {
+                return ResourceManager.GetString("defaultLoadout", resourceCulture);
+            }
+        }
+        
+        internal static string itemCategory {
+            get {
+                return ResourceManager.GetString("itemCategory", resourceCulture);
+            }
+        }
+        
+        internal static string count {
+            get {
+                return ResourceManager.GetString("count", resourceCulture);
+            }
+        }
+        
+        internal static string traineeCount {
+            get {
+                return ResourceManager.GetString("traineeCount", resourceCulture);
+            }
+        }
+        
+        internal static string yearCount {
+            get {
+                return ResourceManager.GetString("yearCount", resourceCulture);
+            }
+        }
+        
+        internal static string trainingDetails {
+            get {
+                return ResourceManager.GetString("trainingDetails", resourceCulture);
+            }
+        }
+        
+        internal static string createNewT {
+            get {
+                return ResourceManager.GetString("createNewT", resourceCulture);
+            }
+        }
+        
+        internal static string yearStarted {
+            get {
+                return ResourceManager.GetString("yearStarted", resourceCulture);
+            }
+        }
+        
+        internal static string TWithNameSuccessfullyCreated {
+            get {
+                return ResourceManager.GetString("TWithNameSuccessfullyCreated", resourceCulture);
+            }
+        }
+        
+        internal static string TWithNameNotsuccessfullyCreated {
+            get {
+                return ResourceManager.GetString("TWithNameNotsuccessfullyCreated", resourceCulture);
+            }
+        }
+        
+        internal static string editT {
+            get {
+                return ResourceManager.GetString("editT", resourceCulture);
+            }
+        }
+        
+        internal static string edit {
+            get {
+                return ResourceManager.GetString("edit", resourceCulture);
+            }
+        }
+        
+        internal static string delete {
+            get {
+                return ResourceManager.GetString("delete", resourceCulture);
+            }
+        }
+        
+        internal static string reallyWantDeleteCannotBeUndone {
+            get {
+                return ResourceManager.GetString("reallyWantDeleteCannotBeUndone", resourceCulture);
+            }
+        }
+        
+        internal static string warning {
+            get {
+                return ResourceManager.GetString("warning", resourceCulture);
+            }
+        }
+        
+        internal static string TWithNameNotsuccessfullyUpdated {
+            get {
+                return ResourceManager.GetString("TWithNameNotsuccessfullyUpdated", resourceCulture);
+            }
+        }
+        
+        internal static string TWithNameSuccessfullyUpdated {
+            get {
+                return ResourceManager.GetString("TWithNameSuccessfullyUpdated", resourceCulture);
             }
         }
     }

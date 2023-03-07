@@ -1,0 +1,23 @@
+
+<MudGrid>
+    <MudItem xs="4">
+        <MudTextField @bind-Value="PersonInfoRequest.FirstName" Label="@Localization.firstName"
+                      Required="true"/>
+    </MudItem>
+    <MudItem xs="4">
+        <MudTextField @bind-Value="PersonInfoRequest.LastName" Label="@Localization.lastName"
+                      Required="true"/>
+    </MudItem>
+    <MudItem xs="4">
+        <MudTextField @bind-Value="PersonInfoRequest.EmailAddress" Label="@Localization.emailAddress" 
+                      Validation="@(new Func<string, string>(EMailValidation))"/>
+    </MudItem>
+    <MudItem xs="4">
+        <TrainingAutocomplete Value="_trainingResponse" ValueChanged="@(_trainingResponse => OnTrainingChanged(_trainingResponse))"
+                              Required="true"/>
+    </MudItem>
+    <MudItem xs="4">
+        <MudTextField Value="PersonInfoRequest.YearStarted" Label="@Localization.yearStarted"
+                      Required="true"/>
+    </MudItem>
+</MudGrid>

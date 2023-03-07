@@ -1,0 +1,10 @@
+.smallWidthColumn{
+    width: 150px;
+}
+.buttonColumn{
+    width: 50px;
+}
+.moreIcon button{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
