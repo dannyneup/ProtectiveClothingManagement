@@ -1,28 +1,28 @@
 @using Pcm.Infrastructure.ResponseModels
 <MudTable Items="_persons" Hover="true" SortLabel="@Localization.sortBy"
-          Filter="new Func<PersonInfoResponseModel, bool>(PersonFilter)"
+          Filter="new Func<PersonResponse, bool>(PersonFilter)"
           Elevation="Elevation">
     <HeaderContent>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<PersonInfoResponseModel, object>(x => x.PersonnelNumber)">@Localization.personnelNumber</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<PersonResponse, object>(x => x.PersonnelNumber)">@Localization.personnelNumber</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<PersonInfoResponseModel, object>(x => x.FirstName)">@Localization.firstName</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<PersonResponse, object>(x => x.FirstName)">@Localization.firstName</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<PersonInfoResponseModel, object>(x => x.LastName)">@Localization.lastName</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<PersonResponse, object>(x => x.LastName)">@Localization.lastName</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<PersonInfoResponseModel, object>(x => x.TrainingType)">@Localization.trainingType</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<PersonResponse, object>(x => x.TrainingType)">@Localization.trainingType</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<PersonInfoResponseModel, object>(x => x.TrainingName)">@Localization.trainingName</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<PersonResponse, object>(x => x.TrainingName)">@Localization.trainingName</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<PersonInfoResponseModel, object>(x => x.YearStarted)">@Localization.yearStarted</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<PersonResponse, object>(x => x.YearStarted)">@Localization.yearStarted</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<PersonInfoResponseModel, object>(x => x.EmailAddress)">@Localization.emailAddress</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<PersonResponse, object>(x => x.EmailAddress)">@Localization.emailAddress</MudTableSortLabel>
         </MudTh>
     </HeaderContent>
     <RowTemplate>

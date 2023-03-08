@@ -8,25 +8,25 @@ namespace Pcm.WebUi.Components.ModelEditors;
 
 public partial class PersonEditor : ComponentBase
 {
-    private TrainingResponseModel? _trainingResponse;
+    private TrainingResponse _trainingResponse;
     private string _emailAddress;
     private string _firstName;
     private string _lastName;
 
-    [Parameter] public PersonInfoRequestModel PersonInfoRequest { get; set; }
-    [Parameter] public EventCallback<PersonInfoRequestModel> PersonInfoRequestChanged { get; set; }
+    [Parameter] public PersonRequest PersonRequest { get; set; }
+    [Parameter] public EventCallback<PersonRequest> PersonInfoRequestChanged { get; set; }
 
     protected override void OnInitialized()
     {
-        PersonInfoRequest = new();
+        PersonRequest = new();
     }
 
-    private async Task OnTrainingChanged(TrainingResponseModel trainingResponse)
+    private async Task OnTrainingChanged(TrainingResponse trainingResponse)
     {
         
-        PersonInfoRequest.TrainingName = trainingResponse.Name;
-        PersonInfoRequest.TrainingType = trainingResponse.Type;
-        await PersonInfoRequestChanged.InvokeAsync(PersonInfoRequest);
+        PersonRequest.TrainingName = trainingResponse.Name;
+        PersonRequest.TrainingType = trainingResponse.Type;
+        await PersonInfoRequestChanged.InvokeAsync(PersonRequest);
     }
 
     private string EMailValidation(string arg)

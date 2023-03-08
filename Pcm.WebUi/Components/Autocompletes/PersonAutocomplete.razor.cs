@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Pcm.Application.Interfaces;
-using Pcm.Application.Interfaces.ResponseModels;
-using Pcm.Core.Entities;
+using Pcm.Infrastructure.RequestModels;
 using Pcm.Infrastructure.ResponseModels;
 using Pcm.WebUi.Controller;
 
@@ -9,19 +8,19 @@ namespace Pcm.WebUi.Components.Autocompletes;
 
 public partial class PersonAutocomplete : ComponentBase
 {
-    private IEnumerable<PersonInfoResponseModel>? _persons;
+    private IEnumerable<PersonResponse>? _persons;
 
-    [Parameter] public PersonInfoResponseModel Value { get; set; }
-    [Parameter] public EventCallback<PersonInfoResponseModel> ValueChanged { get; set; }
+    [Parameter] public PersonResponse Value { get; set; }
+    [Parameter] public EventCallback<PersonResponse> ValueChanged { get; set; }
     [Parameter] public bool Required { get; set; } = false;
-    [Inject] public IRepository<IPersonInfoResponseModel, IPersonInfoResponseModel> PersonInfoRepository { get; set; }
+    [Inject] public IRepository<PersonResponse, PersonRequest> PersonInfoRepository { get; set; }
 
     protected override async void OnInitialized()
     {
-        _persons = await PersonInfoRepository.GetAll() as IEnumerable<PersonInfoResponseModel>;
+        _persons = await PersonInfoRepository.GetAll();
     }
 
-    private async Task<IEnumerable<PersonInfoResponseModel>> SearchPersonAutocomplete(string searchString)
+    private async Task<IEnumerable<PersonResponse>> SearchPersonAutocomplete(string searchString)
     {
         if (string.IsNullOrEmpty(searchString))
             return _persons;
@@ -30,7 +29,7 @@ public partial class PersonAutocomplete : ComponentBase
         return filteredPersons;
     }
 
-    private IEnumerable<PersonInfoResponseModel> FilterPersonsByWords(string[] searchWords)
+    private IEnumerable<PersonResponse> FilterPersonsByWords(string[] searchWords)
     {
         var filtered = _persons;
 
@@ -49,7 +48,7 @@ public partial class PersonAutocomplete : ComponentBase
         return filtered.Distinct();
     }
 
-    private async Task OnValueChanged(PersonInfoResponseModel newPerson)
+    private async Task OnValueChanged(PersonResponse newPerson)
     {
         Value = newPerson;
         await ValueChanged.InvokeAsync(Value);

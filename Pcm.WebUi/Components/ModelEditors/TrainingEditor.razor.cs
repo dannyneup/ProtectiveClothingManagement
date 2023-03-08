@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using Pcm.Application.Interfaces;
-using Pcm.Application.Interfaces.Repositories;
-using Pcm.Application.Interfaces.ResponseModels;
 using Pcm.Infrastructure.Repositories;
 using Pcm.Infrastructure.RequestModels;
 using Pcm.Infrastructure.ResponseModels;
@@ -11,29 +9,31 @@ namespace Pcm.WebUi.Components.ModelEditors;
 
 public partial class TrainingEditor : ComponentBase
 {
-    [Parameter] public TrainingResponseModel Training { get; set; }
-    [Parameter] public EventCallback<TrainingResponseModel> TrainingChanged { get; set; }
-    [Parameter] public List<LoadOutPartResponseModel> LoadOut { get; set; } = new();
-    [Parameter] public EventCallback<List<LoadOutPartResponseModel>> LoadOutChanged { get; set; }
+    [Parameter] public TrainingResponse Training { get; set; }
+    [Parameter] public EventCallback<TrainingResponse> TrainingChanged { get; set; }
+    [Parameter] public List<LoadOutPartResponse> LoadOut { get; set; } = new();
+    [Parameter] public EventCallback<List<LoadOutPartResponse>> LoadOutChanged { get; set; }
     [Parameter] public bool EditMode { get; set; } = false;
-    [Inject] public IRepository<IItemCategoryResponseModel, IItemCategoryRequestModel> ItemCategoryRepository { get; set; }
-    [Inject] public ITrainingRepository TrainingRepository { get; set; }
+    [Inject] public IRepository<ItemCategoryResponse, ItemCategoryRequest> ItemCategoryRepository { get; set; }
+    [Inject] public IRepository<LoadOutPartResponse, LoadOutPartRequest> TrainingRepository { get; set; }
+    [Inject] public IRepository<LoadOutPartResponse, LoadOutPartRequest> LoadoutRepository { get; set; }
 
-    private List<ItemCategoryResponseModel> _itemCategories;
+    private IEnumerable<ItemCategoryResponse> _itemCategories;
     private string _searchString;
 
     protected override async Task OnInitializedAsync()
     {
-        _itemCategories = await ItemCategoryRepository.GetAll() as List<ItemCategoryResponseModel>;
+        _itemCategories = await ItemCategoryRepository.GetAll();
         if(EditMode)
         {
-            LoadOut = await TrainingRepository.GetLoadOut(Training.Id) as List<LoadOutPartResponseModel>;
+            var loadouts = await LoadoutRepository.GetAll();
+            LoadOut = loadouts.ToList();
             return;
         }
         LoadOut = new();
     }
 
-    private int getItemCount(ItemCategoryResponseModel category)
+    private int getItemCount(ItemCategoryResponse category)
     {
         if (LoadOut.Count == 0)
         {
@@ -42,13 +42,13 @@ public partial class TrainingEditor : ComponentBase
         return LoadOut.Select(x => x.CategoryId == category.Id).Count();
     }
     
-    private void OnCountChanged(ItemCategoryResponseModel category, int count)
+    private void OnCountChanged(ItemCategoryResponse category, int count)
     {
         
         var categoryAlreadyInLoadOut = LoadOut.Exists(x => x.CategoryId == category.Id);
         if (!categoryAlreadyInLoadOut)
         {
-            LoadOut.Add(new LoadOutPartResponseModel()
+            LoadOut.Add(new LoadOutPartResponse()
             {
                 CategoryId = category.Id,
                 Count = count
@@ -60,9 +60,9 @@ public partial class TrainingEditor : ComponentBase
         loadOutPart.Count = count;
     }
 
-    private bool ItemCategoryFilter(ItemCategoryResponseModel arg)
+    private bool ItemCategoryFilter(ItemCategoryResponse arg)
     {
-        return ListItemFilterController<IItemCategoryResponseModel>.CheckIfStringMatchesProperties(arg,
+        return ListItemFilterController<ItemCategoryResponse>.CheckIfStringMatchesProperties(arg,
             _searchString);
     }
 }

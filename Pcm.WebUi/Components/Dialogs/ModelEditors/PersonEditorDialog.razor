@@ -1,6 +1,5 @@
-@using Pcm.WebUi.Components.ModelEditors
 <NewEntryDialog SaveNewEntry="SaveNewPerson">
     <Component>
-        <NewPerson PersonInfoRequest="@_personInfoRequest" PersonInfoRequestChanged="(_personInfoRequest) => Console.WriteLine(_personInfoRequest.TrainingName)"/>
+        <NewPerson PersonInfoRequest="@_personRequest" PersonInfoRequestChanged="(_personInfoRequest) => Console.WriteLine(_personInfoRequest.TrainingName)"/>
     </Component>
 </NewEntryDialog>

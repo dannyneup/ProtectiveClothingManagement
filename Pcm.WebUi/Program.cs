@@ -2,14 +2,15 @@ using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using MudBlazor;
 using MudBlazor.Services;
 using Pcm.Application.Interfaces;
-using Pcm.Application.Interfaces.Repositories;
-using Pcm.Application.Interfaces.RequestModels;
-using Pcm.Application.Interfaces.ResponseModels;
+using Pcm.Infrastructure;
 using Pcm.Infrastructure.Repositories;
 using Pcm.Infrastructure.RequestModels;
+using Pcm.Infrastructure.ResponseModels;
 
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSingleton<IEndpointService, EndpointService>();
+
 
 StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 
@@ -31,10 +32,10 @@ builder.Services.AddHttpClient();
 builder.Services.AddLocalization();
 
 //Dependency injection
-builder.Services.AddScoped<IRepository<ITrainingInfoResponseModel, ITrainingInfoRequestModel>, TrainingInfoRepository>();
-builder.Services.AddScoped<ITrainingRepository, TrainingRepository>();
-builder.Services.AddScoped<IRepository<IPersonInfoResponseModel, IPersonInfoRequestModel>, PersonInfoRepository>();
-builder.Services.AddScoped<IRepository<IItemCategoryResponseModel, IItemCategoryRequestModel>, ItemCategoryRepository>();
+builder.Services.AddScoped<IRepository<PersonResponse, PersonRequest>, Repository<PersonResponse, PersonRequest>>();
+builder.Services.AddScoped<IRepository<ItemCategoryResponse, ItemCategoryRequest>, Repository<ItemCategoryResponse, ItemCategoryRequest>>();
+builder.Services.AddScoped<IRepository<TrainingResponse, TrainingRequestModel>, Repository<TrainingResponse, TrainingRequestModel>>();
+builder.Services.AddScoped<IRepository<LoadOutPartResponse, LoadOutPartRequest>, Repository<LoadOutPartResponse, LoadOutPartRequest>>();
 
 
 var app = builder.Build();

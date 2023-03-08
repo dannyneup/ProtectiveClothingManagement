@@ -1,16 +1,15 @@
-using Pcm.Application.Interfaces.ResponseModels;
 
 namespace Pcm.Infrastructure.ResponseModels;
 
-public class TrainingInfoResponseModel : ResponseBase, ITrainingInfoResponseModel
+public class TrainingResponse : ResponseBase
 {
     public int Id { get; set; }
-    public string Name { get; set; }
-    public string Type { get; set; }
+    public string Type { get; set; } = "";
+    public string Name { get; set; } = "";
     public int TraineeCount { get; set; }
     public int YearCount { get; set; }
 
-    public override bool Equals(object? obj)
+    /*public override bool Equals(object? obj)
     {
         var trainingInfo = obj as TrainingInfoResponseModel;
         if (trainingInfo == null)
@@ -29,5 +28,5 @@ public class TrainingInfoResponseModel : ResponseBase, ITrainingInfoResponseMode
             Name = this.Name,
             Type = this.Type
         };
-    }
+    }*/
 }

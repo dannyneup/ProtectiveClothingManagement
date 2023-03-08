@@ -1,9 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Pcm.Application.Interfaces;
-using Pcm.Application.Interfaces.RequestModels;
-using Pcm.Application.Interfaces.ResponseModels;
-using Pcm.Infrastructure.ResponseModels;
 using Pcm.WebUi.Components.DetailViews;
 using Pcm.WebUi.Components.Dialogs.Helpers;
 using Pcm.WebUi.Components.Dialogs.ModelEditors;
@@ -14,12 +10,12 @@ namespace Pcm.WebUi.Pages;
 
 public partial class Trainings
 {
-    [Inject]
-    public IRepository<ITrainingInfoResponseModel, ITrainingInfoRequestModel> ApprenticeshipRepository { get; set; }
+    //[Inject]
+    //public IRepository<ITrainingInfoResponseModel, ITrainingInfoRequestModel> ApprenticeshipRepository { get; set; }
     [Inject] public IDialogService DialogService { get; set; }
     
     private string? _searchString;
-    private IEnumerable<TrainingInfoResponseModel>? _trainingInfoResponses = new List<TrainingInfoResponseModel>();
+    //private IEnumerable<TrainingInfoResponseModel>? _trainingInfoResponses = new List<TrainingInfoResponseModel>();
 
     private void OpenNewTrainingPopOver()
     {

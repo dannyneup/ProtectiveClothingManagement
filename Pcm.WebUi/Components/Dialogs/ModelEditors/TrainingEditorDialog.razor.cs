@@ -1,23 +1,23 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Pcm.Application.Interfaces.Repositories;
-using Pcm.Application.Interfaces.RequestModels;
+using Pcm.Application.Interfaces;
 using Pcm.Infrastructure.RequestModels;
 using Pcm.Infrastructure.ResponseModels;
-using Pcm.WebUi.Controller;
 using Pcm.WebUi.Resources;
 
 namespace Pcm.WebUi.Components.Dialogs.ModelEditors;
 
 public partial class TrainingEditorDialog : ComponentBase
 {
-    [Parameter] public TrainingResponseModel? TrainingToEdit { get; set; }
-    [Inject] public ITrainingRepository TrainingRepository { get; set; }
+    private TrainingResponse TrainingToEdit { get; set; }
+    private TrainingRequestModel TrainingToEdit2 { get; set; }
+    [Inject] public IRepository<TrainingResponse, TrainingRequestModel> TrainingRepository { get; set; }
+    [Inject] public IRepository<LoadOutPartResponse, LoadOutPartRequest> LoadoutRepository { get; set; }
     [Inject] public ISnackbar Snackbar { get; set; }
     
-    private TrainingResponseModel _trainingBeforeEdit;
-    private List<LoadOutPartResponseModel> _loadOut;
-    private List<LoadOutPartResponseModel> _loadOutBeforeEdit;
+    private TrainingResponse _trainingBeforeEdit;
+    private List<LoadOutPartResponse> _loadOut;
+    private List<LoadOutPartResponse> _loadOutBeforeEdit;
     private bool _editMode;
 
     protected override async Task OnInitializedAsync()
@@ -50,23 +50,32 @@ public partial class TrainingEditorDialog : ComponentBase
         
         async Task<bool> UpdateTraining()
         {
-            var trainingResponse = await TrainingRepository.Update(TrainingToEdit) as TrainingResponseModel;
+            var trainingResponse = await TrainingRepository.Update(TrainingToEdit);
             return trainingResponse.IsResponseSuccess;
         }
         
         async Task<bool> InsertNewTraining()
         {
-            var loadOutRequests = _loadOut.ConvertAll(x => x.ToRequestModel());
-            var training = TrainingToEdit.ToRequestModel();
+            //var loadOutRequests = _loadOut.ConvertAll(x => x.ToRequestModel());
+            //var training = TrainingToEdit.ToRequestModel();
             
-            var trainingResponse = await TrainingRepository.Insert(training) as TrainingResponseModel;
+            var trainingResponse = await TrainingRepository.Insert(TrainingToEdit2);
             var isSuccess = trainingResponse.IsResponseSuccess;
             if (isSuccess)
             {
                 var trainingId = trainingResponse.Id;
-                var loadOutResponse = 
-                    await TrainingRepository.InsertLoadOut(trainingId, loadOutRequests) as List<LoadOutPartResponseModel>;
-                isSuccess = loadOutResponse[0].IsResponseSuccess;
+                foreach (var loadOut in _loadOut)
+                {
+                    LoadOutPartRequest request = new()
+                    {
+                        ItemCategoryId = loadOut.CategoryId,
+                        Count = loadOut.Count,
+                        TrainingId = trainingId
+                    };
+                    var loadOutResponse = await LoadoutRepository.Insert(request);
+                    
+                }
+                //isSuccess = loadOutResponse[0].IsResponseSuccess;
             }
             return isSuccess;
         }

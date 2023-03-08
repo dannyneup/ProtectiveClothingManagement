@@ -16,14 +16,14 @@
                               IconSize="Size.Medium" @bind-Value="_searchString"
                               Class="searchTextField"/>
             </MudCardHeader>
-            <MudTable T="ItemCategoryResponseModel" Items="_itemCategories" Hover="true" SortLabel="Sort By"
+            <MudTable T="ItemCategoryResponse" Items="_itemCategories" Hover="true" SortLabel="Sort By"
                       Filter="ItemCategoryFilter"
                       Elevation="0"
                       Dense="true"
                       Context="itemCategory">
                 <HeaderContent>
                     <MudTh>
-                        <MudTableSortLabel SortBy="new Func<ItemCategoryResponseModel, object>(x => x.Name)">@Localization.itemCategory</MudTableSortLabel>
+                        <MudTableSortLabel SortBy="new Func<ItemCategoryResponse, object>(x => x.Name)">@Localization.itemCategory</MudTableSortLabel>
                     </MudTh>
                     <MudTh>@Localization.count</MudTh>
                 </HeaderContent>

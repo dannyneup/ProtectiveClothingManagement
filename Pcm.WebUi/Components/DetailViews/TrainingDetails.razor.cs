@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Pcm.Application.Interfaces.Repositories;
+using Pcm.Application.Interfaces;
+using Pcm.Infrastructure.RequestModels;
 using Pcm.Infrastructure.ResponseModels;
 using Pcm.WebUi.Resources;
 
@@ -13,18 +14,24 @@ public partial class TrainingDetails : ComponentBase
     [Parameter] public string? Height { get; set; }
     [Parameter] public bool FixedHeader { get; set; } = true;
     
-    [Inject] public ITrainingRepository TrainingRepository { get; set; }
+    [Inject] public IRepository<PersonResponse, PersonRequest> PersonRepository { get; set; }
+    [Inject] public IRepository<LoadOutPartResponse, LoadOutPartRequest> LoadOutRepository { get; set; }
 
-    private IEnumerable<PersonInfoResponseModel> _persons;
-    private IEnumerable<LoadOutPartResponseModel> _loadOut;
+    private IEnumerable<PersonResponse> _persons;
+    private IEnumerable<LoadOutPartResponse> _loadOut;
 
     protected override async Task OnInitializedAsync()
     {
-        _persons = await TrainingRepository.GetTrainees(TrainingId) as IEnumerable<PersonInfoResponseModel>;
-        _loadOut = await TrainingRepository.GetLoadOut(TrainingId) as IEnumerable<LoadOutPartResponseModel>;
+        Dictionary<string, string>? personQuery = new()
+        {
+            {"extended", "true"},
+            {"training-id", TrainingId.ToString()}
+        };
+        _persons = await PersonRepository.GetAll(personQuery);
+        _loadOut = await LoadOutRepository.GetAll();
     }
     
-    private TableGroupDefinition<PersonInfoResponseModel> _personInfosGroupDefinition = new()
+    private TableGroupDefinition<PersonResponse> _personInfosGroupDefinition = new()
     {
         GroupName = Localization.group,
         Indentation = false,

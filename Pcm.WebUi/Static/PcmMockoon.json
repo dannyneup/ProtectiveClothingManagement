@@ -45,7 +45,7 @@
           "body": "[\n  {\n    \"personnelNumber\": 1552,\n    \"firstName\": \"Danny\",\n    \"lastName\": \"Neupauer\",\n    \"emailAddress\": \"dannyneupauer@gmail.com\"\n  },\n  {\n    \"personnelNumber\": 9999,\n    \"firstName\": \"Max\",\n    \"lastName\": \"Muster\",\n    \"emailAddress\": \"maxmuster@gmail.com\"\n  },\n  {\n    \"personnelNumber\": 8888,\n    \"firstName\": \"Max\",\n    \"lastName\": \"Müller\"\n    \"emailAddress\": \"maxmueller@gmail.com\"\n  }\n]",
           "latency": 10,
           "statusCode": 200,
-          "label": "default",
+          "label": "",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",
@@ -58,42 +58,97 @@
           "default": true
         },
         {
-          "uuid": "3b37db93-e967-4427-8dc2-6b2fd0491fe7",
-          "body": "{\n  \"id\": 1,\n  \"firstName\": \"Max\",\n  \"lastName\": \"Muster\",\n  \"apprenticeship\": \"DS Wirtschaftsinformatik\",\n  \"emailAdress\": \"mustermail@gmail.com\"\n}",
-          "latency": 5000,
+          "uuid": "f688b188-f8bd-4d82-92ee-da5c547a5fe6",
+          "body": "[\n  {\n    \"personnelNumber\": 1552,\n    \"firstName\": \"Danny\",\n    \"lastName\": \"Neupauer\",\n    \"emailAddress\": \"dannyneupauer@gmail.com\",\n    \"trainingName\": \"Wirtschaftsinformatik\",\n    \"trainingType\": \"Duales Studium\",\n    \"yearStarted\": \"2020\"\n  },\n  {\n    \"personnelNumber\": 9999,\n    \"firstName\": \"Max\",\n    \"lastName\": \"Muster\",\n    \"emailAddress\": \"maxmuster@gmail.com\",\n    \"trainingName\": \"Industriekaufmann/-frau\",\n    \"trainingType\": \"Ausbildung\",\n    \"yearStarted\": \"2020\"\n  },\n  {\n    \"personnelNumber\": 8888,\n    \"firstName\": \"Max\",\n    \"lastName\": \"Müller\",\n    \"emailAddress\": \"maxmueller@gmail.com\",\n    \"trainingName\": \"Industriekaufmann/-frau\",\n    \"trainingType\": \"Ausbildung\",\n    \"yearStarted\": \"2019\"\n  }\n]",
+          "latency": 10,
           "statusCode": 200,
-          "label": "latenz",
+          "label": "extended info",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",
           "databucketID": "",
           "sendFileAsBody": false,
-          "rules": [],
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "extended",
+              "value": "true",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
           "default": false
         },
         {
-          "uuid": "5ec06589-900e-40d6-b24b-f104904a86f9",
-          "body": "{}",
-          "latency": 0,
+          "uuid": "ae111065-4a9b-4084-80f2-ab363c572bb9",
+          "body": "{{#switch (queryParam 'training-id')}}\n  {{#case '1'}}\n  [\n    {\n      \"personnelNumber\": 1552,\n      \"firstName\": \"Danny\",\n      \"lastName\": \"Neupauer\",\n      \"emailAddress\": \"dannyneupauer@gmail.com\",\n      \"trainingName\": \"Wirtschaftsinformatik\",\n      \"trainingType\": \"Duales Studium\",\n      \"yearStarted\": \"2020\"\n    }\n  ]\n  {{/case}}\n  {{#case '2'}}\n  [\n    {\n      \"personnelNumber\": 8888,\n      \"firstName\": \"Max\",\n      \"lastName\": \"Müller\",\n      \"emailAddress\": \"maxmueller@gmail.com\",\n      \"trainingName\": \"Industriekaufmann/-frau\",\n      \"trainingType\": \"Ausbildung\",\n      \"yearStarted\": \"2019\"\n    },\n    {\n      \"personnelNumber\": 9999,\n      \"firstName\": \"Max\",\n      \"lastName\": \"Muster\",\n      \"emailAddress\": \"maxmuster@gmail.com\",\n      \"trainingName\": \"Industriekaufmann/-frau\",\n      \"trainingType\": \"Ausbildung\",\n      \"yearStarted\": \"2020\"\n    }\n  ]\n  {{/case}}\n{{/switch}}",
+          "latency": 10,
           "statusCode": 200,
-          "label": "not found",
+          "label": "extended info, filter training",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",
           "databucketID": "",
           "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "extended",
+              "value": "true",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "query",
+              "modifier": "training-id",
+              "value": "/1|2/g",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "3ee0df68-3acf-41ce-a3c4-dda973b6484b",
+          "body": "{{#switch (queryParam 'training-id')}}\n  {{#case '1'}}\n  [\n    {\n      \"personnelNumber\": 1552,\n      \"firstName\": \"Danny\",\n      \"lastName\": \"Neupauer\",\n      \"emailAddress\": \"dannyneupauer@gmail.com\"\n    }\n  ]\n  {{/case}}\n  {{#case '2'}}\n  [\n    {\n      \"personnelNumber\": 8888,\n      \"firstName\": \"Max\",\n      \"lastName\": \"Müller\"\n      \"emailAddress\": \"maxmueller@gmail.com\"\n    },\n    {\n      \"personnelNumber\": 9999,\n      \"firstName\": \"Max\",\n      \"lastName\": \"Muster\",\n      \"emailAddress\": \"maxmuster@gmail.com\"\n    }\n  ]\n  {{/case}}\n{{/switch}}",
+          "latency": 10,
+          "statusCode": 200,
+          "label": "basic info, filter training",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "extended",
+              "value": "true",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "query",
+              "modifier": "training-id",
+              "value": "/1|2/g",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "AND",
           "disableTemplating": false,
           "fallbackTo404": false,
           "default": false
         }
       ],
       "enabled": true,
-      "responseMode": "DISABLE_RULES"
+      "responseMode": null
     },
     {
       "uuid": "0500ee53-f81f-4c90-a0be-1878c497b666",
@@ -103,7 +158,7 @@
       "responses": [
         {
           "uuid": "ac016676-8ee2-44e8-a7bd-6f007d38899f",
-          "body": "{{#switch (urlParam 'id')}}\n  {{#case '1552'}}\n    {\n      \"personnelNumber\": 1552,\n      \"firstName\": \"Danny\",\n      \"lastName\": \"Neupauer\",\n      \"emailAddress\": \"dannyneupauer@gmail.com\"\n    }\n  {{/case}}\n  {{#case '99999'}}\n    {\n      \"personnelNumber\": 9999,\n      \"firstName\": \"Max\",\n      \"lastName\": \"Muster\",\n      \"emailAddress\": \"maxmuster@gmail.com\"\n    }\n  {{/case}}\n  {{#case '8888'}}\n    {\n      \"personnelNumber\": 8888,\n      \"firstName\": \"Max\",\n      \"lastName\": \"Müller\"\n      \"emailAddress\": \"maxmueller@gmail.com\"\n    }\n  {{/case}}\n{{/switch}}\n",
+          "body": "{{#switch (urlParam 'id')}}\n  {{#case '1552'}}\n    {\n      \"personnelNumber\": 1552,\n      \"firstName\": \"Danny\",\n      \"lastName\": \"Neupauer\",\n      \"emailAddress\": \"dannyneupauer@gmail.com\"\n    }\n  {{/case}}\n  {{#case '9999'}}\n    {\n      \"personnelNumber\": 9999,\n      \"firstName\": \"Max\",\n      \"lastName\": \"Muster\",\n      \"emailAddress\": \"maxmuster@gmail.com\"\n    }\n  {{/case}}\n  {{#case '8888'}}\n    {\n      \"personnelNumber\": 8888,\n      \"firstName\": \"Max\",\n      \"lastName\": \"Müller\"\n      \"emailAddress\": \"maxmueller@gmail.com\"\n    }\n  {{/case}}\n{{/switch}}\n",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -144,6 +199,31 @@
           "disableTemplating": false,
           "fallbackTo404": false,
           "default": true
+        },
+        {
+          "uuid": "e6daf86f-5b4e-45da-86ff-8c0cc6920417",
+          "body": "[\n  {\n    \"id\": 1,\n    \"typeId\": 1,\n    \"typeName\": \"tolle Latzhose\",\n    \"style\": \"blau\",\n    \"categoryId\": 1,\n    \"categoryName\": \"Latzhose\",\n    \"size\": \"M\",\n    \"orderId\": 1,\n    \"orderedAt\": \"Amazon\",\n    \"status\": \"bestellt\",\n    \"statusChanged\": \"2022-11-23\"\n  },\n  {\n    \"id\": 2,\n    \"typeId\": 2,\n    \"typeName\": \"mega tolle Latzhose\",\n    \"style\": \"schwarz\",\n    \"categoryId\": 1,\n    \"CategoryName\": \"Latzhose\",\n    \"size\": \"M\",\n    \"orderId\": 2,\n    \"orderedAt\": \"Max Schön\"\n    \"status\": \"bestellt\",\n    \"statusChanged\": \"2022-11-23\"\n  }\n]",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "extended info",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "extended",
+              "value": "true",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
         }
       ],
       "enabled": true,
@@ -198,6 +278,31 @@
           "disableTemplating": false,
           "fallbackTo404": false,
           "default": true
+        },
+        {
+          "uuid": "c01e97ba-5504-4d18-88a8-39254f847145",
+          "body": "[\n  {\n    \"id\": 0,\n    \"name\": \"tolle Latzhose\",\n    \"manufacturer\": \"Hersteller\",\n    \"category\": {\n      \"id\": 0,\n      \"name\": \"Latzhose\"\n    }\n  },\n  {\n    \"id\": 1,\n    \"name\": \"mega tolle Latzhose\",\n    \"manufacturer\": \"anderer Hersteller\",\n    \"category\": {\n      \"id\": 1,\n      \"name\": \"Lichtbogenschutz-Latzhose\"\n    }\n  }\n]",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "extend info",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "extended",
+              "value": "true",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
         }
       ],
       "enabled": true,
@@ -268,7 +373,24 @@
           "body": "[\n  {\n    \"id\": 1,\n    \"shop\": \"Amazon\",\n    \"number\": \"12345\",\n    \"date\": \"2022-11-23\"\n  },\n  {\n    \"id\": 2,\n    \"shop\": \"Max Schön\",\n    \"Nnumber\": \"X48Z2\",\n    \"date\": \"2022-11-23\"\n  }\n]",
           "latency": 10,
           "statusCode": 200,
-          "label": "default",
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "0f9937c5-c3b5-484f-9b47-5a38f98d40e9",
+          "body": "[\n  {\n    \"id\": 1,\n    \"shop\": \"Amazon\",\n    \"number\": \"12345\",\n    \"date\": \"2022-11-23\",\n    \"items\": [\n      {\n        \"id\": 1,\n        \"style\": \"blau\",\n        \"size\": \"M\",\n        \"status\": \"bestellt\",\n        \"statusChanged\": \"2022-11-23\"\n      },\n      {\n        \"id\": 2,\n        \"style\": \"schwarz\",\n        \"size\": \"M\",\n        \"status\": \"bestellt\",\n        \"statusChanged\": \"2022-11-23\"\n      }\n    ]\n  },\n  {\n    \"id\": 2,\n    \"shop\": \"Max Schön\",\n    \"Nnumber\": \"X48Z2\",\n    \"date\": \"2022-11-23\",\n    \"items\": [\n      {\n        \"id\": 1,\n        \"style\": \"blau\",\n        \"size\": \"M\",\n        \"status\": \"bestellt\",\n        \"statusChanged\": \"2022-11-23\"\n      }\n    ]\n  }\n]",
+          "latency": 10,
+          "statusCode": 200,
+          "label": "extended info",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",
@@ -276,47 +398,13 @@
           "sendFileAsBody": false,
           "rules": [
             {
-              "target": "params",
-              "modifier": "",
-              "value": "",
+              "target": "query",
+              "modifier": "extended",
+              "value": "true",
               "invert": false,
               "operator": "equals"
             }
           ],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": true
-        },
-        {
-          "uuid": "b287cf1b-db80-4482-9b83-da3f28afd373",
-          "body": "{\n  \"id\": 1,\n  \"firstName\": \"Max\",\n  \"lastName\": \"Muster\",\n  \"apprenticeship\": \"DS Wirtschaftsinformatik\",\n  \"emailAdress\": \"mustermail@gmail.com\"\n}",
-          "latency": 5000,
-          "statusCode": 200,
-          "label": "latenz",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": false
-        },
-        {
-          "uuid": "93333f15-d769-4b37-9995-5ef9b53c74a0",
-          "body": "{}",
-          "latency": 0,
-          "statusCode": 200,
-          "label": "not found",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
@@ -335,33 +423,6 @@
         {
           "uuid": "b2c81c3b-aab3-4773-86ad-f98460e7cf40",
           "body": "{{#switch (urlParam 'id')}}\n  {{#case '1'}}\n    {\n      \"id\": 1,\n      \"shop\": \"Amazon\",\n      \"number\": \"12345\",\n      \"date\": \"2022-11-23\"\n    }\n  {{/case}}\n  {{#case '2'}}\n    {\n      \"id\": 2,\n      \"shop\": \"Max Schön\",\n      \"number\": \"X48Z2\",\n      \"date\": \"2022-11-23\"\n    }\n  {{/case}}\n{{/switch}}\n",
-          "latency": 0,
-          "statusCode": 200,
-          "label": "",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": true
-        }
-      ],
-      "enabled": true,
-      "responseMode": null
-    },
-    {
-      "uuid": "7fd63ab0-8467-418a-ae06-dbaac716203e",
-      "documentation": "",
-      "method": "get",
-      "endpoint": "training-infos",
-      "responses": [
-        {
-          "uuid": "49a61695-9b1a-40f0-bd4d-1fb63917a03f",
-          "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Wirtschaftsinformatik\",\n    \"type\": \"Duales Studium\",\n    \"traineeCount\": 1,\n    \"yearCount\": 1\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Industriekaufmann/-frau\",\n    \"type\": \"Ausbildung\",\n    \"traineeCount\": 2,\n    \"yearCount\": 2\n  }\n]",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -402,6 +463,31 @@
           "disableTemplating": false,
           "fallbackTo404": false,
           "default": true
+        },
+        {
+          "uuid": "aeac4dd4-d1c6-4f11-b12d-e317fd80be10",
+          "body": "{{#switch (urlParam 'id')}}\n  {{#case '1'}}\n    {\n      \"id\": 1,\n      \"name\": \"Wirtschaftsinformatik\",\n      \"type\": \"Duales Studium\",\n      \"traineeCount\": 1,\n      \"yearCount\": 1\n    }\n  {{/case}}\n  {{#case '2'}}\n  {\n    \"id\": 2,\n    \"name\": \"Industriekaufmann/-frau\",\n    \"type\": \"Ausbildung\",\n    \"traineeCount\": 2,\n    \"yearCount\": 2\n  }\n  {{/case}}\n{{/switch}}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "extended info",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "extended",
+              "value": "true",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
         }
       ],
       "enabled": true,
@@ -415,172 +501,27 @@
       "responses": [
         {
           "uuid": "2cc60b93-6de0-4f88-9670-668bf33ab63a",
+          "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Wirtschaftsinformatik\",\n    \"type\": \"Duales Studium\",\n    \"traineeCount\": 1,\n    \"yearCount\": 1\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Industriekaufmann/-frau\",\n    \"type\": \"Ausbildung\",\n    \"traineeCount\": 2,\n    \"yearCount\": 2\n  }\n]",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "eccecf9b-42e5-43d5-aafd-8e71b102eb13",
           "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Wirtschaftsinformatik\",\n    \"type\": \"Duales Studium\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Industriekaufmann/-frau\",\n    \"type\": \"Ausbildung\"\n  }\n]",
           "latency": 0,
           "statusCode": 200,
-          "label": "",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": true
-        }
-      ],
-      "enabled": true,
-      "responseMode": null
-    },
-    {
-      "uuid": "5eb2fa26-b0d1-4278-8f81-7051b575f742",
-      "documentation": "",
-      "method": "get",
-      "endpoint": "trainings/:id/loadout",
-      "responses": [
-        {
-          "uuid": "7bb7209f-4725-4907-be6b-149a97604bec",
-          "body": "{{#switch (urlParam 'id')}}\n  {{#case '1'}}\n  [\n    {\n      \"categoryId\": 2,\n      \"categoryName\": \"Poloshirt\",\n      \"count\": 3\n    }\n  ]\n  {{/case}}\n  {{#case '2'}}\n    [\n      {\n        \"categoryId\": 2,\n        \"categoryName\": \"Poloshirt\",\n        \"count\": 5\n      },\n      {\n        \"categoryId\": 0,\n        \"categoryName\": \"Latzhose\",\n        \"count\": 1\n      }\n    ]\n  {{/case}}\n{{/switch}}",
-          "latency": 0,
-          "statusCode": 200,
-          "label": "",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": true
-        }
-      ],
-      "enabled": true,
-      "responseMode": null
-    },
-    {
-      "uuid": "817578ac-c72c-41d3-b0c6-06385b3ae53a",
-      "documentation": "",
-      "method": "get",
-      "endpoint": "training-infos/:id",
-      "responses": [
-        {
-          "uuid": "65a85b6e-f17d-412e-aadc-bba292aa4ffd",
-          "body": "{{#switch (urlParam 'id')}}\n  {{#case '1'}}\n    {\n      \"id\": 1,\n      \"name\": \"Wirtschaftsinformatik\",\n      \"type\": \"Duales Studium\",\n      \"traineeCount\": 1,\n      \"yearCount\": 1\n    }\n  {{/case}}\n  {{#case '2'}}\n  {\n    \"id\": 2,\n    \"name\": \"Industriekaufmann/-frau\",\n    \"type\": \"Ausbildung\",\n    \"traineeCount\": 2,\n    \"yearCount\": 2\n  }\n  {{/case}}\n{{/switch}}",
-          "latency": 0,
-          "statusCode": 200,
-          "label": "",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": true
-        }
-      ],
-      "enabled": true,
-      "responseMode": null
-    },
-    {
-      "uuid": "05304a10-0fdf-440f-8739-897f5597e974",
-      "documentation": "",
-      "method": "get",
-      "endpoint": "trainings/:id/persons",
-      "responses": [
-        {
-          "uuid": "5b3d9070-727a-46f3-b78a-4da2e115e792",
-          "body": "{{#switch (urlParam 'id')}}\n  {{#case '1'}}\n    [\n      {\n        \"personnelNumber\": 1552,\n        \"firstName\": \"Danny\",\n        \"lastName\": \"Neupauer\",\n        \"emailAddress\": \"dannyneupauer@gmail.com\"\n      }\n    ]\n  {{/case}}\n  {{#case '2'}}\n    [\n      {\n        \"personnelNumber\": 9999,\n        \"firstName\": \"Max\",\n        \"lastName\": \"Muster\",\n        \"emailAdress\": \"maxmuster@gmail.com\"\n      },\n      {\n        \"personnelNumber\": 8888,\n        \"firstName\": \"Max\",\n        \"lastName\": \"Müller\",\n        \"emailAddress\": \"maxmueller@gmail.com\"\n      }\n    ]\n  {{/case}}\n{{/switch}}",
-          "latency": 0,
-          "statusCode": 200,
-          "label": "",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": true
-        }
-      ],
-      "enabled": true,
-      "responseMode": null
-    },
-    {
-      "uuid": "61f86043-87cb-4d1e-b310-15e670cae90c",
-      "documentation": "",
-      "method": "get",
-      "endpoint": "orders/:id/items",
-      "responses": [
-        {
-          "uuid": "7897a783-4ecc-48e6-a8f2-1635982223ac",
-          "body": "{{#switch (urlParam 'id')}}\n  {{#case '1'}}\n    [\n      \n    ]\n  {{/case}}\n  {{#case '2'}}\n    [\n      \n    ]\n  {{/case}}\n{{/switch}}\n",
-          "latency": 0,
-          "statusCode": 200,
-          "label": "",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": true
-        }
-      ],
-      "enabled": true,
-      "responseMode": null
-    },
-    {
-      "uuid": "2eb2e139-a03d-47d2-a745-7867e7a2be26",
-      "documentation": "",
-      "method": "get",
-      "endpoint": "iteminfos",
-      "responses": [
-        {
-          "uuid": "3f5ae056-2061-4e45-bb41-a58e576d7c3c",
-          "body": "[\n  {\n    \"id\": 1,\n    \"typeId\": 1,\n    \"typeName\": \"tolle Latzhose\",\n    \"style\": \"blau\",\n    \"categoryId\": 1,\n    \"categoryName\": \"Latzhose\",\n    \"size\": \"M\",\n    \"orderId\": 1,\n    \"orderedAt\": \"Amazon\",\n    \"status\": \"bestellt\",\n    \"statusChanged\": \"2022-11-23\"\n  },\n  {\n    \"id\": 2,\n    \"typeId\": 2,\n    \"typeName\": \"mega tolle Latzhose\",\n    \"style\": \"schwarz\",\n    \"categoryId\": 1,\n    \"CategoryName\": \"Latzhose\",\n    \"size\": \"M\",\n    \"orderId\": 2,\n    \"orderedAt\": \"Max Schön\"\n    \"status\": \"bestellt\",\n    \"statusChanged\": \"2022-11-23\"\n  }\n]",
-          "latency": 0,
-          "statusCode": 200,
-          "label": "",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": true
-        }
-      ],
-      "enabled": true,
-      "responseMode": null
-    },
-    {
-      "uuid": "a9e661ac-8f0c-4294-824c-b1d77606e91f",
-      "documentation": "",
-      "method": "get",
-      "endpoint": "order-infos",
-      "responses": [
-        {
-          "uuid": "23ce48b2-63b4-4e3c-a616-266e23662bd9",
-          "body": "[\n  {\n    \"id\": 1,\n    \"shop\": \"Amazon\",\n    \"number\": \"12345\",\n    \"date\": \"2022-11-23\",\n    \"itemCount\": 1\n  },\n  {\n    \"id\": 2,\n    \"shop\": \"Max Schön\",\n    \"Nnumber\": \"X48Z2\",\n    \"date\": \"2022-11-23\",\n    \"itemCout\": 4\n  }\n]",
-          "latency": 10,
-          "statusCode": 200,
-          "label": "default",
+          "label": "extended info",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",
@@ -588,9 +529,9 @@
           "sendFileAsBody": false,
           "rules": [
             {
-              "target": "params",
-              "modifier": "",
-              "value": "",
+              "target": "query",
+              "modifier": "extended",
+              "value": "true",
               "invert": false,
               "operator": "equals"
             }
@@ -598,68 +539,7 @@
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
-          "default": true
-        },
-        {
-          "uuid": "2a8e338a-0fc3-4a9f-8cc4-3beb542e4ff8",
-          "body": "{\n  \"id\": 1,\n  \"firstName\": \"Max\",\n  \"lastName\": \"Muster\",\n  \"apprenticeship\": \"DS Wirtschaftsinformatik\",\n  \"emailAdress\": \"mustermail@gmail.com\"\n}",
-          "latency": 5000,
-          "statusCode": 200,
-          "label": "latenz",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
           "default": false
-        },
-        {
-          "uuid": "8413bbc2-77c3-4df0-a3c4-00bbf740f704",
-          "body": "{}",
-          "latency": 0,
-          "statusCode": 200,
-          "label": "not found",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": false
-        }
-      ],
-      "enabled": true,
-      "responseMode": null
-    },
-    {
-      "uuid": "4fcf7e4c-2e8d-424a-b684-3baa34938e57",
-      "documentation": "",
-      "method": "get",
-      "endpoint": "model-infos",
-      "responses": [
-        {
-          "uuid": "e1cc0bb7-2dc8-424e-8fd9-779a31720341",
-          "body": "[\n  {\n    \"id\": 0,\n    \"name\": \"tolle Latzhose\",\n    \"manufacturer\": \"Hersteller\",\n    \"category\": {\n      \"id\": 0,\n      \"name\": \"Latzhose\"\n    }\n  },\n  {\n    \"id\": 1,\n    \"name\": \"mega tolle Latzhose\",\n    \"manufacturer\": \"anderer Hersteller\",\n    \"category\": {\n      \"id\": 1,\n      \"name\": \"Lichtbogenschutz-Latzhose\"\n    }\n  }\n]",
-          "latency": 0,
-          "statusCode": 200,
-          "label": "",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": true
         }
       ],
       "enabled": true,
@@ -674,60 +554,6 @@
         {
           "uuid": "7285aa49-7046-4d4d-ab91-83a4447f5a6f",
           "body": "{{#switch (urlParam 'id')}}\n  {{#case '1'}}\n    {\n      \"id\": 1,\n      \"name\": \"Latzhose\"\n    }\n  {{/case}}\n  {{#case '2'}}\n    {\n      \"id\": 2,\n      \"name\": \"Lichtbogenlatzhose\"\n    }\n  {{/case}}\n  {{#case '3'}}\n    {\n      \"id\": 3,\n      \"name\": \"Poloshirt\"\n    }\n  {{/case}}\n{{/switch}}",
-          "latency": 0,
-          "statusCode": 200,
-          "label": "",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": true
-        }
-      ],
-      "enabled": true,
-      "responseMode": null
-    },
-    {
-      "uuid": "1fcc523e-0b80-4dad-9a3a-612fdd9fd7d1",
-      "documentation": "",
-      "method": "get",
-      "endpoint": "person-infos",
-      "responses": [
-        {
-          "uuid": "619edd4a-f55e-44fe-b929-c03ef80a04b2",
-          "body": "[\n  {\n    \"personnelNumber\": 1552,\n    \"firstName\": \"Danny\",\n    \"lastName\": \"Neupauer\",\n    \"emailAddress\": \"dannyneupauer@gmail.com\",\n    \"trainingName\": \"Wirtschaftsinformatik\",\n    \"trainingType\": \"Duales Studium\",\n    \"yearStarted\": \"2020\"\n  },\n  {\n    \"personnelNumber\": 9999,\n    \"firstName\": \"Max\",\n    \"lastName\": \"Muster\",\n    \"emailAddress\": \"maxmuster@gmail.com\",\n    \"trainingName\": \"Industriekaufmann/-frau\",\n    \"trainingType\": \"Ausbildung\",\n    \"yearStarted\": \"2020\"\n  },\n  {\n    \"personnelNumber\": 8888,\n    \"firstName\": \"Max\",\n    \"lastName\": \"Müller\",\n    \"emailAddress\": \"maxmueller@gmail.com\",\n    \"trainingName\": \"Industriekaufmann/-frau\",\n    \"trainingType\": \"Ausbildung\",\n    \"yearStarted\": \"2019\"\n  }\n]",
-          "latency": 0,
-          "statusCode": 200,
-          "label": "",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": true
-        }
-      ],
-      "enabled": true,
-      "responseMode": null
-    },
-    {
-      "uuid": "241d842c-7303-4189-a6c9-352125d139b8",
-      "documentation": "",
-      "method": "get",
-      "endpoint": "trainings/:id/person-infos",
-      "responses": [
-        {
-          "uuid": "5b4854e2-4587-4b8d-a376-c0d5e29846fd",
-          "body": "{{#switch (urlParam 'id')}}\n  {{#case '1'}}\n    [\n      {\n        \"personnelNumber\": 1552,\n        \"firstName\": \"Danny\",\n        \"lastName\": \"Neupauer\",\n        \"emailAddress\": \"dannyneupauer@gmail.com\",\n        \"trainingName\": \"Wirtschaftsinformatik\",\n        \"trainingType\": \"Duales Studium\",\n        \"yearStarted\": \"2020\"\n      }\n    ]\n  {{/case}}\n  {{#case '2'}}\n    [\n      {\n        \"personnelNumber\": 9999,\n        \"firstName\": \"Max\",\n        \"lastName\": \"Muster\",\n        \"emailAddress\": \"maxmuster@gmail.com\",\n        \"trainingName\": \"Industriekaufmann/-frau\",\n        \"trainingType\": \"Ausbildung\",\n        \"yearStarted\": \"2020\"\n      },\n      {\n        \"personnelNumber\": 8888,\n        \"firstName\": \"Max\",\n        \"lastName\": \"Müller\",\n        \"emailAddress\": \"maxmueller@gmail.com\",\n        \"trainingName\": \"Industriekaufmann/-frau\",\n        \"trainingType\": \"Ausbildung\",\n        \"yearStarted\": \"2019\"\n      }\n    ]\n  {{/case}}\n{{/switch}}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -791,33 +617,6 @@
       "responseMode": null
     },
     {
-      "uuid": "1f6a7b33-17c1-4999-a9e2-9f39b58bb7c7",
-      "documentation": "",
-      "method": "post",
-      "endpoint": "trainings/:id/loadout",
-      "responses": [
-        {
-          "uuid": "ef61885a-c42e-4a32-9419-721987622d83",
-          "body": "{{#switch (urlParam 'id')}}\n  {{#case '3'}}\n    [\n      {\n        \"categoryId\": 2,\n        \"categoryName\": \"Poloshirt\",\n        \"count\": 5\n      },\n      {\n        \"categoryId\": 0,\n        \"categoryName\": \"Latzhose\",\n        \"count\": 4\n      }\n    ]\n  {{/case}}\n{{/switch}}",
-          "latency": 0,
-          "statusCode": 200,
-          "label": "",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": true
-        }
-      ],
-      "enabled": true,
-      "responseMode": null
-    },
-    {
       "uuid": "4d902365-6cbc-49c2-89ed-39ef69acb2e4",
       "documentation": "",
       "method": "put",
@@ -856,6 +655,92 @@
           "disableTemplating": false,
           "fallbackTo404": false,
           "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "a9c19d25-9954-4844-9ef7-cd0a70eedd60",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "loadouts",
+      "responses": [
+        {
+          "uuid": "296e2bbb-488c-4a15-9ccc-a1afbac66773",
+          "body": "[\n  {\n    \"categoryId\": 0,\n    \"categoryName\": \"Poloshirt\",\n    \"count\": 5\n  },\n  {\n    \"categoryId\": 1,\n    \"categoryName\": \"Latzhose\",\n    \"count\": 1\n  },\n  {\n    \"categoryId\": 3,\n    \"categoryName\": \"Doppellatzhose\",\n    \"count\": 2\n  },\n  {\n    \"categoryId\": 4,\n    \"categoryName\": \"Dreifachlatzhose\",\n    \"count\": 3\n  }\n]",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "6729a012-7ef6-4aa3-8274-ba1d9c06a3f7",
+          "body": "{{#switch (queryParam 'training-id')}}\n  {{#case '1'}}\n  [\n    {\n      \"categoryId\": 2,\n      \"categoryName\": \"Poloshirt\",\n      \"count\": 3\n    }\n  ]\n  {{/case}}\n  {{#case '2'}}\n    [\n      {\n        \"categoryId\": 2,\n        \"categoryName\": \"Poloshirt\",\n        \"count\": 5\n      },\n      {\n        \"categoryId\": 0,\n        \"categoryName\": \"Latzhose\",\n        \"count\": 1\n      }\n    ]\n  {{/case}}\n{{/switch}}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "training-id",
+              "value": "1",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "query",
+              "modifier": "training-id",
+              "value": "2",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "60388b7a-345d-4ea9-8fdb-d0efc46ab478",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "loadouts:training-id",
+      "responses": [
+        {
+          "uuid": "308dc048-8785-4d6d-a1ab-96a81f7ca7ed",
+          "body": "{{#switch (urlParam 'id')}}\n  {{#case '3'}}\n    [\n      {\n        \"categoryId\": 2,\n        \"categoryName\": \"Poloshirt\",\n        \"count\": 5\n      },\n      {\n        \"categoryId\": 0,\n        \"categoryName\": \"Latzhose\",\n        \"count\": 4\n      }\n    ]\n  {{/case}}\n{{/switch}}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
         }
       ],
       "enabled": true,
@@ -901,58 +786,18 @@
       "collapsed": false,
       "children": [
         {
-          "type": "folder",
-          "uuid": "679de4e7-aef1-4964-add0-e779818f542f"
-        },
-        {
-          "type": "folder",
-          "uuid": "1df3a1b7-68b8-4ec3-9c3e-5b507a82db4a"
-        }
-      ]
-    },
-    {
-      "uuid": "679de4e7-aef1-4964-add0-e779818f542f",
-      "name": "get",
-      "collapsed": false,
-      "children": [
-        {
           "type": "route",
           "uuid": "e32a9e7c-d2ca-43df-968a-3df10fc03225"
         },
         {
           "type": "route",
           "uuid": "0500ee53-f81f-4c90-a0be-1878c497b666"
-        },
-        {
-          "type": "route",
-          "uuid": "1fcc523e-0b80-4dad-9a3a-612fdd9fd7d1"
         }
       ]
-    },
-    {
-      "uuid": "1df3a1b7-68b8-4ec3-9c3e-5b507a82db4a",
-      "name": "post",
-      "collapsed": false,
-      "children": []
     },
     {
       "uuid": "c5092b09-a206-4689-9c31-d23321c08f57",
       "name": "items",
-      "collapsed": true,
-      "children": [
-        {
-          "type": "folder",
-          "uuid": "424e90b9-c6f1-4704-a6b8-7094c66df34d"
-        },
-        {
-          "type": "folder",
-          "uuid": "fd266a02-444f-45f4-ba1d-9891828f48d4"
-        }
-      ]
-    },
-    {
-      "uuid": "424e90b9-c6f1-4704-a6b8-7094c66df34d",
-      "name": "get",
       "collapsed": false,
       "children": [
         {
@@ -962,37 +807,12 @@
         {
           "type": "route",
           "uuid": "0a3bdba2-1037-419d-8a4e-0e9f1d81d1dc"
-        },
-        {
-          "type": "route",
-          "uuid": "2eb2e139-a03d-47d2-a745-7867e7a2be26"
         }
       ]
-    },
-    {
-      "uuid": "fd266a02-444f-45f4-ba1d-9891828f48d4",
-      "name": "post",
-      "collapsed": true,
-      "children": []
     },
     {
       "uuid": "99cbf24b-e822-420c-9cac-776c4c0b42ae",
       "name": "models",
-      "collapsed": true,
-      "children": [
-        {
-          "type": "folder",
-          "uuid": "931d6ba4-c150-4601-8b34-14a595fd6a1d"
-        },
-        {
-          "type": "folder",
-          "uuid": "10939fbb-1ebd-4957-9a0f-a50d3b2b55b3"
-        }
-      ]
-    },
-    {
-      "uuid": "931d6ba4-c150-4601-8b34-14a595fd6a1d",
-      "name": "get",
       "collapsed": false,
       "children": [
         {
@@ -1002,37 +822,12 @@
         {
           "type": "route",
           "uuid": "075d5ff4-211c-4011-a159-5c47d45b2ff9"
-        },
-        {
-          "type": "route",
-          "uuid": "4fcf7e4c-2e8d-424a-b684-3baa34938e57"
         }
       ]
-    },
-    {
-      "uuid": "10939fbb-1ebd-4957-9a0f-a50d3b2b55b3",
-      "name": "post",
-      "collapsed": false,
-      "children": []
     },
     {
       "uuid": "09f41e23-8261-4091-bc30-e71f1ecf6803",
       "name": "order",
-      "collapsed": true,
-      "children": [
-        {
-          "type": "folder",
-          "uuid": "9b05ffc1-04ae-4f81-83cd-b94def948c37"
-        },
-        {
-          "type": "folder",
-          "uuid": "4aae556a-f650-4cde-8bad-474236b79d20"
-        }
-      ]
-    },
-    {
-      "uuid": "9b05ffc1-04ae-4f81-83cd-b94def948c37",
-      "name": "get",
       "collapsed": false,
       "children": [
         {
@@ -1042,41 +837,12 @@
         {
           "type": "route",
           "uuid": "4c950cb9-f082-4bc8-8d60-70843b9c588e"
-        },
-        {
-          "type": "route",
-          "uuid": "61f86043-87cb-4d1e-b310-15e670cae90c"
-        },
-        {
-          "type": "route",
-          "uuid": "a9e661ac-8f0c-4294-824c-b1d77606e91f"
         }
       ]
-    },
-    {
-      "uuid": "4aae556a-f650-4cde-8bad-474236b79d20",
-      "name": "post",
-      "collapsed": true,
-      "children": []
     },
     {
       "uuid": "6c68ba79-e5a7-4dc4-b681-c4d6bf3c28f7",
       "name": "categories",
-      "collapsed": false,
-      "children": [
-        {
-          "type": "folder",
-          "uuid": "c42c45d2-60e1-423a-b33e-54cb7c2eddef"
-        },
-        {
-          "type": "folder",
-          "uuid": "b5ec20bb-fcb6-46f8-98a2-f27ee2ebc6fc"
-        }
-      ]
-    },
-    {
-      "uuid": "c42c45d2-60e1-423a-b33e-54cb7c2eddef",
-      "name": "get",
       "collapsed": false,
       "children": [
         {
@@ -1090,33 +856,8 @@
       ]
     },
     {
-      "uuid": "b5ec20bb-fcb6-46f8-98a2-f27ee2ebc6fc",
-      "name": "post",
-      "collapsed": false,
-      "children": []
-    },
-    {
       "uuid": "4cb110bd-f04d-44d7-9407-62daac024a91",
       "name": "trainings",
-      "collapsed": false,
-      "children": [
-        {
-          "type": "folder",
-          "uuid": "fd18f6d2-1937-48e3-9612-cf4a26dd732d"
-        },
-        {
-          "type": "folder",
-          "uuid": "5a249aa7-1686-413e-8f1d-d7e39bc6c819"
-        },
-        {
-          "type": "folder",
-          "uuid": "af435808-317f-4af4-b6d5-ab5c8ea55431"
-        }
-      ]
-    },
-    {
-      "uuid": "fd18f6d2-1937-48e3-9612-cf4a26dd732d",
-      "name": "get",
       "collapsed": false,
       "children": [
         {
@@ -1129,49 +870,26 @@
         },
         {
           "type": "route",
-          "uuid": "5eb2fa26-b0d1-4278-8f81-7051b575f742"
-        },
-        {
-          "type": "route",
-          "uuid": "05304a10-0fdf-440f-8739-897f5597e974"
-        },
-        {
-          "type": "route",
-          "uuid": "241d842c-7303-4189-a6c9-352125d139b8"
-        },
-        {
-          "type": "route",
-          "uuid": "7fd63ab0-8467-418a-ae06-dbaac716203e"
-        },
-        {
-          "type": "route",
-          "uuid": "817578ac-c72c-41d3-b0c6-06385b3ae53a"
-        }
-      ]
-    },
-    {
-      "uuid": "5a249aa7-1686-413e-8f1d-d7e39bc6c819",
-      "name": "post",
-      "collapsed": false,
-      "children": [
-        {
-          "type": "route",
           "uuid": "90c31b95-dca0-4399-b888-cce6639c207d"
         },
         {
           "type": "route",
-          "uuid": "1f6a7b33-17c1-4999-a9e2-9f39b58bb7c7"
+          "uuid": "4d902365-6cbc-49c2-89ed-39ef69acb2e4"
         }
       ]
     },
     {
-      "uuid": "af435808-317f-4af4-b6d5-ab5c8ea55431",
-      "name": "put",
+      "uuid": "ccee6c55-2839-45b0-ae69-0557955745de",
+      "name": "loadouts",
       "collapsed": false,
       "children": [
         {
           "type": "route",
-          "uuid": "4d902365-6cbc-49c2-89ed-39ef69acb2e4"
+          "uuid": "a9c19d25-9954-4844-9ef7-cd0a70eedd60"
+        },
+        {
+          "type": "route",
+          "uuid": "60388b7a-345d-4ea9-8fdb-d0efc46ab478"
         }
       ]
     }
@@ -1204,6 +922,10 @@
     {
       "type": "folder",
       "uuid": "4cb110bd-f04d-44d7-9407-62daac024a91"
+    },
+    {
+      "type": "folder",
+      "uuid": "ccee6c55-2839-45b0-ae69-0557955745de"
     }
   ]
 }

@@ -1,15 +1,15 @@
 
 <MudGrid>
     <MudItem xs="4">
-        <MudTextField @bind-Value="PersonInfoRequest.FirstName" Label="@Localization.firstName"
+        <MudTextField @bind-Value="PersonRequest.FirstName" Label="@Localization.firstName"
                       Required="true"/>
     </MudItem>
     <MudItem xs="4">
-        <MudTextField @bind-Value="PersonInfoRequest.LastName" Label="@Localization.lastName"
+        <MudTextField @bind-Value="PersonRequest.LastName" Label="@Localization.lastName"
                       Required="true"/>
     </MudItem>
     <MudItem xs="4">
-        <MudTextField @bind-Value="PersonInfoRequest.EmailAddress" Label="@Localization.emailAddress" 
+        <MudTextField @bind-Value="PersonRequest.EmailAddress" Label="@Localization.emailAddress" 
                       Validation="@(new Func<string, string>(EMailValidation))"/>
     </MudItem>
     <MudItem xs="4">
@@ -17,7 +17,7 @@
                               Required="true"/>
     </MudItem>
     <MudItem xs="4">
-        <MudTextField Value="PersonInfoRequest.YearStarted" Label="@Localization.yearStarted"
+        <MudTextField Value="PersonRequest.YearStarted" Label="@Localization.yearStarted"
                       Required="true"/>
     </MudItem>
 </MudGrid>
