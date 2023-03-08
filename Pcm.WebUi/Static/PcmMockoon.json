@@ -75,9 +75,16 @@
               "value": "true",
               "invert": false,
               "operator": "equals"
+            },
+            {
+              "target": "query",
+              "modifier": "training-id",
+              "value": "1|2",
+              "invert": true,
+              "operator": "regex"
             }
           ],
-          "rulesOperator": "OR",
+          "rulesOperator": "AND",
           "disableTemplating": false,
           "fallbackTo404": false,
           "default": false
@@ -104,7 +111,7 @@
             {
               "target": "query",
               "modifier": "training-id",
-              "value": "/1|2/g",
+              "value": "1|2",
               "invert": false,
               "operator": "regex"
             }
@@ -130,13 +137,13 @@
               "target": "query",
               "modifier": "extended",
               "value": "true",
-              "invert": false,
+              "invert": true,
               "operator": "equals"
             },
             {
               "target": "query",
               "modifier": "training-id",
-              "value": "/1|2/g",
+              "value": "1|2",
               "invert": false,
               "operator": "regex"
             }

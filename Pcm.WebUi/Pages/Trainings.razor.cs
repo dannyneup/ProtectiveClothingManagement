@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using Pcm.Infrastructure.RequestModels;
 using Pcm.WebUi.Components.DetailViews;
 using Pcm.WebUi.Components.Dialogs.Helpers;
 using Pcm.WebUi.Components.Dialogs.ModelEditors;
@@ -10,30 +11,36 @@ namespace Pcm.WebUi.Pages;
 
 public partial class Trainings
 {
-    //[Inject]
-    //public IRepository<ITrainingInfoResponseModel, ITrainingInfoRequestModel> ApprenticeshipRepository { get; set; }
+    
     [Inject] public IDialogService DialogService { get; set; }
     
-    private string? _searchString;
-    //private IEnumerable<TrainingInfoResponseModel>? _trainingInfoResponses = new List<TrainingInfoResponseModel>();
+    private string? _searchString; 
+    [Inject] public ISnackbar Snackbar { get; set; }
 
-    private void OpenNewTrainingPopOver()
+    private async Task OpenNewTrainingPopOver()
     {
-        DialogService.Show<TrainingEditorDialog>(String.Format(Localization.createNewT, Localization.training));
+        var dialog = await DialogService.ShowAsync<TrainingEditorDialog>(string.Format(Localization.createNewT, Localization.training));
+        var result = await dialog.Result;
+        if (result.Canceled == false)
+        {
+            var requestModel = (TrainingRequestModel) result.Data;
+            if (requestModel != null)
+            {
+                Snackbar.Add("Training added", Severity.Success);
+            }
+        }
     }
 
     private void OpenTrainingDetailsPopOver(int trainingId)
     {
-        var componentParams = new Dictionary<string, object>
+        /*var componentParams = new Dictionary<string, object>
         {
             {"TrainingId", trainingId},
             {"Height", "30vw"}
         };
-        var renderFragment =
-            RenderFragmentCreationController.CreateRenderFragmentFromComponent<TrainingDetails>(componentParams);
-
-        var parameters = new DialogParameters {{"Component", renderFragment}};
-
+        var renderFragment = RenderFragmentCreationController.CreateRenderFragmentFromComponent<TrainingDetails>(componentParams);
+        var parameters = new DialogParameters {{"Component", renderFragment}};*/
+        var parameters = new DialogParameters { ["TrainingId"] = trainingId, ["Height"] = "30vw" };
         DialogService.Show<ComponentDialog>(Localization.trainingDetails, parameters);
     }
 }

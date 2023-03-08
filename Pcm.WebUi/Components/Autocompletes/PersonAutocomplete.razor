@@ -1,5 +1,5 @@
 @using Pcm.Infrastructure.ResponseModels
-<MudAutocomplete T="PersonResponse" Value="@Value" ValueChanged="@(newPerson => OnValueChanged(newPerson))"
+<MudAutocomplete T="PersonResponse" Value="@Value" ValueChanged="@(OnValueChanged)"
                  Label="@Localization.person"
                  SearchFunc="@SearchPersonAutocomplete" ResetValueOnEmptyText="true"
                  Required="Required">

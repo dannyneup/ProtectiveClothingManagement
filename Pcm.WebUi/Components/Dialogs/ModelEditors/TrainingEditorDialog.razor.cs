@@ -3,24 +3,53 @@ using MudBlazor;
 using Pcm.Application.Interfaces;
 using Pcm.Infrastructure.RequestModels;
 using Pcm.Infrastructure.ResponseModels;
+using Pcm.WebUi.Controller;
 using Pcm.WebUi.Resources;
 
 namespace Pcm.WebUi.Components.Dialogs.ModelEditors;
 
 public partial class TrainingEditorDialog : ComponentBase
 {
-    private TrainingResponse TrainingToEdit { get; set; }
-    private TrainingRequestModel TrainingToEdit2 { get; set; }
-    [Inject] public IRepository<TrainingResponse, TrainingRequestModel> TrainingRepository { get; set; }
-    [Inject] public IRepository<LoadOutPartResponse, LoadOutPartRequest> LoadoutRepository { get; set; }
-    [Inject] public ISnackbar Snackbar { get; set; }
-    
-    private TrainingResponse _trainingBeforeEdit;
-    private List<LoadOutPartResponse> _loadOut;
-    private List<LoadOutPartResponse> _loadOutBeforeEdit;
-    private bool _editMode;
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    private TrainingRequestModel Training { get; set; } = new();
+    //private TrainingRequestModel TrainingToEdit2 { get; set; }
+    //[Inject] public IRepository<TrainingResponse, TrainingRequestModel> TrainingRepository { get; set; }
+    //[Inject] public IRepository<LoadOutPartResponse, LoadOutPartRequest> LoadoutRepository { get; set; }
+    bool success;
+    private IEnumerable<ItemCategoryResponse> _itemCategories = new List<ItemCategoryResponse>();
+    private string _searchString = "";
+
+    
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private void Submit()
+    {
+        MudDialog.Close(DialogResult.Ok(Training));
+    }
+    
+    private int getItemCount(ItemCategoryResponse category)
+    {
+        return 3;
+    }
+    
+    
+
+    private bool ItemCategoryFilter(ItemCategoryResponse arg)
+    {
+        return ListItemFilterController<ItemCategoryResponse>.CheckIfStringMatchesProperties(arg,
+            _searchString);
+    }
+    
+    //private TrainingResponse _trainingBeforeEdit;
+    //private List<LoadOutPartResponse> _loadOut;
+    //private List<LoadOutPartResponse> _loadOutBeforeEdit;
+    //private bool _editMode;
+
+    /*protected override async Task OnInitializedAsync()
     {
         if (TrainingToEdit == null)
         {
@@ -28,9 +57,9 @@ public partial class TrainingEditorDialog : ComponentBase
             return;
         }
         _editMode = true;
-    }
+    }*/
 
-    private async Task OnSave()
+    /*private async Task OnSave()
     {
         bool isSuccess;
         if (_editMode)
@@ -102,5 +131,5 @@ public partial class TrainingEditorDialog : ComponentBase
             }
             return $"{String.Format(Localization.TWithNameSuccessfullyCreated, Localization.training, TrainingToEdit.Name)}";
         }
-    }
+    }*/
 }                                                       

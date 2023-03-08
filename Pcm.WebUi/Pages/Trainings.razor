@@ -1,11 +1,12 @@
 @page "/trainings"
+
 <MudCard>
     <MudCardHeader>
         <MudText Color="Color.Primary" Typo="Typo.h6">@Localization.trainings</MudText>
         <MudSpacer/>
         <MudTextField T="string" Placeholder="@Localization.search"
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" @bind-Value="_searchString"/>
-        <MudIconButton Icon="@Icons.Filled.AddBox" @onclick="OpenNewTrainingPopOver"/>
+        <MudIconButton Icon="@Icons.Material.Filled.AddBox" @onclick="OpenNewTrainingPopOver"/>
     </MudCardHeader>
-    <TrainingList SearchString="@_searchString" RowClicked="(OpenTrainingDetailsPopOver)"/>
+    <TrainingList SearchString="@_searchString" RowClicked="OpenTrainingDetailsPopOver"/>
 </MudCard>

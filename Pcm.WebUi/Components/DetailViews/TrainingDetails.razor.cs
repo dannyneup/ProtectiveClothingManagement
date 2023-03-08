@@ -22,16 +22,16 @@ public partial class TrainingDetails : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        Dictionary<string, string>? personQuery = new()
+        Dictionary<string, string>? query = new()
         {
             {"extended", "true"},
             {"training-id", TrainingId.ToString()}
         };
-        _persons = await PersonRepository.GetAll(personQuery);
-        _loadOut = await LoadOutRepository.GetAll();
+        _persons = await PersonRepository.GetAll(query);
+        _loadOut = await LoadOutRepository.GetAll(query);
     }
     
-    private TableGroupDefinition<PersonResponse> _personInfosGroupDefinition = new()
+    private readonly TableGroupDefinition<PersonResponse> _personInfosGroupDefinition = new()
     {
         GroupName = Localization.group,
         Indentation = false,

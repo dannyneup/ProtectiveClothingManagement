@@ -1,5 +1,5 @@
 @using Pcm.Infrastructure.ResponseModels
-<MudAutocomplete T="string" Value="@Value" ValueChanged="@(newTrainingType => OnValueChanged(newTrainingType))"
+<MudAutocomplete T="string" Value="@Value" ValueChanged="@(OnValueChanged)"
                  Label="@Localization.trainingType"
                  SearchFunc="@SearchTrainingTypeAutocomplete" ResetValueOnEmptyText="true"
                  Required="Required">
