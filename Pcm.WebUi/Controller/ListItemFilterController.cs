@@ -12,21 +12,16 @@ public static class ListItemFilterController<T>
 
     public static IEnumerable<T> FilterByWords(IEnumerable<T> items, string searchString)
     {
-        if (string.IsNullOrWhiteSpace(searchString))
-        {
-            return items;
-        }
+        if (string.IsNullOrWhiteSpace(searchString)) return items;
 
         var searchWords = StringHandleController.CreateWordArray(searchString);
         var filteredItems = new List<T>();
         foreach (var item in items)
         {
             var itemMatches = CheckIfStringArrayMatchesProperties(item, searchWords);
-            if (itemMatches)
-            {
-                filteredItems.Add(item);
-            }
+            if (itemMatches) filteredItems.Add(item);
         }
+
         return filteredItems;
     }
 
@@ -36,14 +31,12 @@ public static class ListItemFilterController<T>
         {
             var properties = item.GetType().GetProperties();
             var foundInProperties = properties.Any(p =>
-                p.GetValue(item)
-                    .ToString()
-                    .Contains(searchWord, StringComparison.OrdinalIgnoreCase) == true);
-            if (foundInProperties)
-            {
-                return true;
-            }
+                (p.GetValue(item) ?? "")
+                .ToString()
+                .Contains(searchWord, StringComparison.OrdinalIgnoreCase));
+            if (foundInProperties) return true;
         }
+
         return false;
     }
 }

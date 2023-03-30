@@ -1,36 +1,25 @@
 using Microsoft.AspNetCore.Components;
-using MudBlazor;
-using Pcm.Application.Interfaces;
-using Pcm.Core.Entities;
-using Pcm.Infrastructure.RequestModels;
-using Pcm.Infrastructure.ResponseModels;
-using Pcm.WebUi.Controller;
+using Pcm.WebUi.Models;
 
 namespace Pcm.WebUi.Components.Autocompletes;
 
 public partial class TrainingAutocomplete : ComponentBase
 {
-    private IEnumerable<TrainingResponse> _trainingResponses;
-    private MudAutocomplete<TrainingResponse> _autocomplete;
-
-    [Parameter] public TrainingResponse Value { get; set; }
-    [Parameter] public EventCallback<TrainingResponse> ValueChanged { get; set; }
+    [Parameter] public List<Training> Trainings { get; set; }
+    [Parameter] public Training Training { get; set; }
+    [Parameter] public EventCallback<Training> TrainingChanged { get; set; }
     [Parameter] public bool Required { get; set; }
-    [Inject] public IRepository<TrainingResponse, TrainingRequestModel> TrainingRepository { get; set; }
 
-    protected override async void OnInitialized()
+    private async Task<IEnumerable<Training>> SearchAutocomplete(string searchString)
     {
-        _trainingResponses = await TrainingRepository.GetAll();
+        if (string.IsNullOrWhiteSpace(searchString))
+            return Trainings;
+        return Trainings.Where(x => x.Name.Contains(searchString));
     }
 
-    private async Task<IEnumerable<TrainingResponse>> SearchTrainingAutocomplete(string searchString)
+    private async Task OnValueChanged(Training Training)
     {
-        return ListItemFilterController<TrainingResponse>.FilterByWords(_trainingResponses, searchString);
-    }
-
-    private async Task OnValueChanged(TrainingResponse newTrainingResponse)
-    {
-        Value = newTrainingResponse;
-        await ValueChanged.InvokeAsync(Value);
+        Training = Training;
+        await TrainingChanged.InvokeAsync(Training);
     }
 }

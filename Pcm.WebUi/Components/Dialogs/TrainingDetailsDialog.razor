@@ -1,4 +1,4 @@
-@using Pcm.Infrastructure.ResponseModels
+@using Pcm.WebUi.Models
 <MudDialog>
     <DialogContent>
         <MudGrid>
@@ -7,20 +7,20 @@
                     <MudCardHeader>
                         <MudText Typo="Typo.h6" Color="Color.Primary" Class="paperHeader">@Localization.belongingTrainees</MudText>
                     </MudCardHeader>
-                    <MudTable T="PersonResponse" Items="_persons"
+                    <MudTable T="Person" Items="Persons"
                               GroupBy="_personInfosGroupDefinition"
                               Dense="true"
-                              Height="@Height"
+                              Height="@_height"
                               FixedHeader="@FixedHeader">
                         <HeaderContent>
                             <MudTh>
-                                <MudTableSortLabel SortBy="new Func<PersonResponse, object>(x => x.PersonnelNumber)">@Localization.personnelNumber</MudTableSortLabel>
+                                <MudTableSortLabel SortBy="new Func<Person, object>(x => x.PersonnelNumber)">@Localization.personnelNumber</MudTableSortLabel>
                             </MudTh>
                             <MudTh>
-                                <MudTableSortLabel SortBy="new Func<PersonResponse, object>(x => x.FirstName)">@Localization.firstName</MudTableSortLabel>
+                                <MudTableSortLabel SortBy="new Func<Person, object>(x => x.FirstName)">@Localization.firstName</MudTableSortLabel>
                             </MudTh>
                             <MudTh>
-                                <MudTableSortLabel SortBy="new Func<PersonResponse, object>(x => x.LastName)">@Localization.lastName</MudTableSortLabel>
+                                <MudTableSortLabel SortBy="new Func<Person, object>(x => x.LastName)">@Localization.lastName</MudTableSortLabel>
                             </MudTh>
                         </HeaderContent>
                         <RowTemplate>
@@ -39,16 +39,16 @@
                     <MudCardHeader>
                         <MudText Typo="Typo.h6" Color="Color.Primary" Class="paperHeader">@Localization.defaultLoadout</MudText>
                     </MudCardHeader>
-                    <MudTable T="LoadOutPartResponse" Items="_loadOut"
+                    <MudTable T="LoadOutPart" Items="LoadOut"
                               Dense="true"
-                              Height="@Height"
+                              Height="@_height"
                               FixedHeader="@FixedHeader">
                         <HeaderContent>
                             <MudTh>
-                                <MudTableSortLabel SortBy="new Func<LoadOutPartResponse, object>(x => x.CategoryName)">@Localization.itemCategory</MudTableSortLabel>
+                                <MudTableSortLabel SortBy="new Func<LoadOutPart, object>(x => x.CategoryName)">@Localization.itemCategory</MudTableSortLabel>
                             </MudTh>
                             <MudTh>
-                                <MudTableSortLabel SortBy="new Func<LoadOutPartResponse, object>(x => x.Count)">@Localization.count</MudTableSortLabel>
+                                <MudTableSortLabel SortBy="new Func<LoadOutPart, object>(x => x.Count)">@Localization.count</MudTableSortLabel>
                             </MudTh>
                         </HeaderContent>
                         <RowTemplate>

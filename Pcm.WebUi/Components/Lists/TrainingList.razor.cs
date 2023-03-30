@@ -1,65 +1,54 @@
-using System.Data;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Pcm.Application.Interfaces;
-using Pcm.Infrastructure.RequestModels;
-using Pcm.Infrastructure.ResponseModels;
-using Pcm.WebUi.Components.Dialogs.ModelEditors;
 using Pcm.WebUi.Controller;
+using Pcm.WebUi.Models;
 using Pcm.WebUi.Resources;
 
 namespace Pcm.WebUi.Components.Lists;
 
 public partial class TrainingList : ComponentBase
 {
-    private TrainingResponse _trainingBevoreEdit;
-    private IEnumerable<TrainingResponse> _trainings;
+    private Training? _trainingBeforeEdit;
+
+    [Parameter] public List<Training> Trainings { get; set; }
+    [Parameter] public EventCallback<List<Training>> TrainingsChanged { get; set; }
     [Parameter] public string? SearchString { get; set; }
     [Parameter] public int Elevation { get; set; } = 0;
-    [Parameter] public EventCallback<int> RowClicked { get; set; }
+    [Parameter] public EventCallback<Training> TrainingRowClicked { get; set; }
+    [Parameter] public EventCallback<Training> TrainingEditClicked { get; set; }
+    [Parameter] public EventCallback<Training> TrainingDeleteConfirmed { get; set; }
 
-    [Inject] public IRepository<TrainingResponse, TrainingRequestModel> TrainingRepository { get; set; }
-
-    //[Inject] public ITrainingRepository TrainingRepository { get; set; }
-    [Inject] public ISnackbar Snackbar { get; set; }
     [Inject] public IDialogService DialogService { get; set; }
 
-    protected override async Task OnInitializedAsync()
-    {
-        _trainings = await TrainingRepository.GetAll();
-    }
 
-    private bool TrainingFilter(TrainingResponse trainingResponse)
+    private bool TrainingFilter(Training training)
     {
-        return ListItemFilterController<TrainingResponse>.CheckIfStringMatchesProperties(trainingResponse,
+        return ListItemFilterController<Training>.CheckIfStringMatchesProperties(training,
             SearchString);
     }
 
-    private async void OnRowClick(TableRowClickEventArgs<TrainingResponse> rowClickEvent)
+    private async void OnRowClick(TableRowClickEventArgs<Training> rowClickEvent)
     {
-        await RowClicked.InvokeAsync(rowClickEvent.Item.Id);
+        await TrainingRowClicked.InvokeAsync(rowClickEvent.Item);
     }
 
-    private async Task OnRowEdit(TrainingResponse training)
+    private async Task OnRowEdit(Training training)
     {
-        //var training = trainingInfo.ToTrainingResponseModel();
-        var dialogParams = new DialogParameters
+        await TrainingEditClicked.InvokeAsync(training);
+    }
+
+    private async Task OnRowDelete(Training training)
+    {
+        var dialogOptions = new DialogOptions
         {
-            {"TrainingToEdit", training}
+            MaxWidth = MaxWidth.Small
         };
-        await DialogService.ShowAsync<TrainingEditorDialog>(string.Format(Localization.editT, Localization.training), dialogParams);
-    }
-
-    private async Task OnRowDelete(TrainingResponse rowObj)
-    {
         var deletingConfirmed = await DialogService.ShowMessageBox(
-            @Localization.warning,
-            @Localization.reallyWantDeleteCannotBeUndone,
-            yesText: @Localization.yes, noText: @Localization.no)
-            ?? false;
-        if (deletingConfirmed)
-        {
-            var deleted = await TrainingRepository.Delete(rowObj.Id);
-        }
+                                    Localization.warning,
+                                    Localization.reallyWantDeleteCannotBeUndone,
+                                    Localization.yes, Localization.no,
+                                    options: dialogOptions)
+                                ?? false;
+        if (deletingConfirmed) await TrainingDeleteConfirmed.InvokeAsync(training);
     }
 }

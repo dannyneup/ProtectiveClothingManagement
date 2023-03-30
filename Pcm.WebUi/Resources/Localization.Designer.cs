@@ -315,9 +315,9 @@ namespace Pcm.WebUi.Resources {
             }
         }
         
-        internal static string TWithNameNotsuccessfullyCreated {
+        internal static string TWithNameNotSuccessfullyCreated {
             get {
-                return ResourceManager.GetString("TWithNameNotsuccessfullyCreated", resourceCulture);
+                return ResourceManager.GetString("TWithNameNotSuccessfullyCreated", resourceCulture);
             }
         }
         
@@ -351,15 +351,33 @@ namespace Pcm.WebUi.Resources {
             }
         }
         
-        internal static string TWithNameNotsuccessfullyUpdated {
+        internal static string TWithNameNotSuccessfullyUpdated {
             get {
-                return ResourceManager.GetString("TWithNameNotsuccessfullyUpdated", resourceCulture);
+                return ResourceManager.GetString("TWithNameNotSuccessfullyUpdated", resourceCulture);
             }
         }
         
         internal static string TWithNameSuccessfullyUpdated {
             get {
                 return ResourceManager.GetString("TWithNameSuccessfullyUpdated", resourceCulture);
+            }
+        }
+        
+        internal static string TWithNameSuccessfullyDeleted {
+            get {
+                return ResourceManager.GetString("TWithNameSuccessfullyDeleted", resourceCulture);
+            }
+        }
+        
+        internal static string TWithNameNotSuccessfullyDeleted {
+            get {
+                return ResourceManager.GetString("TWithNameNotSuccessfullyDeleted", resourceCulture);
+            }
+        }
+        
+        internal static string startingYear {
+            get {
+                return ResourceManager.GetString("startingYear", resourceCulture);
             }
         }
     }

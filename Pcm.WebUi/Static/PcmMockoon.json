@@ -1,11 +1,11 @@
 {
   "uuid": "c055d0f0-20b0-479c-b690-fd606ad24cba",
-  "lastMigration": 25,
+  "lastMigration": 27,
   "name": "Pcm",
   "endpointPrefix": "v1/",
   "latency": 0,
   "port": 3001,
-  "hostname": "0.0.0.0",
+  "hostname": "",
   "routes": [
     {
       "uuid": "2494e6af-c949-4f96-a8a3-53a44ec87fba",
@@ -32,7 +32,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "e32a9e7c-d2ca-43df-968a-3df10fc03225",
@@ -155,7 +156,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "0500ee53-f81f-4c90-a0be-1878c497b666",
@@ -182,7 +184,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "8a6db9f4-9718-4f24-84f4-8958267458b0",
@@ -234,7 +237,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "0a3bdba2-1037-419d-8a4e-0e9f1d81d1dc",
@@ -261,7 +265,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "dc0a16d4-4a46-4ba3-848d-8b7e2321b3b2",
@@ -313,7 +318,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "075d5ff4-211c-4011-a159-5c47d45b2ff9",
@@ -340,7 +346,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "e8a72e34-da05-42b5-8c23-23579075b13b",
@@ -350,7 +357,7 @@
       "responses": [
         {
           "uuid": "d9d6a522-d88a-4edf-91c9-f9e6068eefd6",
-          "body": "[\n  {\n    \"id\": 0,\n    \"name\": \"Latzhose\"\n  },\n  {\n    \"id\": 1,\n    \"name\": \"Lichtbogenlatzhose\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Poloshirt\"\n  }\n]",
+          "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Latzhose\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Lichtbogenlatzhose\"\n  },\n  {\n    \"id\": 3,\n    \"name\": \"Poloshirt\"\n  }\n]",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -367,7 +374,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "75cf58c3-41b1-4edb-9cb6-4a0cce951501",
@@ -419,7 +427,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "4c950cb9-f082-4bc8-8d60-70843b9c588e",
@@ -446,7 +455,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "36349294-c12a-429f-9c9a-5708fb52ff1f",
@@ -498,7 +508,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "b982ac73-4fbc-47bd-84bb-8d610e624da4",
@@ -507,8 +518,8 @@
       "endpoint": "trainings",
       "responses": [
         {
-          "uuid": "2cc60b93-6de0-4f88-9670-668bf33ab63a",
-          "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Wirtschaftsinformatik\",\n    \"type\": \"Duales Studium\",\n    \"traineeCount\": 1,\n    \"yearCount\": 1\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Industriekaufmann/-frau\",\n    \"type\": \"Ausbildung\",\n    \"traineeCount\": 2,\n    \"yearCount\": 2\n  }\n]",
+          "uuid": "eccecf9b-42e5-43d5-aafd-8e71b102eb13",
+          "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Wirtschaftsinformatik\",\n    \"type\": \"Duales Studium\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Industriekaufmann/-frau\",\n    \"type\": \"Ausbildung\"\n  }\n]",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -524,8 +535,8 @@
           "default": true
         },
         {
-          "uuid": "eccecf9b-42e5-43d5-aafd-8e71b102eb13",
-          "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Wirtschaftsinformatik\",\n    \"type\": \"Duales Studium\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Industriekaufmann/-frau\",\n    \"type\": \"Ausbildung\"\n  }\n]",
+          "uuid": "2cc60b93-6de0-4f88-9670-668bf33ab63a",
+          "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Wirtschaftsinformatik\",\n    \"type\": \"Duales Studium\",\n    \"traineeCount\": 1,\n    \"yearCount\": 1\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Industriekaufmann/-frau\",\n    \"type\": \"Ausbildung\",\n    \"traineeCount\": 2,\n    \"yearCount\": 2\n  }\n]",
           "latency": 0,
           "statusCode": 200,
           "label": "extended info",
@@ -550,7 +561,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "8a9c3fc1-2587-4986-bba6-ef99ac02358e",
@@ -577,7 +589,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "90c31b95-dca0-4399-b888-cce6639c207d",
@@ -621,7 +634,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "4d902365-6cbc-49c2-89ed-39ef69acb2e4",
@@ -665,16 +679,45 @@
         }
       ],
       "enabled": true,
+      "responseMode": null,
+      "type": "http"
+    },
+    {
+      "uuid": "fbfd586e-e83f-4d98-a679-e48b8721acee",
+      "type": "http",
+      "documentation": "",
+      "method": "delete",
+      "endpoint": "trainings/:id",
+      "responses": [
+        {
+          "uuid": "deed5119-7625-47bd-8203-87b7da4e5b28",
+          "body": "",
+          "latency": 0,
+          "statusCode": 204,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
       "responseMode": null
     },
     {
-      "uuid": "a9c19d25-9954-4844-9ef7-cd0a70eedd60",
+      "uuid": "8c8b172c-f7e1-4faa-863d-ad561f9b59ce",
       "documentation": "",
       "method": "get",
       "endpoint": "loadouts",
       "responses": [
         {
-          "uuid": "296e2bbb-488c-4a15-9ccc-a1afbac66773",
+          "uuid": "7c4a980c-2d56-4f48-bc44-133321e77e22",
           "body": "[\n  {\n    \"categoryId\": 0,\n    \"categoryName\": \"Poloshirt\",\n    \"count\": 5\n  },\n  {\n    \"categoryId\": 1,\n    \"categoryName\": \"Latzhose\",\n    \"count\": 1\n  },\n  {\n    \"categoryId\": 3,\n    \"categoryName\": \"Doppellatzhose\",\n    \"count\": 2\n  },\n  {\n    \"categoryId\": 4,\n    \"categoryName\": \"Dreifachlatzhose\",\n    \"count\": 3\n  }\n]",
           "latency": 0,
           "statusCode": 200,
@@ -691,7 +734,7 @@
           "default": true
         },
         {
-          "uuid": "6729a012-7ef6-4aa3-8274-ba1d9c06a3f7",
+          "uuid": "e99da71e-9487-4c13-910a-95b0e8df70b0",
           "body": "{{#switch (queryParam 'training-id')}}\n  {{#case '1'}}\n  [\n    {\n      \"categoryId\": 2,\n      \"categoryName\": \"Poloshirt\",\n      \"count\": 3\n    }\n  ]\n  {{/case}}\n  {{#case '2'}}\n    [\n      {\n        \"categoryId\": 2,\n        \"categoryName\": \"Poloshirt\",\n        \"count\": 5\n      },\n      {\n        \"categoryId\": 0,\n        \"categoryName\": \"Latzhose\",\n        \"count\": 1\n      }\n    ]\n  {{/case}}\n{{/switch}}",
           "latency": 0,
           "statusCode": 200,
@@ -724,16 +767,17 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
-      "uuid": "60388b7a-345d-4ea9-8fdb-d0efc46ab478",
+      "uuid": "2ccd7702-c95e-4b1e-83eb-7c7944a56d0d",
       "documentation": "",
       "method": "post",
       "endpoint": "loadouts:training-id",
       "responses": [
         {
-          "uuid": "308dc048-8785-4d6d-a1ab-96a81f7ca7ed",
+          "uuid": "bd1e38e6-74ff-43ef-88fb-b0fceab3b72a",
           "body": "{{#switch (urlParam 'id')}}\n  {{#case '3'}}\n    [\n      {\n        \"categoryId\": 2,\n        \"categoryName\": \"Poloshirt\",\n        \"count\": 5\n      },\n      {\n        \"categoryId\": 0,\n        \"categoryName\": \"Latzhose\",\n        \"count\": 4\n      }\n    ]\n  {{/case}}\n{{/switch}}",
           "latency": 0,
           "statusCode": 200,
@@ -751,7 +795,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     }
   ],
   "proxyMode": false,
@@ -882,6 +927,10 @@
         {
           "type": "route",
           "uuid": "4d902365-6cbc-49c2-89ed-39ef69acb2e4"
+        },
+        {
+          "type": "route",
+          "uuid": "fbfd586e-e83f-4d98-a679-e48b8721acee"
         }
       ]
     },
@@ -892,11 +941,11 @@
       "children": [
         {
           "type": "route",
-          "uuid": "a9c19d25-9954-4844-9ef7-cd0a70eedd60"
+          "uuid": "2ccd7702-c95e-4b1e-83eb-7c7944a56d0d"
         },
         {
           "type": "route",
-          "uuid": "60388b7a-345d-4ea9-8fdb-d0efc46ab478"
+          "uuid": "8c8b172c-f7e1-4faa-863d-ad561f9b59ce"
         }
       ]
     }

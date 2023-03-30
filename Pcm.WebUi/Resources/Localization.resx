@@ -159,7 +159,7 @@
     <data name="TWithNameSuccessfullyCreated" xml:space="preserve">
         <value>{0} {1} successfully created.</value>
     </data>
-    <data name="TWithNameNotsuccessfullyCreated" xml:space="preserve">
+    <data name="TWithNameNotSuccessfullyCreated" xml:space="preserve">
         <value>{0} {1} not successfully created.</value>
     </data>
     <data name="editT" xml:space="preserve">
@@ -177,10 +177,19 @@
     <data name="warning" xml:space="preserve">
         <value>Warning</value>
     </data>
-    <data name="TWithNameNotsuccessfullyUpdated" xml:space="preserve">
+    <data name="TWithNameNotSuccessfullyUpdated" xml:space="preserve">
         <value>{0} {1} not successfully updated.</value>
     </data>
     <data name="TWithNameSuccessfullyUpdated" xml:space="preserve">
         <value>{0} {1} successfully updated.</value>
+    </data>
+    <data name="TWithNameSuccessfullyDeleted" xml:space="preserve">
+        <value>{0} {1} successfully deleted.</value>
+    </data>
+    <data name="TWithNameNotSuccessfullyDeleted" xml:space="preserve">
+        <value>{0} {1} not successfully deleted.</value>
+    </data>
+    <data name="startingYear" xml:space="preserve">
+        <value>Starting Year</value>
     </data>
 </root>

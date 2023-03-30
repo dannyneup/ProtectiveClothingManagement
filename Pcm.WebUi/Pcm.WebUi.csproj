@@ -8,6 +8,10 @@
         <RootNamespace>Pcm.WebUi</RootNamespace>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DefineConstants>TRACE</DefineConstants>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="MudBlazor" Version="6.1.7" />
     </ItemGroup>
@@ -39,8 +43,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <_ContentIncludedByDefault Remove="Components\Dialogs\Details\TrainingDetails.razor" />
-      <_ContentIncludedByDefault Remove="Components\Lists\Helpers\EditableTable.razor" />
+        <_ContentIncludedByDefault Remove="Components\Dialogs\Details\TrainingDetails.razor" />
+        <_ContentIncludedByDefault Remove="Components\Lists\Helpers\EditableTable.razor" />
+        <_ContentIncludedByDefault Remove="Components\Dialogs\Helpers\ModelEditorDialog.razor" />
+        <_ContentIncludedByDefault Remove="Components\ModelEditors\PersonEditor.razor" />
+        <_ContentIncludedByDefault Remove="Components\ModelEditors\TrainingEditor.razor" />
+        <_ContentIncludedByDefault Remove="Components\DetailViews\TrainingDetails.razor" />
     </ItemGroup>
 
 </Project>

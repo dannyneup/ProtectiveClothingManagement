@@ -1,7 +1,7 @@
 @using Pcm.WebUi.Models
-<MudAutocomplete T="Training"
-                 Value="Training" ValueChanged="OnValueChanged"
-                 Label="@Localization.training"
+<MudAutocomplete T="ItemCategory"
+                 Value="ItemCategory" ValueChanged="OnValueChanged"
+                 Label="@Localization.itemCategory"
                  SearchFunc="@SearchAutocomplete" ResetValueOnEmptyText="true"
                  ToStringFunc="x => x.Name"
                  Required="Required">
@@ -9,7 +9,6 @@
         <div class="itemTemplate">
             <div class="itemContainerText">
                 <MudText Typo="Typo.body1">@context.Name</MudText>
-                <MudText Typo="Typo.body2">@context.Type</MudText>
             </div>
         </div>
     </ItemTemplate>

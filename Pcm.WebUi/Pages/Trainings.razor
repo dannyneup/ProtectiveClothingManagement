@@ -6,7 +6,9 @@
         <MudSpacer/>
         <MudTextField T="string" Placeholder="@Localization.search"
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" @bind-Value="_searchString"/>
-        <MudIconButton Icon="@Icons.Material.Filled.AddBox" @onclick="OpenNewTrainingPopOver"/>
+        <MudIconButton Icon="@Icons.Material.Filled.AddCircle" @onclick="OnAddButtonClicked"/>
     </MudCardHeader>
-    <TrainingList SearchString="@_searchString" RowClicked="OpenTrainingDetailsPopOver"/>
+    <TrainingList Trainings="_trainings"
+                  TrainingRowClicked="ShowDetailDialog" TrainingEditClicked="EditTraining" TrainingDeleteConfirmed="DeleteTraining"
+                  SearchString="@_searchString"/>
 </MudCard>

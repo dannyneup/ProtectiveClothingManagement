@@ -1,10 +1,16 @@
 ﻿@page "/"
 @using Pcm.Infrastructure.ResponseModels
 
-<TrainingEditor @bind-Training="_training" @bind-Loadout="_loadOut"/>
+<TrainingList/>
 
 @code
 {
-    private TrainingResponse _training = new();
+    private readonly TrainingResponse _training = new()
+    {
+        Id = 1,
+        Name = "WI",
+        Type = "Duales Studium"
+    };
+
     private List<LoadOutPartResponse> _loadOut;
 }

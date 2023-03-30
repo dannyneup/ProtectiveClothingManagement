@@ -1,22 +1,21 @@
-@using Pcm.Infrastructure.ResponseModels
-
-<MudTable T="TrainingResponse" Items="_trainings" Hover="true" SortLabel="Sort By"
+@using Pcm.WebUi.Models
+<MudTable T="Training" Items="Trainings" Hover="true" SortLabel="Sort By"
           Filter="TrainingFilter"
           OnRowClick="OnRowClick"
           EditButtonPosition="TableEditButtonPosition.End"
           Context="rowObj">
     <HeaderContent>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<TrainingResponse, object>(x => x.Name)">@Localization.trainingName</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<Training, object>(x => x.Name)">@Localization.name</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<TrainingResponse, object>(x => x.Type)">@Localization.trainingName</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<Training, object>(x => x.Type)">@Localization.type</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<TrainingResponse, object>(x => x.TraineeCount)">@Localization.traineeCount</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<Training, object>(x => x.TraineeCount)">@Localization.traineeCount</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<TrainingResponse, object>(x => x.YearCount)">@Localization.yearCount</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<Training, object>(x => x.YearCount)">@Localization.yearCount</MudTableSortLabel>
         </MudTh>
         <MudTd/>
     </HeaderContent>

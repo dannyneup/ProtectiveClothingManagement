@@ -7,10 +7,9 @@ using Pcm.Infrastructure.Repositories;
 using Pcm.Infrastructure.RequestModels;
 using Pcm.Infrastructure.ResponseModels;
 
-
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddSingleton<IEndpointService, EndpointService>();
 
+builder.Services.AddSingleton<IEndpointService, EndpointService>();
 
 StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 
@@ -33,9 +32,14 @@ builder.Services.AddLocalization();
 
 //Dependency injection
 builder.Services.AddScoped<IRepository<PersonResponse, PersonRequest>, Repository<PersonResponse, PersonRequest>>();
-builder.Services.AddScoped<IRepository<ItemCategoryResponse, ItemCategoryRequest>, Repository<ItemCategoryResponse, ItemCategoryRequest>>();
-builder.Services.AddScoped<IRepository<TrainingResponse, TrainingRequestModel>, Repository<TrainingResponse, TrainingRequestModel>>();
-builder.Services.AddScoped<IRepository<LoadOutPartResponse, LoadOutPartRequest>, Repository<LoadOutPartResponse, LoadOutPartRequest>>();
+builder.Services
+    .AddScoped<IRepository<ItemCategoryResponse, ItemCategoryRequest>,
+        Repository<ItemCategoryResponse, ItemCategoryRequest>>();
+builder.Services
+    .AddScoped<IRepository<TrainingResponse, TrainingRequest>, Repository<TrainingResponse, TrainingRequest>>();
+builder.Services
+    .AddScoped<IRepository<LoadOutPartResponse, LoadOutPartRequest>,
+        Repository<LoadOutPartResponse, LoadOutPartRequest>>();
 
 
 var app = builder.Build();

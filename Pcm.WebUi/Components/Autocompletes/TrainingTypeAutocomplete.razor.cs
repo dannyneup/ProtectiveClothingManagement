@@ -1,40 +1,31 @@
 using Microsoft.AspNetCore.Components;
-using Pcm.Application.Interfaces;
-using Pcm.Core.Entities;
-using Pcm.Infrastructure.RequestModels;
-using Pcm.Infrastructure.ResponseModels;
-using Pcm.WebUi.Controller;
+using Pcm.WebUi.Models;
 
 namespace Pcm.WebUi.Components.Autocompletes;
 
 public partial class TrainingTypeAutocomplete : ComponentBase
 {
-    [Parameter] public string Value { get; set; }
-    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+    private List<string> _trainingTypes;
+    [Parameter] public List<Training> Trainings { get; set; }
+    [Parameter] public string TrainingType { get; set; }
+    [Parameter] public EventCallback<string> TrainingChanged { get; set; }
     [Parameter] public bool Required { get; set; }
-    [Inject] public IRepository<TrainingResponse, TrainingRequestModel> TrainingRepository { get; set; }
 
-    private IEnumerable<TrainingResponse> _trainingResponses;
-    private IEnumerable<string> _trainingTypes;
-
-    protected override async void OnInitialized()
+    protected override void OnInitialized()
     {
-        _trainingResponses = await TrainingRepository.GetAll();
-        _trainingTypes = _trainingResponses.Select(x => x.Type).ToList().Distinct();
+        _trainingTypes = Trainings.Select(x => x.Type).Distinct().ToList();
     }
 
-    private async Task<IEnumerable<string>> SearchTrainingTypeAutocomplete(string searchString)
+    private async Task<IEnumerable<string>> SearchAutocomplete(string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString))
-        {
             return _trainingTypes;
-        }
         return _trainingTypes.Where(x => x.Contains(searchString));
     }
 
-    private async Task OnValueChanged(string newTrainingType)
+    private async Task OnValueChanged(string trainingType)
     {
-        Value = newTrainingType;
-        await ValueChanged.InvokeAsync(Value);
+        TrainingType = trainingType;
+        await TrainingChanged.InvokeAsync(trainingType);
     }
 }
