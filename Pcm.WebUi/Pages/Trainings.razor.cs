@@ -35,6 +35,12 @@ public partial class Trainings
                 {"extended", "true"}
             };
             var trainingResponses = await TrainingRepository.GetAll(queries);
+            if (!trainingResponses.FirstOrDefault().IsResponseSuccess)
+            {
+                var errorMessage = String.Format(Localization.TCouldNotLoadedSuccessfully, Localization.trainings);
+                Snackbar.Add(errorMessage, Severity.Error);
+                return;
+            }
             _trainings = trainingResponses.Select(x => new Training
             {
                 Id = x.Id,
@@ -48,6 +54,12 @@ public partial class Trainings
         async Task GetItemCategories()
         {
             var itemCategoryResponses = await CategoryRepository.GetAll();
+            if (!itemCategoryResponses.FirstOrDefault().IsResponseSuccess)
+            {
+                var errorMessage = String.Format(Localization.TCouldNotLoadedSuccessfully, Localization.itemCategories);
+                Snackbar.Add(errorMessage, Severity.Error);
+                return;
+            }
             _itemCategories = itemCategoryResponses.Select(x => new ItemCategory
             {
                 Id = x.Id,

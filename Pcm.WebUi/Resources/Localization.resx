@@ -192,4 +192,10 @@
     <data name="startingYear" xml:space="preserve">
         <value>Starting Year</value>
     </data>
+    <data name="TCouldNotLoadedSuccessfully" xml:space="preserve">
+        <value>{0} could not be loaded successfully.</value>
+    </data>
+    <data name="itemCategories" xml:space="preserve">
+        <value>Item categories</value>
+    </data>
 </root>

@@ -380,5 +380,17 @@ namespace Pcm.WebUi.Resources {
                 return ResourceManager.GetString("startingYear", resourceCulture);
             }
         }
+        
+        internal static string TCouldNotLoadedSuccessfully {
+            get {
+                return ResourceManager.GetString("TCouldNotLoadedSuccessfully", resourceCulture);
+            }
+        }
+        
+        internal static string itemCategories {
+            get {
+                return ResourceManager.GetString("itemCategories", resourceCulture);
+            }
+        }
     }
 }
