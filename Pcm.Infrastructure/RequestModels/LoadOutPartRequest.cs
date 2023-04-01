@@ -1,9 +1,9 @@
+using Pcm.Application.Interfaces.RequestModels;
+
 namespace Pcm.Infrastructure.RequestModels;
 
-public class LoadOutPartRequest
+public class LoadOutPartRequest : ILoadOutPartRequest
 {
-    public int Id { get; set; }
     public int ItemCategoryId { get; set; }
-    public int TrainingId { get; set; }
     public int Count { get; set; }
 }

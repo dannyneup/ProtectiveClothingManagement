@@ -15,13 +15,13 @@ public class EndpointService : IEndpointService
             : FallbackUrl) ?? FallbackUrl;
     }
 
-    public string GetMappedUrl(object responseModel)
+    public string GetMappedUrl(Type responseModel)
     {
         if (ReferenceEquals(responseModel, typeof(PersonResponse))) return _serviceUrl + ResourceUrls.Persons;
         if (ReferenceEquals(responseModel, typeof(ItemCategoryResponse)))
             return _serviceUrl + ResourceUrls.ItemCategories;
         if (ReferenceEquals(responseModel, typeof(TrainingResponse))) return _serviceUrl + ResourceUrls.Trainings;
-        if (ReferenceEquals(responseModel, typeof(LoadOutPartResponse))) return _serviceUrl + ResourceUrls.LoadOuts;
+        if (ReferenceEquals(responseModel, typeof(LoadOutPartResponse))) return _serviceUrl + ResourceUrls.LoadOut;
         return _serviceUrl;
     }
 }

@@ -616,6 +616,23 @@
           "default": true
         },
         {
+          "uuid": "c2fc9858-2155-4625-a1d1-49b5794cfd77",
+          "body": "{\n  \"id\": 3,\n  \"name\": \"Elektrotechnik\",\n  \"type\": \"Duales Studium\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "including-loadout",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
           "uuid": "36a5b28b-899a-411e-8d0d-6b5d89ce04a9",
           "body": "{}",
           "latency": 0,
@@ -714,28 +731,11 @@
       "uuid": "8c8b172c-f7e1-4faa-863d-ad561f9b59ce",
       "documentation": "",
       "method": "get",
-      "endpoint": "loadouts",
+      "endpoint": "trainings/:id/loadout",
       "responses": [
         {
-          "uuid": "7c4a980c-2d56-4f48-bc44-133321e77e22",
-          "body": "[\n  {\n    \"categoryId\": 0,\n    \"categoryName\": \"Poloshirt\",\n    \"count\": 5\n  },\n  {\n    \"categoryId\": 1,\n    \"categoryName\": \"Latzhose\",\n    \"count\": 1\n  },\n  {\n    \"categoryId\": 3,\n    \"categoryName\": \"Doppellatzhose\",\n    \"count\": 2\n  },\n  {\n    \"categoryId\": 4,\n    \"categoryName\": \"Dreifachlatzhose\",\n    \"count\": 3\n  }\n]",
-          "latency": 0,
-          "statusCode": 200,
-          "label": "",
-          "headers": [],
-          "bodyType": "INLINE",
-          "filePath": "",
-          "databucketID": "",
-          "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
-          "disableTemplating": false,
-          "fallbackTo404": false,
-          "default": true
-        },
-        {
           "uuid": "e99da71e-9487-4c13-910a-95b0e8df70b0",
-          "body": "{{#switch (queryParam 'training-id')}}\n  {{#case '1'}}\n  [\n    {\n      \"categoryId\": 2,\n      \"categoryName\": \"Poloshirt\",\n      \"count\": 3\n    }\n  ]\n  {{/case}}\n  {{#case '2'}}\n    [\n      {\n        \"categoryId\": 2,\n        \"categoryName\": \"Poloshirt\",\n        \"count\": 5\n      },\n      {\n        \"categoryId\": 0,\n        \"categoryName\": \"Latzhose\",\n        \"count\": 1\n      }\n    ]\n  {{/case}}\n{{/switch}}",
+          "body": "{{#switch (urlParam 'id')}}\n  {{#case '1'}}\n  [\n    {\n      \"categoryId\": 2,\n      \"categoryName\": \"Poloshirt\",\n      \"count\": 3\n    }\n  ]\n  {{/case}}\n  {{#case '2'}}\n    [\n      {\n        \"categoryId\": 2,\n        \"categoryName\": \"Poloshirt\",\n        \"count\": 5\n      },\n      {\n        \"categoryId\": 1,\n        \"categoryName\": \"Latzhose\",\n        \"count\": 1\n      }\n    ]\n  {{/case}}\n{{/switch}}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -763,7 +763,7 @@
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
-          "default": false
+          "default": true
         }
       ],
       "enabled": true,
@@ -774,11 +774,11 @@
       "uuid": "2ccd7702-c95e-4b1e-83eb-7c7944a56d0d",
       "documentation": "",
       "method": "post",
-      "endpoint": "loadouts:training-id",
+      "endpoint": "training/:id/loadout",
       "responses": [
         {
           "uuid": "bd1e38e6-74ff-43ef-88fb-b0fceab3b72a",
-          "body": "{{#switch (urlParam 'id')}}\n  {{#case '3'}}\n    [\n      {\n        \"categoryId\": 2,\n        \"categoryName\": \"Poloshirt\",\n        \"count\": 5\n      },\n      {\n        \"categoryId\": 0,\n        \"categoryName\": \"Latzhose\",\n        \"count\": 4\n      }\n    ]\n  {{/case}}\n{{/switch}}",
+          "body": "{{#switch (urlParam 'id')}}\n  {{#case '3'}}\n    [\n      {\n        \"categoryId\": 2,\n        \"categoryName\": \"Poloshirt\",\n        \"count\": 5\n      },\n      {\n        \"categoryId\": 1,\n        \"categoryName\": \"Latzhose\",\n        \"count\": 4\n      }\n    ]\n  {{/case}}\n{{/switch}}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -922,7 +922,15 @@
         },
         {
           "type": "route",
+          "uuid": "8c8b172c-f7e1-4faa-863d-ad561f9b59ce"
+        },
+        {
+          "type": "route",
           "uuid": "90c31b95-dca0-4399-b888-cce6639c207d"
+        },
+        {
+          "type": "route",
+          "uuid": "2ccd7702-c95e-4b1e-83eb-7c7944a56d0d"
         },
         {
           "type": "route",
@@ -938,16 +946,7 @@
       "uuid": "ccee6c55-2839-45b0-ae69-0557955745de",
       "name": "loadouts",
       "collapsed": false,
-      "children": [
-        {
-          "type": "route",
-          "uuid": "2ccd7702-c95e-4b1e-83eb-7c7944a56d0d"
-        },
-        {
-          "type": "route",
-          "uuid": "8c8b172c-f7e1-4faa-863d-ad561f9b59ce"
-        }
-      ]
+      "children": []
     }
   ],
   "rootChildren": [

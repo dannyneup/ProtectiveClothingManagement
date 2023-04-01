@@ -1,6 +1,8 @@
+using Pcm.Application.Interfaces.RequestModels;
+
 namespace Pcm.Infrastructure.RequestModels;
 
-public class PersonRequest
+public class PersonRequest : IPersonRequest
 {
     public int PersonnelNumber { get; set; }
     public string FirstName { get; set; } = "";

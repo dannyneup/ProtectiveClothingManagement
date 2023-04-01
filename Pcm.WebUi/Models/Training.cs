@@ -7,13 +7,13 @@ public class Training : IEquatable<Training>
     public string Name { get; set; }
     public int TraineeCount { get; set; }
     public int YearCount { get; set; }
-    public List<LoadOutPart>? LoadOut { get; set; }
+    public List<LoadOutPart> LoadOut { get; set; } = Enumerable.Empty<LoadOutPart>().ToList();
 
     public bool Equals(Training? other)
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
-        return Id == other.Id && Type == other.Type && Name == other.Name && LoadOut.Equals(other.LoadOut);
+        return Id == other.Id && Type == other.Type && Name == other.Name && (LoadOut.Equals(other.LoadOut));
     }
 
     public override bool Equals(object? obj)

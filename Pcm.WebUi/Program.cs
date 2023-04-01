@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using MudBlazor;
 using MudBlazor.Services;
-using Pcm.Application.Interfaces;
+using Pcm.Application.Interfaces.Repositories;
 using Pcm.Infrastructure;
 using Pcm.Infrastructure.Repositories;
 using Pcm.Infrastructure.RequestModels;
@@ -36,10 +36,7 @@ builder.Services
     .AddScoped<IRepository<ItemCategoryResponse, ItemCategoryRequest>,
         Repository<ItemCategoryResponse, ItemCategoryRequest>>();
 builder.Services
-    .AddScoped<IRepository<TrainingResponse, TrainingRequest>, Repository<TrainingResponse, TrainingRequest>>();
-builder.Services
-    .AddScoped<IRepository<LoadOutPartResponse, LoadOutPartRequest>,
-        Repository<LoadOutPartResponse, LoadOutPartRequest>>();
+    .AddScoped<ITrainingRepository<TrainingResponse, TrainingRequest>, TrainingRepository>();
 
 
 var app = builder.Build();

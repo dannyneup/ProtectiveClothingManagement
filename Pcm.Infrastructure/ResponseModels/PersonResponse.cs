@@ -1,8 +1,9 @@
+using Pcm.Application.Interfaces.ResponseModels;
 using Pcm.Core.Entities;
 
 namespace Pcm.Infrastructure.ResponseModels;
 
-public class PersonResponse : ResponseBase, IPerson
+public class PersonResponse : ResponseBase, IPerson, IPersonResponse
 {
     public string TrainingName { get; set; } = "";
     public string TrainingType { get; set; } = "";

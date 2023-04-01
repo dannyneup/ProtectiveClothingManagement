@@ -8,5 +8,5 @@ public class ResourceUrls
     public const string ItemCategories = "/categories";
     public const string Orders = "/orders";
     public const string Trainings = "/trainings";
-    public const string LoadOuts = "/loadouts";
+    public const string LoadOut = "/loadout";
 }

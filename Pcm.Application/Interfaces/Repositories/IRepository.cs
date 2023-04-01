@@ -1,4 +1,4 @@
-namespace Pcm.Application.Interfaces;
+namespace Pcm.Application.Interfaces.Repositories;
 
 public interface IRepository<TResponse, in TRequest> where TResponse : class where TRequest : class
 {

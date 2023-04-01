@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Pcm.Application.Interfaces;
+using Pcm.Application.Interfaces.Repositories;
+using Pcm.Application.Interfaces.RequestModels;
+using Pcm.Infrastructure.Repositories;
 using Pcm.Infrastructure.RequestModels;
 using Pcm.Infrastructure.ResponseModels;
 using Pcm.WebUi.Components.Dialogs;
@@ -18,9 +21,8 @@ public partial class Trainings
     private List<Training> _trainings = new();
     [Inject] public IDialogService DialogService { get; set; }
     [Inject] public ISnackbar Snackbar { get; set; }
-    [Inject] public IRepository<TrainingResponse, TrainingRequest> TrainingRepository { get; set; }
+    [Inject] public ITrainingRepository<TrainingResponse, TrainingRequest> TrainingRepository { get; set; }
     [Inject] public IRepository<ItemCategoryResponse, ItemCategoryRequest> CategoryRepository { get; set; }
-    [Inject] public IRepository<LoadOutPartResponse, LoadOutPartRequest> LoadOutRepository { get; set; }
     [Inject] public IRepository<PersonResponse, PersonRequest> PersonRepository { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -85,8 +87,35 @@ public partial class Trainings
         {
             var training = result.Data as Training;
             _trainings.Append(training);
+            AddTraining(training);
             StateHasChanged();
         }
+    }
+
+    private async Task AddTraining(Training training)
+    {
+        var trainingRequest = new TrainingRequest
+        {
+            Name = training.Name,
+            Type = training.Type,
+            LoadOut = training.LoadOut.Select(x => new LoadOutPartRequest
+            {
+                ItemCategoryId = x.CategoryId,
+                Count = x.Count
+            }).ToList()
+        };
+        var trainingResponse = await TrainingRepository.Insert(trainingRequest);
+        if (trainingResponse.IsResponseSuccess)
+        {
+            var successMessage = String.Format(Localization.TWithNameSuccessfullyCreated, Localization.training,
+                training.Name);
+            Snackbar.Add(successMessage, Severity.Success);
+            return;
+        }
+
+        var errorMessage = String.Format(Localization.TWithNameNotSuccessfullyCreated, Localization.training,
+            training.Name);
+        Snackbar.Add(errorMessage, Severity.Error);
     }
 
     private async Task ShowDetailDialog(Training training)
@@ -173,7 +202,6 @@ public partial class Trainings
                 Name = training.Name,
                 Type = training.Type
             };
-
             return await TrainingRepository.Update(trainingRequest, training.Id);
         }
 
@@ -197,11 +225,7 @@ public partial class Trainings
 
     private async Task<List<LoadOutPart>> getLoadOut(Training training)
     {
-        var loadOutQueries = new Dictionary<string, string>
-        {
-            {"training-id", $"{training.Id}"}
-        };
-        var loadOutResponse = await LoadOutRepository.GetAll(loadOutQueries) as List<LoadOutPartResponse>;
+        var loadOutResponse = await TrainingRepository.GetLoadOut(training.Id) as List<LoadOutPartResponse>;
         return loadOutResponse.Select(x => new LoadOutPart
         {
             CategoryId = x.CategoryId,

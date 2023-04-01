@@ -2,29 +2,26 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using Pcm.Application.Interfaces;
+using Pcm.Application.Interfaces.Repositories;
 using Pcm.Infrastructure.ResponseModels;
 
 namespace Pcm.Infrastructure.Repositories;
 
-//todo: Anpassung für Änderung an Api: loadout nicht unter 'loadouts/{training-id}' sondern unter '/training/{training-id}/loadout'
 public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
     where TResponse : ResponseBase, new()
     where TRequest : class, new()
 {
-    private readonly HttpClient _httpClient;
-    private readonly JsonSerializerOptions _options;
-    private readonly string _uri;
-    private TResponse _type;
+    protected readonly HttpClient _httpClient;
+    protected readonly JsonSerializerOptions _options;
+    protected readonly string _uri;
 
 
     public Repository(HttpClient httpClient, IEndpointService endpointService)
     {
-        var types = GetType().GenericTypeArguments;
         _httpClient = httpClient;
-        _uri = endpointService.GetMappedUrl(types[0]);
+        _uri = endpointService.GetMappedUrl(typeof(TResponse));
         _options = new JsonSerializerOptions {PropertyNameCaseInsensitive = true};
     }
-
 
     public async Task<IEnumerable<TResponse>> GetAll(Dictionary<string, string>? queries = default)
     {
@@ -111,7 +108,7 @@ public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
         }
     }
 
-    private string ExtractQuery(Dictionary<string, string>? queries)
+    protected string ExtractQuery(Dictionary<string, string>? queries)
     {
         if (queries == null || queries.Count == 0) return "";
         var query = queries.Aggregate("?", (current, kv) => current + $"{kv.Key}={kv.Value}&");

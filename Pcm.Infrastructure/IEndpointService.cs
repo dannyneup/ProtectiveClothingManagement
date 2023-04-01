@@ -2,5 +2,5 @@
 
 public interface IEndpointService
 {
-    string GetMappedUrl(object responseModel);
+    string GetMappedUrl(Type responseModel);
 }
