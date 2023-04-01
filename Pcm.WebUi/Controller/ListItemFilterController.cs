@@ -25,14 +25,14 @@ public static class ListItemFilterController<T>
         return filteredItems;
     }
 
-    private static bool CheckIfStringArrayMatchesProperties(T item, string[] searchWords)
+    private static bool CheckIfStringArrayMatchesProperties(T item, IEnumerable<string> searchWords)
     {
         foreach (var searchWord in searchWords)
         {
-            var properties = item.GetType().GetProperties();
+            var properties = item!.GetType().GetProperties();
             var foundInProperties = properties.Any(p =>
                 (p.GetValue(item) ?? "")
-                .ToString()
+                .ToString()!
                 .Contains(searchWord, StringComparison.OrdinalIgnoreCase));
             if (foundInProperties) return true;
         }

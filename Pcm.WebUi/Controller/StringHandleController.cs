@@ -14,7 +14,7 @@ public static class StringHandleController
 
     public static string RemoveMultipleWhitespaces(string s)
     {
-        return s = Regex.Replace(s, @"\s+", " ");
+        return Regex.Replace(s, @"\s+", " ");
     }
 
     public static string RemoveSpecialCharacters(string s)

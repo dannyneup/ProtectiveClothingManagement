@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Pcm.Application.Interfaces;
 using Pcm.WebUi.Models;
 using Pcm.WebUi.Resources;
 
@@ -17,9 +16,9 @@ public partial class TrainingDetailsDialog
         Selector = e => e.YearStarted
     };
 
-    private const string _height = "30vw";
+    private const string Height = "30vw";
 
-    [Parameter] public List<Person> Persons { get; set; }
-    [Parameter] public List<LoadOutPart> LoadOut { get; set; }
+    [Parameter] public List<Person> Persons { get; set; } = Enumerable.Empty<Person>().ToList();
+    [Parameter] public List<LoadOutPart> LoadOut { get; set; } = Enumerable.Empty<LoadOutPart>().ToList();
     [Parameter] public bool FixedHeader { get; set; } = true;
 }

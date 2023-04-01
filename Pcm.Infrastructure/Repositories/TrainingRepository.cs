@@ -21,7 +21,7 @@ public class TrainingRepository : Repository<TrainingResponse, TrainingRequest>,
     {
         try
         {
-            var requestUri = $"{_uri}/{trainingId}/{ResourceUrls.LoadOut}";
+            var requestUri = $"{_uri}/{trainingId}{ResourceUrls.LoadOut}";
             var response = await _httpClient.PostAsJsonAsync(requestUri, requestModel);
             var responseString = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<LoadOutPartResponse>(responseString);

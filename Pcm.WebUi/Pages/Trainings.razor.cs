@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Pcm.Application.Interfaces;
 using Pcm.Application.Interfaces.Repositories;
-using Pcm.Application.Interfaces.RequestModels;
-using Pcm.Infrastructure.Repositories;
 using Pcm.Infrastructure.RequestModels;
 using Pcm.Infrastructure.ResponseModels;
 using Pcm.WebUi.Components.Dialogs;
@@ -14,36 +11,41 @@ namespace Pcm.WebUi.Pages;
 
 public partial class Trainings
 {
-    private List<ItemCategory> _itemCategories;
-    private string? _searchString;
+    private string _searchString = "";
     private Training _trainingBeforeEdit = new();
 
-    private List<Training> _trainings = new();
-    [Inject] public IDialogService DialogService { get; set; }
-    [Inject] public ISnackbar Snackbar { get; set; }
-    [Inject] public ITrainingRepository<TrainingResponse, TrainingRequest> TrainingRepository { get; set; }
-    [Inject] public IRepository<ItemCategoryResponse, ItemCategoryRequest> CategoryRepository { get; set; }
-    [Inject] public IRepository<PersonResponse, PersonRequest> PersonRepository { get; set; }
+    private List<ItemCategory> _itemCategories = Enumerable.Empty<ItemCategory>().ToList();
+    private List<Training> _trainings = Enumerable.Empty<Training>().ToList();
+    [Inject] public IDialogService DialogService { get; set; } = default!;
+    [Inject] public ISnackbar Snackbar { get; set; } = default!;
+    [Inject] public ITrainingRepository<TrainingResponse, TrainingRequest> TrainingRepository { get; set; } = default!;
+    [Inject] public IRepository<ItemCategoryResponse, ItemCategoryRequest> CategoryRepository { get; set; } = default!;
+    [Inject] public IRepository<PersonResponse, PersonRequest> PersonRepository { get; set; } = default!;
+    
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await GetTrainings();
-        await GetItemCategories();
+        if (firstRender)
+        {
+            _trainings = await GetTrainings();
+            StateHasChanged();
+        }
 
-        async Task GetTrainings()
+        async Task<List<Training>> GetTrainings()
         {
             var queries = new Dictionary<string, string>
             {
                 {"extended", "true"}
             };
             var trainingResponses = await TrainingRepository.GetAll(queries);
-            if (!trainingResponses.FirstOrDefault().IsResponseSuccess)
+            trainingResponses = trainingResponses.ToList();
+            if (!trainingResponses.FirstOrDefault()!.IsResponseSuccess)
             {
                 var errorMessage = String.Format(Localization.TCouldNotLoadedSuccessfully, Localization.trainings);
                 Snackbar.Add(errorMessage, Severity.Error);
-                return;
+                return Enumerable.Empty<Training>().ToList();
             }
-            _trainings = trainingResponses.Select(x => new Training
+            return trainingResponses.Select(x => new Training
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -52,27 +54,14 @@ public partial class Trainings
                 YearCount = x.YearCount
             }).ToList();
         }
-
-        async Task GetItemCategories()
-        {
-            var itemCategoryResponses = await CategoryRepository.GetAll();
-            if (!itemCategoryResponses.FirstOrDefault().IsResponseSuccess)
-            {
-                var errorMessage = String.Format(Localization.TCouldNotLoadedSuccessfully, Localization.itemCategories);
-                Snackbar.Add(errorMessage, Severity.Error);
-                return;
-            }
-            _itemCategories = itemCategoryResponses.Select(x => new ItemCategory
-            {
-                Id = x.Id,
-                Name = x.Name
-            }).ToList();
-        }
     }
+
+    
 
 
     private async Task OnAddButtonClicked()
     {
+        _itemCategories = await GetItemCategoriesIfNotAlreadyLoaded();
         var dialogParams = new DialogParameters
         {
             {"Trainings", _trainings},
@@ -85,15 +74,26 @@ public partial class Trainings
         var result = await dialog.Result;
         if (!result.Canceled)
         {
-            var training = result.Data as Training;
-            _trainings.Append(training);
-            AddTraining(training);
-            StateHasChanged();
+            var training = (result.Data as Training) ?? new Training();
+            await AddTraining(training);
         }
+    }
+
+    private async Task<List<ItemCategory>> GetItemCategoriesIfNotAlreadyLoaded()
+    {
+        if (_itemCategories.Count == 0)
+        {
+            return await GetItemCategories();
+        }
+
+        return Enumerable.Empty<ItemCategory>().ToList();
     }
 
     private async Task AddTraining(Training training)
     {
+        _trainings = _trainings.Append(training).ToList();
+        StateHasChanged();
+
         var trainingRequest = new TrainingRequest
         {
             Name = training.Name,
@@ -105,30 +105,30 @@ public partial class Trainings
             }).ToList()
         };
         var trainingResponse = await TrainingRepository.Insert(trainingRequest);
-        if (trainingResponse.IsResponseSuccess)
+        if (!trainingResponse.IsResponseSuccess)
         {
-            var successMessage = String.Format(Localization.TWithNameSuccessfullyCreated, Localization.training,
+            var errorMessage = String.Format(Localization.TWithNameNotSuccessfullyCreated, Localization.training,
                 training.Name);
-            Snackbar.Add(successMessage, Severity.Success);
+            Snackbar.Add(errorMessage, Severity.Error);
             return;
         }
-
-        var errorMessage = String.Format(Localization.TWithNameNotSuccessfullyCreated, Localization.training,
-            training.Name);
-        Snackbar.Add(errorMessage, Severity.Error);
+        var successMessage = String.Format(Localization.TWithNameSuccessfullyCreated, Localization.training,
+                training.Name);
+        Snackbar.Add(successMessage, Severity.Success);
     }
 
     private async Task ShowDetailDialog(Training training)
     {
         var persons = await GetPersons();
-        training.LoadOut = await getLoadOut(training);
+        training.LoadOut = await GetLoadOut(training);
 
         var parameters = new DialogParameters
         {
             {"Persons", persons},
             {"LoadOut", training.LoadOut}
         };
-        var dialog = await DialogService.ShowAsync<TrainingDetailsDialog>(Localization.trainingDetails, parameters);
+        await DialogService.ShowAsync<TrainingDetailsDialog>(Localization.trainingDetails, parameters);
+        
         
         async Task<List<Person>> GetPersons()
         {
@@ -153,7 +153,7 @@ public partial class Trainings
 
     private async Task EditTraining(Training training)
     {
-        training.LoadOut = await getLoadOut(training);
+        training.LoadOut = await GetLoadOut(training);
 
         BackupTraining();
 
@@ -190,12 +190,11 @@ public partial class Trainings
         }
 
         ResetTraining();
-
         
 
         async Task<TrainingResponse> UpdateTraining()
         {
-            training = result.Data as Training;
+            training = (result.Data as Training) ?? new Training();
             StateHasChanged();
             var trainingRequest = new TrainingRequest
             {
@@ -223,9 +222,9 @@ public partial class Trainings
         }
     }
 
-    private async Task<List<LoadOutPart>> getLoadOut(Training training)
+    private async Task<List<LoadOutPart>> GetLoadOut(Training training)
     {
-        var loadOutResponse = await TrainingRepository.GetLoadOut(training.Id) as List<LoadOutPartResponse>;
+        var loadOutResponse = (await TrainingRepository.GetLoadOut(training.Id) as List<LoadOutPartResponse>) ?? new List<LoadOutPartResponse>();
         return loadOutResponse.Select(x => new LoadOutPart
         {
             CategoryId = x.CategoryId,
@@ -241,14 +240,31 @@ public partial class Trainings
         {
             _trainings.Remove(training);
             Console.WriteLine(_trainings.Count());
-            var SuccessMessage = string.Format(Localization.TWithNameSuccessfullyDeleted, Localization.training,
+            var successMessage = string.Format(Localization.TWithNameSuccessfullyDeleted, Localization.training,
                 training.Name);
-            Snackbar.Add(SuccessMessage, Severity.Success);
+            Snackbar.Add(successMessage, Severity.Success);
             return;
         }
 
-        var ErrorMessage = string.Format(Localization.TWithNameNotSuccessfullyDeleted, Localization.training,
+        var errorMessage = string.Format(Localization.TWithNameNotSuccessfullyDeleted, Localization.training,
             training.Name);
-        Snackbar.Add(ErrorMessage, Severity.Error);
+        Snackbar.Add(errorMessage, Severity.Error);
+    }
+    private async Task<List<ItemCategory>> GetItemCategories()
+    {
+        var itemCategoryResponses = await CategoryRepository.GetAll();
+        itemCategoryResponses = itemCategoryResponses.ToList();
+        if (!itemCategoryResponses.FirstOrDefault()!.IsResponseSuccess)
+        {
+            var errorMessage = String.Format(Localization.TCouldNotLoadedSuccessfully, Localization.itemCategories);
+            Snackbar.Add(errorMessage, Severity.Error);
+            return Enumerable.Empty<ItemCategory>().ToList();
+        }
+
+        return itemCategoryResponses.Select(x => new ItemCategory
+        {
+            Id = x.Id,
+            Name = x.Name
+        }).ToList();
     }
 }

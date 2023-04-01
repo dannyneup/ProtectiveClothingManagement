@@ -6,10 +6,8 @@ namespace Pcm.WebUi.Components.Dialogs;
 
 public partial class TrainingEditorDialog : ComponentBase
 {
-    private MudForm _form;
-    private MudTable<LoadOutPart> _table;
-
-    private string _searchString = "";
+    private MudForm _form = new();
+    private MudTable<LoadOutPart> _table = new();
     
     private bool _formIsValid;
     private bool _activeRowEdit;
@@ -18,8 +16,7 @@ public partial class TrainingEditorDialog : ComponentBase
     
     private LoadOutPart? _loadOutPartBeforeEdit;
 
-    private List<ItemCategory> _remainingCategories;
-    private List<ItemCategory> _availableItemCategories;
+    private List<ItemCategory> _remainingCategories = new();
 
     [Parameter]
     public Training Training { get; set; } = new()
@@ -27,11 +24,11 @@ public partial class TrainingEditorDialog : ComponentBase
         LoadOut = new List<LoadOutPart>()
     };
 
-    [Parameter] public List<Training> Trainings { get; set; }
-    [Parameter] public List<ItemCategory> ItemCategories { get; set; }
+    [Parameter] public List<Training> Trainings { get; set; } = Enumerable.Empty<Training>().ToList();
+    [Parameter] public List<ItemCategory> ItemCategories { get; set; } = Enumerable.Empty<ItemCategory>().ToList();
     [Parameter] public bool EditMode { get; set; }
 
-    [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+    [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = default!;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
