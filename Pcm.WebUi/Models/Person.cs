@@ -4,7 +4,7 @@ namespace Pcm.WebUi.Models;
 
 public class Person : IPerson
 {
-    public int PersonnelNumber { get; set; }
+    public int PersonnelNumber { get; init; }
     public string FirstName { get; set; } = "";
     public string LastName { get; set; } = "";
     public string EmailAddress { get; set; } = "";

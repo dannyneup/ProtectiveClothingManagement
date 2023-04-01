@@ -1,6 +1,3 @@
-using Pcm.Application.Interfaces.RequestModels;
-using Pcm.Infrastructure.ResponseModels;
-
 namespace Pcm.Infrastructure.RequestModels;
 
 public class TrainingRequest

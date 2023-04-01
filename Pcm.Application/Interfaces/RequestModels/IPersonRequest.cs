@@ -2,11 +2,11 @@ namespace Pcm.Application.Interfaces.RequestModels;
 
 public interface IPersonRequest
 {
-    int PersonnelNumber { get; set; }
-    string FirstName { get; set; }
-    string LastName { get; set; }
-    string EmailAddress { get; set; }
-    string TrainingName { get; set; }
-    string TrainingType { get; set; }
-    string YearStarted { get; set; }
+    int PersonnelNumber { get; init; }
+    string FirstName { get; init; }
+    string LastName { get; init; }
+    string EmailAddress { get; init; }
+    string TrainingName { get; init; }
+    string TrainingType { get; init; }
+    string YearStarted { get; init; }
 }

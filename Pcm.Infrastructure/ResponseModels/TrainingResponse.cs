@@ -4,9 +4,9 @@ namespace Pcm.Infrastructure.ResponseModels;
 
 public class TrainingResponse : ResponseBase, ITrainingResponse
 {
-    public int Id { get; set; }
-    public string Type { get; set; } = "";
-    public string Name { get; set; } = "";
-    public int TraineeCount { get; set; }
-    public int YearCount { get; set; }
+    public int Id { get; init; }
+    public string Type { get; init; } = "";
+    public string Name { get; init; } = "";
+    public int TraineeCount { get; init; }
+    public int YearCount { get; init; }
 }

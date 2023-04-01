@@ -2,10 +2,9 @@ namespace Pcm.Application.Interfaces.ResponseModels;
 
 public interface ITrainingResponse : IResponseBase
 {
-    int Id { get; set; }
-    string Type { get; set; }
-    string Name { get; set; }
-    int TraineeCount { get; set; }
-    int YearCount { get; set; }
-    bool IsResponseSuccess { get; set; }
+    int Id { get; init; }
+    string Type { get; init; }
+    string Name { get; init; }
+    int TraineeCount { get; init; }
+    int YearCount { get; init; }
 }

@@ -1,8 +1,9 @@
 using System.Text.Json.Serialization;
+using Pcm.Application.Interfaces;
 
 namespace Pcm.Infrastructure.ResponseModels;
 
-public class ResponseBase
+public class ResponseBase : IResponseBase
 {
-    [JsonIgnore] public bool IsResponseSuccess { get; set; } = true;
+    [JsonIgnore] public bool IsResponseSuccess { get; init; } = true;
 }

@@ -2,12 +2,11 @@ namespace Pcm.Application.Interfaces.ResponseModels;
 
 public interface IPersonResponse : IResponseBase
 {
-    string TrainingName { get; set; }
-    string TrainingType { get; set; }
-    string YearStarted { get; set; }
-    int PersonnelNumber { get; set; }
-    string FirstName { get; set; }
-    string LastName { get; set; }
-    string EmailAddress { get; set; }
-    bool IsResponseSuccess { get; set; }
+    string TrainingName { get; init; }
+    string TrainingType { get; init; }
+    string YearStarted { get; init; }
+    int PersonnelNumber { get; init; }
+    string FirstName { get; init; }
+    string LastName { get; init; }
+    string EmailAddress { get; init; }
 }

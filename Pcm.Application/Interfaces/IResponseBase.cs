@@ -2,5 +2,5 @@ namespace Pcm.Application.Interfaces;
 
 public interface IResponseBase
 {
-    public bool IsResponseSuccess { get; set; }
+    public bool IsResponseSuccess { get; init; }
 }
