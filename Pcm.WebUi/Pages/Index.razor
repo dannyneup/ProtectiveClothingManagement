@@ -1,16 +1,1 @@
 ﻿@page "/"
-@using Pcm.Infrastructure.ResponseModels
-
-<TrainingList/>
-
-@code
-{
-    private readonly TrainingResponse _training = new()
-    {
-        Id = 1,
-        Name = "WI",
-        Type = "Duales Studium"
-    };
-
-    private List<LoadOutPartResponse> _loadOut;
-}
