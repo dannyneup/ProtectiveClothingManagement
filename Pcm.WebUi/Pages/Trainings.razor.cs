@@ -86,7 +86,7 @@ public partial class Trainings
             return await GetItemCategories();
         }
 
-        return Enumerable.Empty<ItemCategory>().ToList();
+        return _itemCategories;
     }
 
     private async Task AddTraining(Training training)
