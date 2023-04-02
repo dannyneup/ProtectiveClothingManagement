@@ -21,8 +21,8 @@ public class TrainingRepository : Repository<TrainingResponse, TrainingRequest>,
     {
         try
         {
-            var requestUri = $"{_uri}/{trainingId}{ResourceUrls.LoadOut}";
-            var response = await _httpClient.PostAsJsonAsync(requestUri, requestModel);
+            var requestUri = $"{Uri}/{trainingId}{ResourceUrls.LoadOut}";
+            var response = await HttpClient.PostAsJsonAsync(requestUri, requestModel);
             var responseString = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<LoadOutPartResponse>(responseString);
         }
@@ -39,8 +39,8 @@ public class TrainingRepository : Repository<TrainingResponse, TrainingRequest>,
     {
         try
         {
-            var requestUri = $"{_uri}/{trainingId}/{ResourceUrls.LoadOut}";
-            var response = await _httpClient.GetFromJsonAsync<List<LoadOutPartResponse>>(requestUri, _options);
+            var requestUri = $"{Uri}/{trainingId}/{ResourceUrls.LoadOut}";
+            var response = await HttpClient.GetFromJsonAsync<List<LoadOutPartResponse>>(requestUri, Options);
             return response ?? Enumerable.Empty<LoadOutPartResponse>().ToList();
         }
         catch (Exception e) when (e is HttpRequestException or JsonException)

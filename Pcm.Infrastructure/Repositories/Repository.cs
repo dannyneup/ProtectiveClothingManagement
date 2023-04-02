@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text.Json;
-using Pcm.Application.Interfaces;
 using Pcm.Application.Interfaces.Repositories;
 using Pcm.Infrastructure.ResponseModels;
 
@@ -11,24 +10,24 @@ public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
     where TResponse : ResponseBase, new()
     where TRequest : class, new()
 {
-    protected readonly HttpClient _httpClient;
-    protected readonly JsonSerializerOptions _options;
-    protected readonly string _uri;
+    protected readonly HttpClient HttpClient;
+    protected readonly JsonSerializerOptions Options;
+    protected readonly string Uri;
 
 
     public Repository(HttpClient httpClient, IEndpointService endpointService)
     {
-        _httpClient = httpClient;
-        _uri = endpointService.GetMappedUrl(typeof(TResponse));
-        _options = new JsonSerializerOptions {PropertyNameCaseInsensitive = true};
+        HttpClient = httpClient;
+        Uri = endpointService.GetMappedUrl(typeof(TResponse));
+        Options = new JsonSerializerOptions {PropertyNameCaseInsensitive = true};
     }
 
-    public async Task<IEnumerable<TResponse>> GetAll(Dictionary<string, string>? queries = default)
+    public async Task<IEnumerable<TResponse>> GetAll(Dictionary<string, string> queries = default!)
     {
         try
         {
             var query = ExtractQuery(queries);
-            var response = await _httpClient.GetFromJsonAsync<List<TResponse>>($"{_uri}{query}", _options);
+            var response = await HttpClient.GetFromJsonAsync<List<TResponse>>($"{Uri}{query}", Options);
             return response ?? Enumerable.Empty<TResponse>().ToList();
         }
         catch (Exception e) when (e is HttpRequestException or JsonException)
@@ -38,12 +37,12 @@ public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
         }
     }
 
-    public async Task<TResponse> Get(int id, Dictionary<string, string>? queries = default)
+    public async Task<TResponse> Get(int id, Dictionary<string, string> queries = default!)
     {
         try
         {
             var query = ExtractQuery(queries);
-            var response = await _httpClient.GetFromJsonAsync<TResponse>($"{_uri}/{id}{query}", _options);
+            var response = await HttpClient.GetFromJsonAsync<TResponse>($"{Uri}/{id}{query}", Options);
             return response ?? new TResponse();
         }
         catch (Exception e) when (e is HttpRequestException or JsonException)
@@ -58,12 +57,11 @@ public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
 
     public async Task<TResponse> Insert(TRequest requestModel)
     {
-        //todo: insert training with corresponding loadout
         try
         {
-            var response = await _httpClient.PostAsJsonAsync(_uri, requestModel);
+            var response = await HttpClient.PostAsJsonAsync(Uri, requestModel);
             var responseString = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<TResponse>(responseString);
+            return JsonSerializer.Deserialize<TResponse>(responseString) ?? new TResponse();
         }
         catch (Exception e) when (e is HttpRequestException or JsonException)
         {
@@ -77,12 +75,11 @@ public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
 
     public async Task<TResponse> Update(TRequest requestModel, int id)
     {
-        //todo: update training with corresponding loadout
         try
         {
-            var response = await _httpClient.PutAsJsonAsync($"{_uri}/{id}", requestModel);
+            var response = await HttpClient.PutAsJsonAsync($"{Uri}/{id}", requestModel);
             var responseString = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<TResponse>(responseString);
+            return JsonSerializer.Deserialize<TResponse>(responseString) ?? new TResponse();
         }
         catch (Exception e) when (e is HttpRequestException or JsonException)
         {
@@ -98,7 +95,7 @@ public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
     {
         try
         {
-            var response = await _httpClient.DeleteAsync($"{_uri}/{id}");
+            var response = await HttpClient.DeleteAsync($"{Uri}/{id}");
             return response.IsSuccessStatusCode;
         }
         catch (HttpRequestException e)
@@ -108,9 +105,9 @@ public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
         }
     }
 
-    protected string ExtractQuery(Dictionary<string, string>? queries)
+    protected string ExtractQuery(Dictionary<string, string> queries)
     {
-        if (queries == null || queries.Count == 0) return "";
+        if (queries.Count == 0) return "";
         var query = queries.Aggregate("?", (current, kv) => current + $"{kv.Key}={kv.Value}&");
         return query.Remove(query.Length - 1);
     }
