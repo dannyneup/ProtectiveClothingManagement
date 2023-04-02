@@ -309,15 +309,15 @@ namespace Pcm.WebUi.Resources {
             }
         }
         
-        internal static string TWithNameSuccessfullyCreated {
+        internal static string tWithNameSuccessfullyCreated {
             get {
-                return ResourceManager.GetString("TWithNameSuccessfullyCreated", resourceCulture);
+                return ResourceManager.GetString("tWithNameSuccessfullyCreated", resourceCulture);
             }
         }
         
-        internal static string TWithNameNotSuccessfullyCreated {
+        internal static string tWithNameNotSuccessfullyCreated {
             get {
-                return ResourceManager.GetString("TWithNameNotSuccessfullyCreated", resourceCulture);
+                return ResourceManager.GetString("tWithNameNotSuccessfullyCreated", resourceCulture);
             }
         }
         
@@ -351,27 +351,27 @@ namespace Pcm.WebUi.Resources {
             }
         }
         
-        internal static string TWithNameNotSuccessfullyUpdated {
+        internal static string tWithNameNotSuccessfullyUpdated {
             get {
-                return ResourceManager.GetString("TWithNameNotSuccessfullyUpdated", resourceCulture);
+                return ResourceManager.GetString("tWithNameNotSuccessfullyUpdated", resourceCulture);
             }
         }
         
-        internal static string TWithNameSuccessfullyUpdated {
+        internal static string tWithNameSuccessfullyUpdated {
             get {
-                return ResourceManager.GetString("TWithNameSuccessfullyUpdated", resourceCulture);
+                return ResourceManager.GetString("tWithNameSuccessfullyUpdated", resourceCulture);
             }
         }
         
-        internal static string TWithNameSuccessfullyDeleted {
+        internal static string tWithNameSuccessfullyDeleted {
             get {
-                return ResourceManager.GetString("TWithNameSuccessfullyDeleted", resourceCulture);
+                return ResourceManager.GetString("tWithNameSuccessfullyDeleted", resourceCulture);
             }
         }
         
-        internal static string TWithNameNotSuccessfullyDeleted {
+        internal static string tWithNameNotSuccessfullyDeleted {
             get {
-                return ResourceManager.GetString("TWithNameNotSuccessfullyDeleted", resourceCulture);
+                return ResourceManager.GetString("tWithNameNotSuccessfullyDeleted", resourceCulture);
             }
         }
         

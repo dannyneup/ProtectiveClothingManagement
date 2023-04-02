@@ -107,12 +107,12 @@ public partial class Trainings
         var trainingResponse = await TrainingRepository.Insert(trainingRequest);
         if (!trainingResponse.IsResponseSuccess)
         {
-            var errorMessage = String.Format(Localization.TWithNameNotSuccessfullyCreated, Localization.training,
+            var errorMessage = String.Format(Localization.tWithNameNotSuccessfullyCreated, Localization.training,
                 training.Name);
             Snackbar.Add(errorMessage, Severity.Error);
             return;
         }
-        var successMessage = String.Format(Localization.TWithNameSuccessfullyCreated, Localization.training,
+        var successMessage = String.Format(Localization.tWithNameSuccessfullyCreated, Localization.training,
                 training.Name);
         Snackbar.Add(successMessage, Severity.Success);
     }
@@ -176,14 +176,14 @@ public partial class Trainings
             if (response.IsResponseSuccess)
             {
                 var successMessage =
-                    string.Format(Localization.TWithNameSuccessfullyUpdated, Localization.training, training.Name);
+                    string.Format(Localization.tWithNameSuccessfullyUpdated, Localization.training, training.Name);
                 Snackbar.Add(successMessage, Severity.Success);
                 return;
             }
 
             ResetTraining();
             var errorMessage =
-                string.Format(Localization.TWithNameNotSuccessfullyUpdated, Localization.training,
+                string.Format(Localization.tWithNameNotSuccessfullyUpdated, Localization.training,
                     _trainingBeforeEdit.Name);
             Snackbar.Add(errorMessage, Severity.Error);
             return;
@@ -240,13 +240,13 @@ public partial class Trainings
         {
             _trainings.Remove(training);
             Console.WriteLine(_trainings.Count());
-            var successMessage = string.Format(Localization.TWithNameSuccessfullyDeleted, Localization.training,
+            var successMessage = string.Format(Localization.tWithNameSuccessfullyDeleted, Localization.training,
                 training.Name);
             Snackbar.Add(successMessage, Severity.Success);
             return;
         }
 
-        var errorMessage = string.Format(Localization.TWithNameNotSuccessfullyDeleted, Localization.training,
+        var errorMessage = string.Format(Localization.tWithNameNotSuccessfullyDeleted, Localization.training,
             training.Name);
         Snackbar.Add(errorMessage, Severity.Error);
     }

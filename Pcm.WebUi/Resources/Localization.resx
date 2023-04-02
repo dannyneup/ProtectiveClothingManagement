@@ -156,10 +156,10 @@
     <data name="yearStarted" xml:space="preserve">
         <value>Starting Year</value>
     </data>
-    <data name="TWithNameSuccessfullyCreated" xml:space="preserve">
+    <data name="tWithNameSuccessfullyCreated" xml:space="preserve">
         <value>{0} {1} successfully created.</value>
     </data>
-    <data name="TWithNameNotSuccessfullyCreated" xml:space="preserve">
+    <data name="tWithNameNotSuccessfullyCreated" xml:space="preserve">
         <value>{0} {1} not successfully created.</value>
     </data>
     <data name="editT" xml:space="preserve">
@@ -177,16 +177,16 @@
     <data name="warning" xml:space="preserve">
         <value>Warning</value>
     </data>
-    <data name="TWithNameNotSuccessfullyUpdated" xml:space="preserve">
+    <data name="tWithNameNotSuccessfullyUpdated" xml:space="preserve">
         <value>{0} {1} not successfully updated.</value>
     </data>
-    <data name="TWithNameSuccessfullyUpdated" xml:space="preserve">
+    <data name="tWithNameSuccessfullyUpdated" xml:space="preserve">
         <value>{0} {1} successfully updated.</value>
     </data>
-    <data name="TWithNameSuccessfullyDeleted" xml:space="preserve">
+    <data name="tWithNameSuccessfullyDeleted" xml:space="preserve">
         <value>{0} {1} successfully deleted.</value>
     </data>
-    <data name="TWithNameNotSuccessfullyDeleted" xml:space="preserve">
+    <data name="tWithNameNotSuccessfullyDeleted" xml:space="preserve">
         <value>{0} {1} not successfully deleted.</value>
     </data>
     <data name="startingYear" xml:space="preserve">

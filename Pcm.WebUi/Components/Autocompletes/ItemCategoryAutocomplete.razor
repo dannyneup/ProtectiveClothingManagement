@@ -1,8 +1,9 @@
 @using Pcm.WebUi.Models
 <MudAutocomplete T="ItemCategory"
                  Value="ItemCategory" ValueChanged="OnValueChanged"
+                 ResetValueOnEmptyText="true"
                  Label="@Localization.itemCategory"
-                 SearchFunc="@SearchAutocomplete" ResetValueOnEmptyText="true"
+                 SearchFunc="@SearchAutocomplete"
                  ToStringFunc="x => x.Name"
                  Required="Required">
     <ItemTemplate>

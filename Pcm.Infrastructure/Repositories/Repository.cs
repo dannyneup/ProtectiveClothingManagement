@@ -22,7 +22,7 @@ public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
         Options = new JsonSerializerOptions {PropertyNameCaseInsensitive = true};
     }
 
-    public async Task<IEnumerable<TResponse>> GetAll(Dictionary<string, string> queries = default!)
+    public async Task<IEnumerable<TResponse>> GetAll(Dictionary<string, string>? queries = default)
     {
         try
         {
@@ -37,7 +37,7 @@ public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
         }
     }
 
-    public async Task<TResponse> Get(int id, Dictionary<string, string> queries = default!)
+    public async Task<TResponse> Get(int id, Dictionary<string, string>? queries = default)
     {
         try
         {
@@ -105,9 +105,9 @@ public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
         }
     }
 
-    protected string ExtractQuery(Dictionary<string, string> queries)
+    protected string ExtractQuery(Dictionary<string, string>? queries)
     {
-        if (queries.Count == 0) return "";
+        if (queries == null || queries.Count == 0) return "";
         var query = queries.Aggregate("?", (current, kv) => current + $"{kv.Key}={kv.Value}&");
         return query.Remove(query.Length - 1);
     }
