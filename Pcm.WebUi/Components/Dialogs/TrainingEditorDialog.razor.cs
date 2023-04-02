@@ -18,14 +18,9 @@ public partial class TrainingEditorDialog : ComponentBase
 
     private List<ItemCategory> _remainingCategories = new();
 
-    [Parameter]
-    public Training Training { get; set; } = new()
-    {
-        LoadOut = new List<LoadOutPart>()
-    };
-
-    [Parameter] public List<Training> Trainings { get; set; } = Enumerable.Empty<Training>().ToList();
-    [Parameter] public List<ItemCategory> ItemCategories { get; set; } = Enumerable.Empty<ItemCategory>().ToList();
+    [Parameter, EditorRequired] public Training Training { get; set; } = new();
+    [Parameter, EditorRequired] public List<Training> Trainings { get; set; } = Enumerable.Empty<Training>().ToList();
+    [Parameter, EditorRequired] public List<ItemCategory> ItemCategories { get; set; } = Enumerable.Empty<ItemCategory>().ToList();
     [Parameter] public bool EditMode { get; set; }
 
     [CascadingParameter] private MudDialogInstance MudDialog { get; set; } = default!;

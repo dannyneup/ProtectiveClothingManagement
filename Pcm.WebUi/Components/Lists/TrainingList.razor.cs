@@ -9,8 +9,7 @@ namespace Pcm.WebUi.Components.Lists;
 
 public partial class TrainingList : ComponentBase
 { 
-    [Parameter] public List<Training> Trainings { get; set; } = Enumerable.Empty<Training>().ToList();
-    [Parameter] public EventCallback<List<Training>> TrainingsChanged { get; set; }
+    [Parameter, EditorRequired] public List<Training> Trainings { get; set; } = Enumerable.Empty<Training>().ToList();
     [Parameter] public string SearchString { get; set; } = "";
     [Parameter] public int Elevation { get; set; }
     [Parameter] public EventCallback<Training> TrainingRowClicked { get; set; }

@@ -6,7 +6,7 @@ namespace Pcm.WebUi.Components.Autocompletes;
 public partial class TrainingTypeAutocomplete : ComponentBase
 {
     private List<string> _trainingTypes = new();
-    [Parameter] public List<Training> Trainings { get; set; } = Enumerable.Empty<Training>().ToList();
+    [Parameter, EditorRequired] public List<Training> Trainings { get; set; } = Enumerable.Empty<Training>().ToList();
     [Parameter] public string TrainingType { get; set; } = "";
     [Parameter] public EventCallback<string> TrainingChanged { get; set; }
     [Parameter] public bool Required { get; set; }

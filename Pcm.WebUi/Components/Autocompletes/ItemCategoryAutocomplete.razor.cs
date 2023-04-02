@@ -6,7 +6,7 @@ namespace Pcm.WebUi.Components.Autocompletes;
 
 public partial class ItemCategoryAutocomplete : ComponentBase
 {
-    [Parameter] public List<ItemCategory> ItemCategories { get; set; } = Enumerable.Empty<ItemCategory>().ToList();
+    [Parameter, EditorRequired] public List<ItemCategory> ItemCategories { get; set; } = Enumerable.Empty<ItemCategory>().ToList();
     [Parameter] public ItemCategory ItemCategory { get; set; } = new();
     [Parameter] public EventCallback<ItemCategory> ItemCategoryChanged { get; set; }
     [Parameter] public bool Required { get; set; }
