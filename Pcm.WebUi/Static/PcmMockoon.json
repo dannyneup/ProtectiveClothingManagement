@@ -941,12 +941,6 @@
           "uuid": "fbfd586e-e83f-4d98-a679-e48b8721acee"
         }
       ]
-    },
-    {
-      "uuid": "ccee6c55-2839-45b0-ae69-0557955745de",
-      "name": "loadouts",
-      "collapsed": false,
-      "children": []
     }
   ],
   "rootChildren": [
@@ -977,10 +971,6 @@
     {
       "type": "folder",
       "uuid": "4cb110bd-f04d-44d7-9407-62daac024a91"
-    },
-    {
-      "type": "folder",
-      "uuid": "ccee6c55-2839-45b0-ae69-0557955745de"
     }
   ]
 }
