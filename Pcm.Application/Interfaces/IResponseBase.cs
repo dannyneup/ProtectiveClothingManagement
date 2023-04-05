@@ -1,6 +1,6 @@
-namespace Pcm.Application.Interfaces;
+namespace Pcm.Infrastructure.DTOs;
 
 public interface IResponseBase
 {
-    public bool IsResponseSuccess { get; init; }
+    bool IsResponseSuccess { get; init; }
 }

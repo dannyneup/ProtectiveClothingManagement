@@ -1,11 +1,10 @@
-using Pcm.Application.Interfaces.RequestModels;
-using Pcm.Application.Interfaces.ResponseModels;
+using Pcm.Infrastructure.DTOs;
 
 namespace Pcm.Application.Interfaces.Repositories;
 
-public interface ITrainingRepository<TResponse, in TRequest> : IRepository<TResponse, TRequest> 
-    where TResponse : class where TRequest : class 
+public interface ITrainingRepository<TResponse, in TRequest, TLoadOutPartResponse> : IRepository<TResponse, TRequest> 
+    where TResponse : class, IResponseBase 
+    where TRequest : class 
 {
-    Task<IEnumerable<ILoadOutPartResponse>> GetLoadOut(int trainingId);
-    Task<ILoadOutPartResponse> InsertLoadOut(int trainingId, IEnumerable<ILoadOutPartRequest> requestModel);
+    Task<IEnumerable<TLoadOutPartResponse>> GetLoadOut(int trainingId);
 }

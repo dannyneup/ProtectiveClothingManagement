@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Pcm.WebUi.Models;
+using Pcm.Application.Models;
 
 namespace Pcm.WebUi.Components.Dialogs;
 

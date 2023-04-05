@@ -1,8 +1,6 @@
-using Pcm.Application.Interfaces.ResponseModels;
+namespace Pcm.Infrastructure.DTOs.ResponseModels;
 
-namespace Pcm.Infrastructure.ResponseModels;
-
-public class TrainingResponse : ResponseBase, ITrainingResponse
+public record TrainingResponse : ResponseBase
 {
     public int Id { get; init; }
     public string Type { get; init; } = "";

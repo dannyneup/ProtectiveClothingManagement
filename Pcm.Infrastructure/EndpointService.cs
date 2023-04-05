@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Pcm.Infrastructure.ResponseModels;
+using Pcm.Infrastructure.DTOs;
+using Pcm.Infrastructure.DTOs.ResponseModels;
 
 namespace Pcm.Infrastructure;
 
@@ -17,8 +18,8 @@ public class EndpointService : IEndpointService
 
     public string GetMappedUrl(Type responseModel)
     {
-        if (ReferenceEquals(responseModel, typeof(PersonResponse))) return _serviceUrl + ResourceUrls.Persons;
-        if (ReferenceEquals(responseModel, typeof(ItemCategoryResponse)))
+        if (ReferenceEquals(responseModel, typeof(PersonDto))) return _serviceUrl + ResourceUrls.Persons;
+        if (ReferenceEquals(responseModel, typeof(ItemCategoryDto)))
             return _serviceUrl + ResourceUrls.ItemCategories;
         if (ReferenceEquals(responseModel, typeof(TrainingResponse))) return _serviceUrl + ResourceUrls.Trainings;
         if (ReferenceEquals(responseModel, typeof(LoadOutPartResponse))) return _serviceUrl + ResourceUrls.LoadOut;

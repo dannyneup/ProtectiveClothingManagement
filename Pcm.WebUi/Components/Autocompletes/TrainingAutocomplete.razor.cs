@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Components;
-using Pcm.WebUi.Models;
+using Pcm.Application.Models;
 
 namespace Pcm.WebUi.Components.Autocompletes;
 

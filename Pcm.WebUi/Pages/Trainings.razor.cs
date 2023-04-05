@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Pcm.Application.Interfaces.Repositories;
-using Pcm.Infrastructure.RequestModels;
-using Pcm.Infrastructure.ResponseModels;
+using Pcm.Application.Models;
+using Pcm.Infrastructure.DTOs;
+using Pcm.Infrastructure.DTOs.RequestModels;
+using Pcm.Infrastructure.DTOs.ResponseModels;
 using Pcm.WebUi.Components.Dialogs;
-using Pcm.WebUi.Models;
 using Pcm.WebUi.Resources;
+using PersonDto = Pcm.Infrastructure.DTOs.PersonDto;
 
 namespace Pcm.WebUi.Pages;
 
@@ -18,9 +20,9 @@ public partial class Trainings
     private List<Training> _trainings = Enumerable.Empty<Training>().ToList();
     [Inject] public IDialogService DialogService { get; set; } = default!;
     [Inject] public ISnackbar Snackbar { get; set; } = default!;
-    [Inject] public ITrainingRepository<TrainingResponse, TrainingRequest> TrainingRepository { get; set; } = default!;
-    [Inject] public IRepository<ItemCategoryResponse, ItemCategoryRequest> CategoryRepository { get; set; } = default!;
-    [Inject] public IRepository<PersonResponse, PersonRequest> PersonRepository { get; set; } = default!;
+    [Inject] public ITrainingRepository<TrainingResponse, TrainingRequest, LoadOutPartResponse> TrainingRepository { get; set; } = default!;
+    [Inject] public IRepository<ItemCategoryDto, ItemCategoryDto> CategoryRepository { get; set; } = default!;
+    [Inject] public IRepository<PersonDto, PersonDto> PersonRepository { get; set; } = default!;
     
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

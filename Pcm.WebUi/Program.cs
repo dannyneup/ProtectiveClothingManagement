@@ -3,9 +3,11 @@ using MudBlazor;
 using MudBlazor.Services;
 using Pcm.Application.Interfaces.Repositories;
 using Pcm.Infrastructure;
+using Pcm.Infrastructure.DTOs;
+using Pcm.Infrastructure.DTOs.RequestModels;
+using Pcm.Infrastructure.DTOs.ResponseModels;
 using Pcm.Infrastructure.Repositories;
-using Pcm.Infrastructure.RequestModels;
-using Pcm.Infrastructure.ResponseModels;
+using PersonDto = Pcm.Infrastructure.DTOs.PersonDto;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,12 +26,12 @@ builder.Services.AddHttpClient();
 builder.Services.AddLocalization();
 
 //Dependency injection
-builder.Services.AddScoped<IRepository<PersonResponse, PersonRequest>, Repository<PersonResponse, PersonRequest>>();
+builder.Services.AddScoped<IRepository<PersonDto, PersonDto>, Repository<PersonDto, PersonDto>>();
 builder.Services
-    .AddScoped<IRepository<ItemCategoryResponse, ItemCategoryRequest>,
-        Repository<ItemCategoryResponse, ItemCategoryRequest>>();
+    .AddScoped<IRepository<ItemCategoryDto, ItemCategoryDto>,
+        Repository<ItemCategoryDto, ItemCategoryDto>>();
 builder.Services
-    .AddScoped<ITrainingRepository<TrainingResponse, TrainingRequest>, TrainingRepository>();
+    .AddScoped<ITrainingRepository<TrainingResponse, TrainingRequest, LoadOutPartResponse>, TrainingRepository>();
 
 
 var app = builder.Build();

@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.VisualBasic;
 using MudBlazor;
+using Pcm.Application.Models;
 using Pcm.WebUi.Controller;
-using Pcm.WebUi.Models;
 using Pcm.WebUi.Resources;
 
 namespace Pcm.WebUi.Components.Lists;

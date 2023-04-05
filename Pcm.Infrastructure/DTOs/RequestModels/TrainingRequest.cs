@@ -1,4 +1,4 @@
-namespace Pcm.Infrastructure.RequestModels;
+namespace Pcm.Infrastructure.DTOs.RequestModels;
 
 public class TrainingRequest
 {

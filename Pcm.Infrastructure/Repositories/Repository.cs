@@ -2,7 +2,7 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using Pcm.Application.Interfaces.Repositories;
-using Pcm.Infrastructure.ResponseModels;
+using Pcm.Infrastructure.DTOs;
 
 namespace Pcm.Infrastructure.Repositories;
 
@@ -20,6 +20,7 @@ public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
         HttpClient = httpClient;
         Uri = endpointService.GetMappedUrl(typeof(TResponse));
         Options = new JsonSerializerOptions {PropertyNameCaseInsensitive = true};
+        Debug.WriteLine("");
     }
 
     public async Task<IEnumerable<TResponse>> GetAll(Dictionary<string, string>? queries = default)
@@ -32,6 +33,7 @@ public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
         }
         catch (Exception e) when (e is HttpRequestException or JsonException)
         {
+            
             Debug.WriteLine(e);
             return new List<TResponse> {new() {IsResponseSuccess = false}};
         }

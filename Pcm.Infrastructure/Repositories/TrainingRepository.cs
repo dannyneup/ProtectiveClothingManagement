@@ -3,39 +3,18 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using Pcm.Application.Interfaces;
 using Pcm.Application.Interfaces.Repositories;
-using Pcm.Application.Interfaces.RequestModels;
-using Pcm.Application.Interfaces.ResponseModels;
-using Pcm.Infrastructure.RequestModels;
-using Pcm.Infrastructure.ResponseModels;
+using Pcm.Infrastructure.DTOs.RequestModels;
+using Pcm.Infrastructure.DTOs.ResponseModels;
 
 namespace Pcm.Infrastructure.Repositories;
 
-public class TrainingRepository : Repository<TrainingResponse, TrainingRequest>, ITrainingRepository<TrainingResponse, TrainingRequest>
+public class TrainingRepository : Repository<TrainingResponse, TrainingRequest>, ITrainingRepository<TrainingResponse, TrainingRequest, LoadOutPartResponse>
 {
     
     public TrainingRepository(HttpClient httpClient, IEndpointService endpointService) : base(httpClient, endpointService) 
     {
     }
-
-    public async Task<ILoadOutPartResponse> InsertLoadOut(int trainingId, IEnumerable<ILoadOutPartRequest> requestModel)
-    {
-        try
-        {
-            var requestUri = $"{Uri}/{trainingId}{ResourceUrls.LoadOut}";
-            var response = await HttpClient.PostAsJsonAsync(requestUri, requestModel);
-            var responseString = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<LoadOutPartResponse>(responseString);
-        }
-        catch (Exception e) when (e is HttpRequestException or JsonException)
-        {
-            Debug.WriteLine(e);
-            return new LoadOutPartResponse()
-            {
-                IsResponseSuccess = false
-            };
-        }
-    }
-    public async Task<IEnumerable<ILoadOutPartResponse>> GetLoadOut(int trainingId)
+    public async Task<IEnumerable<LoadOutPartResponse>> GetLoadOut(int trainingId)
     {
         try
         {
