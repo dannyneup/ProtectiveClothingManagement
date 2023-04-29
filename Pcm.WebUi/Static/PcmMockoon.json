@@ -39,7 +39,7 @@
       "uuid": "e32a9e7c-d2ca-43df-968a-3df10fc03225",
       "documentation": "",
       "method": "get",
-      "endpoint": "persons",
+      "endpoint": "trainees",
       "responses": [
         {
           "uuid": "e03de54f-1088-47cc-b436-8e0ceb1a4c5d",
@@ -163,7 +163,7 @@
       "uuid": "0500ee53-f81f-4c90-a0be-1878c497b666",
       "documentation": "",
       "method": "get",
-      "endpoint": "persons/:id",
+      "endpoint": "trainees/:id",
       "responses": [
         {
           "uuid": "ac016676-8ee2-44e8-a7bd-6f007d38899f",
@@ -549,7 +549,7 @@
             {
               "target": "query",
               "modifier": "extended",
-              "value": "true",
+              "value": "True",
               "invert": false,
               "operator": "equals"
             }
@@ -834,7 +834,7 @@
   "folders": [
     {
       "uuid": "93dabfcc-d84c-4616-8be6-1d2fc9439c10",
-      "name": "persons",
+      "name": "trainees",
       "collapsed": false,
       "children": [
         {

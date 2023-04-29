@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.VisualBasic;
 using MudBlazor;
 using Pcm.Application.Models;
+using Pcm.Infrastructure.DTOs.ResponseModels;
 using Pcm.WebUi.Controller;
 using Pcm.WebUi.Resources;
 
@@ -17,11 +18,12 @@ public partial class TrainingList : ComponentBase
     [Parameter] public EventCallback<Training> TrainingDeleteConfirmed { get; set; }
 
     [Inject] public IDialogService DialogService { get; set; } = default!;
+    [Inject] public ListItemFilterService<Training> ListItemFilterService { get; set; } = default!;
 
 
     private bool TrainingFilter(Training training)
     {
-        return ListItemFilterController<Training>.CheckIfStringMatchesProperties(training,
+        return ListItemFilterService.CheckIfStringMatchesProperties(training,
             SearchString);
     }
 
@@ -45,7 +47,7 @@ public partial class TrainingList : ComponentBase
                                     Localization.warning,
                                     Localization.reallyWantDeleteCannotBeUndone,
                                     Localization.yes, Localization.no,
-                                    options: dialogOptions)
+                                    options: dialogOptions) 
                                 ?? false;
         if (deletingConfirmed) await TrainingDeleteConfirmed.InvokeAsync(training);
     }

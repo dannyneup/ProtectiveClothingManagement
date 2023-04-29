@@ -4,11 +4,18 @@
     <MudCardHeader>
         <MudText Color="Color.Primary" Typo="Typo.h6">@Localization.trainings</MudText>
         <MudSpacer/>
-        <MudTextField T="string" Placeholder="@Localization.search"
-                      Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" @bind-Value="_searchString"/>
-        <MudIconButton Icon="@Icons.Material.Filled.AddCircle" @onclick="OnAddButtonClicked"/>
+        <MudTextField T="string" 
+                      Placeholder="@Localization.search"
+                      Adornment="Adornment.Start" 
+                      AdornmentIcon="@Icons.Material.Filled.Search" 
+                      IconSize="Size.Medium" 
+                      bind-Value="_searchString"/>
+        <MudIconButton Icon="@Icons.Material.Filled.AddCircle" 
+                       OnClick="ViewModel.AddTraining"/>
     </MudCardHeader>
-    <TrainingList Trainings="_trainings"
-                  TrainingRowClicked="ShowDetailDialog" TrainingEditClicked="EditTraining" TrainingDeleteConfirmed="DeleteTraining"
+    <TrainingList Trainings="ViewModel.Trainings"
+                  TrainingRowClicked="ViewModel.ShowTrainingDetails" 
+                  TrainingEditClicked="ViewModel.EditTraining" 
+                  TrainingDeleteConfirmed="ViewModel.DeleteTraining"
                   SearchString="@_searchString"/>
 </MudCard>

@@ -18,7 +18,7 @@ public class EndpointService : IEndpointService
 
     public string GetMappedUrl(Type responseModel)
     {
-        if (ReferenceEquals(responseModel, typeof(PersonDto))) return _serviceUrl + ResourceUrls.Persons;
+        if (ReferenceEquals(responseModel, typeof(TraineeResponse))) return _serviceUrl + ResourceUrls.Trainees;
         if (ReferenceEquals(responseModel, typeof(ItemCategoryDto)))
             return _serviceUrl + ResourceUrls.ItemCategories;
         if (ReferenceEquals(responseModel, typeof(TrainingResponse))) return _serviceUrl + ResourceUrls.Trainings;

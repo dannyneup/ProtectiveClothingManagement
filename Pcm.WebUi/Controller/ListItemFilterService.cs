@@ -1,20 +1,26 @@
 namespace Pcm.WebUi.Controller;
 
-public static class ListItemFilterController<T>
+public class ListItemFilterService<T>
 {
-    public static bool CheckIfStringMatchesProperties(T item, string searchString)
+    private StringHandleService _stringHandleService;
+    public ListItemFilterService(StringHandleService stringHandleService)
+    {
+        _stringHandleService = stringHandleService;
+    }
+    
+    public bool CheckIfStringMatchesProperties(T item, string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
-        var searchWords = StringHandleController.CreateWordArray(searchString);
+        var searchWords = _stringHandleService.CreateWordArray(searchString);
         return CheckIfStringArrayMatchesProperties(item, searchWords);
     }
 
-    public static IEnumerable<T> FilterByWords(IEnumerable<T> items, string searchString)
+    public IEnumerable<T> FilterByWords(IEnumerable<T> items, string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString)) return items;
 
-        var searchWords = StringHandleController.CreateWordArray(searchString);
+        var searchWords = _stringHandleService.CreateWordArray(searchString);
         var filteredItems = new List<T>();
         foreach (var item in items)
         {
@@ -25,7 +31,7 @@ public static class ListItemFilterController<T>
         return filteredItems;
     }
 
-    private static bool CheckIfStringArrayMatchesProperties(T item, IEnumerable<string> searchWords)
+    private bool CheckIfStringArrayMatchesProperties(T item, IEnumerable<string> searchWords)
     {
         foreach (var searchWord in searchWords)
         {

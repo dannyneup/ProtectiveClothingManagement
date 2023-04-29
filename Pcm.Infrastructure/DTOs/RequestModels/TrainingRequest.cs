@@ -1,6 +1,6 @@
 namespace Pcm.Infrastructure.DTOs.RequestModels;
 
-public class TrainingRequest
+public record TrainingRequest
 {
     public string Name { get; init; } = "";
     public string Type { get; init; } = "";

@@ -2,7 +2,7 @@
 
 public class ResourceUrls
 {
-    public const string Persons = "/persons";
+    public const string Trainees = "/trainees";
     public const string Items = "/items";
     public const string Models = "/models";
     public const string ItemCategories = "/categories";

@@ -1,5 +1,8 @@
 @using Pcm.Application.Models
-<MudTable T="Training" Items="Trainings" Hover="true" SortLabel="Sort By"
+<MudTable T="Training" 
+          Items="Trainings" 
+          Hover="true" 
+          SortLabel="@Localization.sortBy"
           Filter="TrainingFilter"
           OnRowClick="OnRowClick"
           EditButtonPosition="TableEditButtonPosition.End"
@@ -22,9 +25,9 @@
     <ColGroup>
         <col/>
         <col/>
-        <col class="smallWidthColumn"/>
-        <col class="smallWidthColumn"/>
-        <col class="buttonColumn"/>
+        <col class="small-width-column"/>
+        <col class="small-width-column"/>
+        <col class="button-column"/>
     </ColGroup>
     <RowTemplate>
         <MudTd DataLabel="@Localization.name">@rowObj.Name</MudTd>
@@ -33,7 +36,7 @@
         <MudTd DataLabel="@Localization.yearCount">@rowObj.YearCount</MudTd>
         <MudTd>
             <MudMenu Icon="@Icons.Material.Filled.MoreHoriz"
-                     Class="moreIcon">
+                     Class="more-icon-button">
                 <MudMenuItem OnClick="() => OnRowEdit(rowObj)">
                     @Localization.edit
                 </MudMenuItem>

@@ -1,12 +1,12 @@
-.smallWidthColumn {
+.small-width-column {
     width: 150px;
 }
 
-.buttonColumn {
+.button-column {
     width: 50px;
 }
 
-.moreIcon button {
+.more-icon-button button {
     padding-top: 0px;
     padding-bottom: 0px;
 }

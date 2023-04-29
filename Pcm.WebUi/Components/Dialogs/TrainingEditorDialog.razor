@@ -8,7 +8,8 @@
                                   Label="@Localization.name"
                                   @bind-Value="Training.Name"
                                   Required="true"/>
-                    <TrainingTypeAutocomplete TrainingType="@Training.Type" TrainingChanged="OnTrainingTypeChanged"
+                    <TrainingTypeAutocomplete TrainingType="@Training.Type" 
+                                              TrainingChanged="OnTrainingTypeChanged"
                                               Trainings="Trainings"
                                               Required="true"/>
                 </MudItem>
@@ -16,7 +17,8 @@
                     <MudTable T="LoadOutPart" Items="Training.LoadOut" @ref="_table"
                               Dense="true"
                               RowEditPreview="OnRowEdit"
-                              RowEditCancel="OnRowEditCancel" CanCancelEdit="true"
+                              RowEditCancel="OnRowEditCancel" 
+                              CanCancelEdit="true"
                               RowEditCommit="OnRowEditSubmit"
                               IsEditRowSwitchingBlocked="true"
                               ApplyButtonPosition="TableApplyButtonPosition.End">
@@ -59,7 +61,8 @@
                             </MudTd>
                             <MudTd DataLabel="@Localization.count">
                                 <MudNumericField @bind-Value="@context.Count"
-                                                 Min="0" Required="true"/>
+                                                 Min="0" 
+                                                 Required="true"/>
                             </MudTd>
                         </RowEditingTemplate>
                     </MudTable>
@@ -69,11 +72,14 @@
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel"
-                   Variant="Variant.Outlined" Color="Color.Secondary">
+                   Variant="Variant.Outlined" 
+                   Color="Color.Secondary">
             @Localization.cancel
         </MudButton>
-        <MudButton OnClick="Submit" Disabled="@(!_formIsValid || _activeRowEdit)"
-                   Variant="Variant.Filled" Color="Color.Primary">
+        <MudButton OnClick="Submit" 
+                   Disabled="@(!_formIsValid || _activeRowEdit)"
+                   Variant="Variant.Filled" 
+                   Color="Color.Primary">
             @Localization.save
         </MudButton>
     </DialogActions>
