@@ -2,12 +2,10 @@
 using Pcm.Application.Interfaces.Repositories;
 using Pcm.Infrastructure.RequestModels;
 using Pcm.Infrastructure.ResponseModels;
-using ItemCategoryRequest = Pcm.WebUi.Refactor.RqRsp.ItemCategoryRequest;
-using ItemCategoryResponse = Pcm.WebUi.Refactor.RqRsp.ItemCategoryResponse;
 
 namespace Pcm.WebUi.Refactor.Models;
 
-public class TrainingModel
+public class DataModel
 {
     private readonly IRepository<TrainingResponse, TrainingRequest> _trainingRepository;
     private readonly IRepository<LoadOutPartResponse, LoadOutPartRequest> _loadoutRepository;
@@ -16,7 +14,8 @@ public class TrainingModel
     private List<ItemCategoryResponse> _itemCategories = new();
     private List<LoadOutPartResponse> _loadOutParts = new();
     
-    public EventCallback<TrainingResponse> InsertRequestFinished { get; set; }
+    public EventCallback<TrainingResponse> TrainingInsertRequestFinished { get; set; }
+    public EventCallback<LoadOutPartResponse> LoadoutInsertRequestFinished { get; set; }
     
     public List<TrainingResponse> Trainings
     {
@@ -57,7 +56,7 @@ public class TrainingModel
         }
     }
 
-    public TrainingModel(IRepository<TrainingResponse, TrainingRequest> trainingRepository, 
+    public DataModel(IRepository<TrainingResponse, TrainingRequest> trainingRepository, 
         IRepository<LoadOutPartResponse, LoadOutPartRequest> loadoutRepository, 
         IRepository<ItemCategoryResponse, ItemCategoryRequest> itemCategoryRepository)
     {
@@ -66,7 +65,7 @@ public class TrainingModel
         _itemCategoryRepository = itemCategoryRepository;
     }
 
-    public async Task Add(TrainingRequest request)
+    public async Task AddTraining(TrainingRequest request)
     {
         var trainingResponse = await _trainingRepository.Insert(request);
         bool isSuccesful = trainingResponse.IsResponseSuccess;
@@ -75,6 +74,20 @@ public class TrainingModel
             _trainings.Add(trainingResponse);
         }
 
-        await InsertRequestFinished.InvokeAsync(trainingResponse);
+        await TrainingInsertRequestFinished.InvokeAsync(trainingResponse);
     }
+    
+    public async Task AddLoadout(LoadOutPartRequest request)
+    {
+        var loadoutResponse = await _loadoutRepository.Insert(request);
+        bool isSuccesful = loadoutResponse.IsResponseSuccess;
+        if (isSuccesful)
+        {
+            _loadOutParts.Add(loadoutResponse);
+        }
+
+        await LoadoutInsertRequestFinished.InvokeAsync(loadoutResponse);
+    }
+    
+    
 }

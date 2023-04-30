@@ -3,7 +3,7 @@ using Pcm.Core.Entities;
 
 namespace Pcm.Infrastructure.ResponseModels;
 
-public class TraineeResponse : ResponseBase, IPerson
+public record TraineeResponse : ResponseBase, IPerson
 {
     public int PersonnelNumber { get; init; }
     public string FirstName { get; set; }

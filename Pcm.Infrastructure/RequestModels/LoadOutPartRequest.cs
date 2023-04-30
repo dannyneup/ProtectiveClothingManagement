@@ -1,7 +1,8 @@
 namespace Pcm.Infrastructure.RequestModels;
 
-public class LoadOutPartRequest : ResponseBase
+public record LoadOutPartRequest : ResponseBase
 {
-    public int CategoryId { get; init; }
-    public int Count { get; init; }
+    public int CategoryId { get; set; }
+    public int TrainingId { get; set; }
+    public int Count { get; set; }
 }

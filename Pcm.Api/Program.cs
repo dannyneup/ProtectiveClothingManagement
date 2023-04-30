@@ -47,20 +47,20 @@ app.MapGet("/", () => "PcmApi");
 app.MapGet("/trainings", async (GetConnection connectionGetter) =>
 {
     using var con = await connectionGetter();
-    var sql = @"SELECT t.id, name, typeFk as type, yearStarted, COUNT(a.id) AS traineeCount
+    var sql = @"SELECT t.id, description AS title, typeFk as type, yearStarted, COUNT(a.id) AS traineeCount
                 FROM training t
                 LEFT JOIN apprentice a ON t.id = a.trainingFk
                 GROUP BY t.id;";
-    return con.Query<List<TrainingResponse>>(sql);
+    return con.Query<TrainingResponse>(sql);
 });
 
 
 app.MapPost("/trainings", async (TrainingRequest request, GetConnection connectionGetter) =>
 {
     using var con = await connectionGetter();
-    var sql = @"INSERT INTO training (name, typeFk, yearStarted)
-                VALUES (@Name, @Type, @YearStarted);
-                SELECT id, name, typeFk as type, yearStarted
+    var sql = @"INSERT INTO training (description, typeFk, yearStarted)
+                VALUES (@Title, @Type, @YearStarted);
+                SELECT id, description as title, typeFk as type, yearStarted
                 FROM training
                 WHERE id = LAST_INSERT_ID();";
     var result = await con.QueryFirstOrDefaultAsync<TrainingResponse>(sql, request);
@@ -69,6 +69,64 @@ app.MapPost("/trainings", async (TrainingRequest request, GetConnection connecti
         ? Results.Created($"/trainings/{result.Id}", result)
         : Results.BadRequest();
 });
+
+
+app.MapGet("/loadouts", async (GetConnection connectionGetter) =>
+{
+    using var con = await connectionGetter();
+    var sql = @"
+                SELECT c.id as categoryId, c.description as categoryName, count, t.id AS trainingId
+                FROM loadout
+                JOIN category c on c.id = loadout.categoryFk
+                JOIN training t on t.id = loadout.trainingFk;";
+    return con.Query<LoadOutPartResponse>(sql);
+});
+
+
+app.MapPost("/loadouts", async (LoadOutPartRequest request, GetConnection connectionGetter) =>
+{
+    using var con = await connectionGetter();
+    var sql = @"INSERT INTO loadout (categoryFk, trainingFk, count)
+                VALUES (@CategoryId, @TrainingId, @Count);
+                SELECT loadout.id AS id, c.id as categoryId, c.description as categoryName, count, t.id AS trainingId
+                FROM loadout
+                JOIN category c on c.id = loadout.categoryFk
+                JOIN training t on t.id = loadout.trainingFk
+                WHERE loadout.id = LAST_INSERT_ID();";
+    var result = await con.QueryFirstOrDefaultAsync<LoadOutPartResponse>(sql, request);
+
+    return result != null
+        ? Results.Created($"/loadouts/{result.Id}", result)
+        : Results.BadRequest();
+});
+
+
+app.MapGet("/items/categories", async (GetConnection connectionGetter) =>
+{
+    using var con = await connectionGetter();
+    var sql = @"
+                SELECT id, description as title
+                FROM category;";
+    return con.Query<ItemCategoryResponse>(sql);
+});
+
+app.MapPost("/items/categories", async (ItemCategoryRequest request, GetConnection connectionGetter) =>
+{
+    using var con = await connectionGetter();
+    var sql = @"INSERT INTO category (description)
+                VALUES (@Title);
+                SELECT id, description as title
+                FROM category
+                WHERE id = LAST_INSERT_ID();";
+    var result = await con.QueryFirstOrDefaultAsync<ItemCategoryResponse>(sql, request);
+
+    return result != null
+        ? Results.Created($"/items/categories{result.Id}", result)
+        : Results.BadRequest();
+});
+
+
+
 
 
 /*

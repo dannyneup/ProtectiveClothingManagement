@@ -19,7 +19,6 @@ public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
         HttpClient = httpClient;
         Uri = endpointService.GetMappedUrl(typeof(TResponse));
         Options = new JsonSerializerOptions {PropertyNameCaseInsensitive = true};
-        Debug.WriteLine("");
     }
 
     public async Task<IEnumerable<TResponse>> GetAll(Dictionary<string, string>? queries = default)

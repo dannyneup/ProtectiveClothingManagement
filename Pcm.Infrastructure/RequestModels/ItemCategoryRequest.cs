@@ -1,6 +1,6 @@
 ﻿namespace Pcm.Infrastructure.RequestModels;
 
-public class ItemCategoryRequest : ResponseBase
+public record ItemCategoryRequest : ResponseBase
 {
-    public string Name { get; init; } = "";
+    public string Title { get; init; } = "";
 }

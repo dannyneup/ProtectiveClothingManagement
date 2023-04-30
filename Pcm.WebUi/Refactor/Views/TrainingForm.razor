@@ -1,0 +1,42 @@
+﻿<MudCard Elevation="25" Class="rounded-lg pb-4" Style="height: 100%; padding: 12px; display: flex; flex-direction: column;">
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h5" Align="Align.Center">1. Training hinzufügen</MudText>
+            <MudChip
+                Disabled="IsEnabled == false"
+                Style="display: flex;"
+                tyle="display: flex;"
+                Color="Vm.StatusColor">
+                @Vm.StatusText
+            </MudChip>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent Style="width: 100%;">
+        <MudTextField 
+            T="string" 
+            Label="@("Bezeichnung")"
+            Disabled="IsEnabled == false"
+            @bind-Value="Vm.TrainingRequest.Title" />
+        <MudNumericField 
+            T="int" 
+            Label="Beginn (Jahr)"
+            Disabled="IsEnabled == false"
+            Min="2020"
+            Max="@(DateTime.Now.Year)" 
+            @bind-Value="Vm.TrainingRequest.YearStarted"/>
+        <MudSelect T="string" @bind-Value="Vm.TrainingRequest.Type">
+            <MudSelectItem Value="@("ausbildung")">Ausbildung</MudSelectItem>
+            <MudSelectItem Value="@("dualesstudium")">Duales Studium</MudSelectItem>
+        </MudSelect>
+    </MudCardContent>
+    <MudCardActions Class="d-flex justify-center" Style="margin-bottom: 0; margin-top: auto; gap: 12px;">
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   Size="Size.Large"
+                   Disabled="Vm.IsLoading || IsEnabled == false"
+                   OnClick="Vm.AddNewTraining"
+                   Style="width:100%;">
+            hinzufügen
+        </MudButton>
+    </MudCardActions>
+</MudCard>

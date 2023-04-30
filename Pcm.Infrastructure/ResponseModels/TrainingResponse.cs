@@ -1,10 +1,9 @@
+using Pcm.Infrastructure.RequestModels;
+
 namespace Pcm.Infrastructure.ResponseModels;
 
-public class TrainingResponse : ResponseBase
+public record TrainingResponse : TrainingRequest
 {
     public int Id { get; init; }
-    public string Type { get; init; } = "";
-    public string Name { get; init; } = "";
     public int TraineeCount { get; init; }
-    public int YearStarted { get; init; }
 }

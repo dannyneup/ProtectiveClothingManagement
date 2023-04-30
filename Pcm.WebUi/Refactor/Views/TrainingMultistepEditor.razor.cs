@@ -3,8 +3,8 @@ using Pcm.WebUi.Refactor.ViewModels;
 
 namespace Pcm.WebUi.Refactor.Views;
 
-public partial class TrainingEditor
+public partial class TrainingMultistepEditor
 {
     [Inject]
-    public TrainingEditorViewModel Vm { get; set; }
+    public TrainingMultistepEditorViewModel Vm { get; set; }
 }

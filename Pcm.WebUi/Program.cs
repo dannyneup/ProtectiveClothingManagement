@@ -8,10 +8,6 @@ using Pcm.Infrastructure.Repositories;
 using Pcm.Infrastructure.RequestModels;
 using Pcm.Infrastructure.ResponseModels;
 using Pcm.WebUi.Controller;
-using Pcm.WebUi.Models;
-using Pcm.WebUi.Refactor.RqRsp;
-using Pcm.WebUi.ViewModels;
-using ItemCategoryResponse = Pcm.WebUi.Refactor.RqRsp.ItemCategoryResponse;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,25 +27,21 @@ builder.Services.AddLocalization();
 
 //Dependency injection
 builder.Services.AddScoped<IRepository<TraineeResponse, TraineeRequest>, Repository<TraineeResponse, TraineeRequest>>();
-builder.Services
-    .AddScoped<IRepository<ItemCategoryResponse, ItemCategoryResponse>,
-        Repository<ItemCategoryResponse, ItemCategoryResponse>>();
+
 builder.Services
     .AddScoped<ITrainingRepository<TrainingResponse, TrainingRequest, LoadOutPartResponse>, TrainingRepository>();
 
 builder.Services.AddScoped<StringHandleService>();
 builder.Services.AddScoped<ListItemFilterService<Training>>();
 
-builder.Services.AddScoped<TrainingModel>();
-builder.Services.AddScoped<ItemCategoryModel>();
-builder.Services.AddScoped<TrainingsViewModel>();
-builder.Services.AddScoped<TraineeModel>();
 
-builder.Services.AddScoped<Pcm.WebUi.Refactor.Models.TrainingModel>();
-builder.Services.AddScoped<Pcm.WebUi.Refactor.ViewModels.TrainingEditorViewModel>();
+builder.Services.AddScoped<Pcm.WebUi.Refactor.Models.DataModel>();
+builder.Services.AddScoped<Pcm.WebUi.Refactor.ViewModels.TrainingMultistepEditorViewModel>();
+builder.Services.AddScoped<Pcm.WebUi.Refactor.ViewModels.LoadoutFormViewModel>();
+builder.Services.AddScoped<Pcm.WebUi.Refactor.ViewModels.TrainingFormViewModel>();
 builder.Services.AddSingleton<IRepository<TrainingResponse, TrainingRequest>, Repository<TrainingResponse, TrainingRequest>>();
 builder.Services.AddSingleton<IRepository<LoadOutPartResponse, LoadOutPartRequest>, Repository<LoadOutPartResponse, LoadOutPartRequest>>();
-builder.Services.AddSingleton<IRepository<ItemCategoryResponse, Pcm.WebUi.Refactor.RqRsp.ItemCategoryRequest>, Repository<ItemCategoryResponse, Pcm.WebUi.Refactor.RqRsp.ItemCategoryRequest>>();
+builder.Services.AddSingleton<IRepository<ItemCategoryResponse, ItemCategoryRequest>, Repository<ItemCategoryResponse, ItemCategoryRequest>>();
 
 var app = builder.Build();
 app.UseRequestLocalization(new RequestLocalizationOptions()
