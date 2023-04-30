@@ -32,10 +32,9 @@ public class NotificationService
     {
         if (ReferenceEquals(eObject, typeof(Training))) return Localization.training;
         if (ReferenceEquals(eObject, typeof(IEnumerable<Training>))) return Localization.trainings;
-        
-        if (ReferenceEquals(eObject, typeof(Trainee))) return Localization.trainee;
+        if (ReferenceEquals(eObject, typeof(Trainee))) return "Localization.trainee";
         if (ReferenceEquals(eObject, typeof(IEnumerable<Trainee>))) return Localization.trainees;
-        return Localization.entry;
+        return "Localization.entry";
     }
 
 }

@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Pcm.Application.Models;
-using Pcm.Infrastructure.DTOs.RequestModels;
-using Pcm.Infrastructure.DTOs.ResponseModels;
 using Pcm.Infrastructure.Repositories;
 using Pcm.WebUi.Components.Dialogs;
 using Pcm.WebUi.CustomEventArgs;
+using Pcm.WebUi.Refactor.Views;
 using Pcm.WebUi.Resources;
 using Pcm.WebUi.ViewModels;
 
@@ -37,7 +36,7 @@ public partial class Trainings
             {"ItemCategories", createNewTrainingEventArgs.ItemCategories},
             {"EditMode", false}
         };
-        var dialog = await DialogService.ShowAsync<TrainingEditorDialog>(
+        /*var dialog = await DialogService.ShowAsync<TrainingEditorDialogRef>(
             string.Format(Localization.editT, Localization.training),
             dialogParams);
         var result = await dialog.Result;
@@ -47,7 +46,7 @@ public partial class Trainings
         if (!newTrainingCreated) return;
         
         var newTraining = result.Data as Training ?? new Training();
-        await ViewModel.SaveNewTraining(newTraining);
+        await ViewModel.SaveNewTraining(newTraining);*/
     }
 
     private async void ShowTrainingDetailsDialog(object? sender, OpenTrainingDetailsEventArgs openTrainingDetailsEventArgs)
@@ -70,7 +69,7 @@ public partial class Trainings
             {"ItemCategories", editTrainingEventArgs.ItemCategories},
             {"EditMode", true}
         };
-        var dialog = await DialogService.ShowAsync<TrainingEditorDialog>(
+        /*var dialog = await DialogService.ShowAsync<TrainingEditorDialogRef>(
             string.Format(Localization.editT, Localization.training),
             dialogParams);
         var result = await dialog.Result;
@@ -79,6 +78,6 @@ public partial class Trainings
             ViewModel.ResetEditedTraining(editTrainingEventArgs.Training);
         }
         var editedTraining = result.Data as Training ?? trainingBeforeEdit;
-        await ViewModel.UpdateEditedTraining(editedTraining);
+        await ViewModel.UpdateEditedTraining(editedTraining);*/
     }
 }

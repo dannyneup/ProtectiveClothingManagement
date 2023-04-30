@@ -3,8 +3,8 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using Pcm.Application.Interfaces;
 using Pcm.Application.Interfaces.Repositories;
-using Pcm.Infrastructure.DTOs.RequestModels;
-using Pcm.Infrastructure.DTOs.ResponseModels;
+using Pcm.Infrastructure.RequestModels;
+using Pcm.Infrastructure.ResponseModels;
 
 namespace Pcm.Infrastructure.Repositories;
 

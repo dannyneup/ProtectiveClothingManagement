@@ -1,7 +1,7 @@
 using Pcm.Application.Interfaces.Repositories;
 using Pcm.Application.Models;
-using Pcm.Infrastructure.DTOs.RequestModels;
-using Pcm.Infrastructure.DTOs.ResponseModels;
+using Pcm.Infrastructure.RequestModels;
+using Pcm.Infrastructure.ResponseModels;
 using Pcm.WebUi.Enums;
 
 namespace Pcm.WebUi.Models;

@@ -1,15 +1,16 @@
 using Pcm.Application.Interfaces.Repositories;
 using Pcm.Application.Models;
-using Pcm.Infrastructure.DTOs;
 using Pcm.WebUi.Enums;
+using Pcm.WebUi.Refactor.RqRsp;
+using ItemCategoryResponse = Pcm.WebUi.Refactor.RqRsp.ItemCategoryResponse;
 
 namespace Pcm.WebUi.Models;
 
 public class ItemCategoryModel : ModelBase, IModel<ItemCategory>
 {
-    private readonly IRepository<ItemCategoryDto, ItemCategoryDto> _itemCategoryRepository;
+    private readonly IRepository<ItemCategoryResponse, ItemCategoryResponse> _itemCategoryRepository;
 
-    public ItemCategoryModel(IRepository<ItemCategoryDto, ItemCategoryDto> itemCategoryRepository)
+    public ItemCategoryModel(IRepository<ItemCategoryResponse, ItemCategoryResponse> itemCategoryRepository)
     {
         _itemCategoryRepository = itemCategoryRepository;
     }
@@ -47,7 +48,7 @@ public class ItemCategoryModel : ModelBase, IModel<ItemCategory>
 
     public async Task Add(ItemCategory entity)
     {
-        var personRequest = new ItemCategoryDto
+        var personRequest = new ItemCategoryResponse
         {
             Name = entity.Name
         };
@@ -64,7 +65,7 @@ public class ItemCategoryModel : ModelBase, IModel<ItemCategory>
 
     public async Task Update(ItemCategory entity)
     {
-        var itemCategoryRequest = new ItemCategoryDto
+        var itemCategoryRequest = new ItemCategoryResponse
         {
             Name = entity.Name
         };
@@ -91,7 +92,7 @@ public class ItemCategoryModel : ModelBase, IModel<ItemCategory>
         InvokeOperationDone(this, entity, CrudOperation.Delete, true);
     }
 
-    private ItemCategory MapItemCategoryResponseToItemCategory(ItemCategoryDto response)
+    private ItemCategory MapItemCategoryResponseToItemCategory(ItemCategoryResponse response)
     {
         return new ItemCategory
         {

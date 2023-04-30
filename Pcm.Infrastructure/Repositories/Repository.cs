@@ -2,7 +2,6 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using Pcm.Application.Interfaces.Repositories;
-using Pcm.Infrastructure.DTOs;
 
 namespace Pcm.Infrastructure.Repositories;
 
@@ -63,7 +62,8 @@ public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
         {
             var response = await HttpClient.PostAsJsonAsync(Uri, requestModel);
             var responseString = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<TResponse>(responseString) ?? new TResponse();
+            var result = JsonSerializer.Deserialize<TResponse>(responseString, Options);
+            return result ?? new TResponse {IsResponseSuccess = false};
         }
         catch (Exception e) when (e is HttpRequestException or JsonException)
         {
@@ -81,7 +81,8 @@ public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
         {
             var response = await HttpClient.PutAsJsonAsync($"{Uri}/{id}", requestModel);
             var responseString = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<TResponse>(responseString) ?? new TResponse();
+            var result = JsonSerializer.Deserialize<TResponse>(responseString, Options);
+            return result ?? new TResponse {IsResponseSuccess = false};
         }
         catch (Exception e) when (e is HttpRequestException or JsonException)
         {

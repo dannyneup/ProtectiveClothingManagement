@@ -1,4 +1,4 @@
-namespace Pcm.Infrastructure.DTOs;
+namespace Pcm.Application.Interfaces;
 
 public interface IResponseBase
 {

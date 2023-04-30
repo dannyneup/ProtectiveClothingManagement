@@ -4,13 +4,14 @@ using MudBlazor.Services;
 using Pcm.Application.Interfaces.Repositories;
 using Pcm.Application.Models;
 using Pcm.Infrastructure;
-using Pcm.Infrastructure.DTOs;
-using Pcm.Infrastructure.DTOs.RequestModels;
-using Pcm.Infrastructure.DTOs.ResponseModels;
 using Pcm.Infrastructure.Repositories;
+using Pcm.Infrastructure.RequestModels;
+using Pcm.Infrastructure.ResponseModels;
 using Pcm.WebUi.Controller;
 using Pcm.WebUi.Models;
+using Pcm.WebUi.Refactor.RqRsp;
 using Pcm.WebUi.ViewModels;
+using ItemCategoryResponse = Pcm.WebUi.Refactor.RqRsp.ItemCategoryResponse;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,8 +32,8 @@ builder.Services.AddLocalization();
 //Dependency injection
 builder.Services.AddScoped<IRepository<TraineeResponse, TraineeRequest>, Repository<TraineeResponse, TraineeRequest>>();
 builder.Services
-    .AddScoped<IRepository<ItemCategoryDto, ItemCategoryDto>,
-        Repository<ItemCategoryDto, ItemCategoryDto>>();
+    .AddScoped<IRepository<ItemCategoryResponse, ItemCategoryResponse>,
+        Repository<ItemCategoryResponse, ItemCategoryResponse>>();
 builder.Services
     .AddScoped<ITrainingRepository<TrainingResponse, TrainingRequest, LoadOutPartResponse>, TrainingRepository>();
 
@@ -44,6 +45,11 @@ builder.Services.AddScoped<ItemCategoryModel>();
 builder.Services.AddScoped<TrainingsViewModel>();
 builder.Services.AddScoped<TraineeModel>();
 
+builder.Services.AddScoped<Pcm.WebUi.Refactor.Models.TrainingModel>();
+builder.Services.AddScoped<Pcm.WebUi.Refactor.ViewModels.TrainingEditorViewModel>();
+builder.Services.AddSingleton<IRepository<TrainingResponse, TrainingRequest>, Repository<TrainingResponse, TrainingRequest>>();
+builder.Services.AddSingleton<IRepository<LoadOutPartResponse, LoadOutPartRequest>, Repository<LoadOutPartResponse, LoadOutPartRequest>>();
+builder.Services.AddSingleton<IRepository<ItemCategoryResponse, Pcm.WebUi.Refactor.RqRsp.ItemCategoryRequest>, Repository<ItemCategoryResponse, Pcm.WebUi.Refactor.RqRsp.ItemCategoryRequest>>();
 
 var app = builder.Build();
 app.UseRequestLocalization(new RequestLocalizationOptions()

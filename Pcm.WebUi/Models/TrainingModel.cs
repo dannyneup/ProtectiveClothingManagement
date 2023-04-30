@@ -1,13 +1,14 @@
 using Pcm.Application.Interfaces.Repositories;
 using Pcm.Application.Models;
-using Pcm.Infrastructure.DTOs.RequestModels;
-using Pcm.Infrastructure.DTOs.ResponseModels;
+using Pcm.Infrastructure.RequestModels;
+using Pcm.Infrastructure.ResponseModels;
 using Pcm.WebUi.Enums;
 
 namespace Pcm.WebUi.Models;
 
 public class TrainingModel : ModelBase, IModel<Training>
 {
+    
     private readonly ITrainingRepository<TrainingResponse, TrainingRequest, LoadOutPartResponse> _trainingRepository;
 
     public TrainingModel(ITrainingRepository<TrainingResponse, TrainingRequest, LoadOutPartResponse> trainingRepository)
@@ -40,12 +41,12 @@ public class TrainingModel : ModelBase, IModel<Training>
         {
             Name = training.Name,
             Type = training.Type,
-            LoadOut = training.LoadOut.Select(x => new LoadOutPartRequest
+            /*LoadOuts = training.LoadOut.Select(x => new LoadOutPartRequest
                 {
-                    ItemCategoryId = x.CategoryId,
+                    CategoryId = x.CategoryId,
                     Count = x.Count
                 }
-            ).ToList()
+            ).ToList()*/
         };
         var trainingResponse = await _trainingRepository.Insert(trainingRequest);
         if (!trainingResponse.IsResponseSuccess)
@@ -64,11 +65,11 @@ public class TrainingModel : ModelBase, IModel<Training>
         {
             Name = training.Name,
             Type = training.Type,
-            LoadOut = training.LoadOut.Select(x => new LoadOutPartRequest
+            /*LoadOuts = training.LoadOut.Select(x => new LoadOutPartRequest
             {
-                ItemCategoryId = x.CategoryId,
+                CategoryId = x.CategoryId,
                 Count = x.Count
-            }).ToList()
+            }).ToList()*/
         };
         var trainingResponse = await _trainingRepository.Update(trainingRequest, training.Id);
         if (!trainingResponse.IsResponseSuccess)
@@ -130,7 +131,7 @@ public class TrainingModel : ModelBase, IModel<Training>
             Name = response.Name,
             Type = response.Type,
             TraineeCount = response.TraineeCount,
-            YearCount = response.YearCount
+            YearCount = response.YearStarted
         };
     }
 }

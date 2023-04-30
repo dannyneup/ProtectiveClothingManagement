@@ -2,6 +2,9 @@ using System.Data;
 using Dapper;
 using Dapper.FluentMap;
 using MySql.Data.MySqlClient;
+using Pcm.Infrastructure.RequestModels;
+using Pcm.Infrastructure.ResponseModels;
+using PcmBackendApi;
 using PcmBackendApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,10 +15,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddScoped<GetConnection>(sp =>
     async () =>
     {
-        var connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=password;Database=psadb;sslmode=none;";
+        var connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=example;Database=psadb;sslmode=none;";
         var connection = new MySqlConnection(connectionString);
         await connection.OpenAsync();
         return connection;
@@ -39,6 +43,35 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("/", () => "PcmApi");
 
+
+app.MapGet("/trainings", async (GetConnection connectionGetter) =>
+{
+    using var con = await connectionGetter();
+    var sql = @"SELECT t.id, name, typeFk as type, yearStarted, COUNT(a.id) AS traineeCount
+                FROM training t
+                LEFT JOIN apprentice a ON t.id = a.trainingFk
+                GROUP BY t.id;";
+    return con.Query<List<TrainingResponse>>(sql);
+});
+
+
+app.MapPost("/trainings", async (TrainingRequest request, GetConnection connectionGetter) =>
+{
+    using var con = await connectionGetter();
+    var sql = @"INSERT INTO training (name, typeFk, yearStarted)
+                VALUES (@Name, @Type, @YearStarted);
+                SELECT id, name, typeFk as type, yearStarted
+                FROM training
+                WHERE id = LAST_INSERT_ID();";
+    var result = await con.QueryFirstOrDefaultAsync<TrainingResponse>(sql, request);
+
+    return result != null
+        ? Results.Created($"/trainings/{result.Id}", result)
+        : Results.BadRequest();
+});
+
+
+/*
 app.MapGet("/persons", async (GetConnection connectionGetter) =>
 {
     using var con = await connectionGetter();
@@ -211,7 +244,10 @@ app.MapGet("/apprenticeships/{id}", async (GetConnection connectionGetter, int i
         return apprenticeship;
     }, splitOn: "articleCategoryId, count").Distinct();
 });
-
+*/
 app.Run();
 
-public delegate Task<IDbConnection> GetConnection();
+namespace PcmBackendApi
+{
+    public delegate Task<IDbConnection> GetConnection();
+}

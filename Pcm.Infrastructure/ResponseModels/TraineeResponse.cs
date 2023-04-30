@@ -1,9 +1,9 @@
 
 using Pcm.Core.Entities;
 
-namespace Pcm.Infrastructure.DTOs.ResponseModels;
+namespace Pcm.Infrastructure.ResponseModels;
 
-public record TraineeResponse : ResponseBase, IPerson
+public class TraineeResponse : ResponseBase, IPerson
 {
     public int PersonnelNumber { get; init; }
     public string FirstName { get; set; }

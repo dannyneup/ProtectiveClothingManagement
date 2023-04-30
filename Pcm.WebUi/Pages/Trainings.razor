@@ -1,4 +1,4 @@
-@page "/trainings"
+@page "/trainings2"
 
 <MudCard>
     <MudCardHeader>
@@ -13,9 +13,10 @@
         <MudIconButton Icon="@Icons.Material.Filled.AddCircle" 
                        OnClick="ViewModel.AddTraining"/>
     </MudCardHeader>
-    <TrainingList Trainings="ViewModel.Trainings"
-                  TrainingRowClicked="ViewModel.ShowTrainingDetails" 
-                  TrainingEditClicked="ViewModel.EditTraining" 
-                  TrainingDeleteConfirmed="ViewModel.DeleteTraining"
-                  SearchString="@_searchString"/>
+    <!--<TrainingList Trainings="ViewModel.Trainings"
+                      TrainingRowClicked="ViewModel.ShowTrainingDetails" 
+                      TrainingEditClicked="ViewModel.EditTraining" 
+                      TrainingDeleteConfirmed="ViewModel.DeleteTraining"
+                      SearchString="@_searchString"/>-->
+    
 </MudCard>

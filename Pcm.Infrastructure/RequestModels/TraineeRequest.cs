@@ -1,8 +1,8 @@
 using Pcm.Core.Entities;
 
-namespace Pcm.Infrastructure.DTOs.RequestModels;
+namespace Pcm.Infrastructure.RequestModels;
 
-public record TraineeRequest : IPerson
+public class TraineeRequest : IPerson
 {
     public int PersonnelNumber { get; init; }
     public string FirstName { get; set; } = "";

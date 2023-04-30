@@ -1,5 +1,3 @@
-using Pcm.Infrastructure.DTOs;
-
 namespace Pcm.Application.Interfaces.Repositories;
 
 public interface IRepository<TResponse, in TRequest> 
