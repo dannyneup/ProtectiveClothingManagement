@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
+using MudBlazor;
+using Pcm.Infrastructure.ResponseModels;
 using Pcm.WebUi.Refactor.ViewModels;
 
 namespace Pcm.WebUi.Refactor.Views;
@@ -17,8 +19,30 @@ public partial class LoadoutForm
     [Inject]
     public LoadoutFormViewModel Vm { get; set; }
 
+    private bool _isVisible;
+    
     protected override void OnParametersSet()
     {
         Vm.LoadoutRequest.TrainingId = TrainingId;
     }
+
+    private async Task ChooseOptionOnButtonClick()
+    {
+        if (Vm.TempLoadoutId == 0)
+        {
+            OpenOverlay();
+        }
+        else
+        {
+            await Vm.UpdateLoadout();
+        }
+    }
+    
+
+    private void OpenOverlay()
+    {
+        _isVisible = true;
+        StateHasChanged();
+    }
+    
 }

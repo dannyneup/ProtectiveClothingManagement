@@ -15,7 +15,10 @@
                 LoadoutAddingDone="Vm.LoadoutEditingDone"/>
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <ApprenticesForm />
+            <TraineesForm 
+                IsEnabled="Vm.Status == TrainingEditStatus.AddApprentices"
+                TrainingId="Vm.AddedTrainingId"
+                TraineeAddingDone="Vm.TraineeEditionDone"/>
         </MudItem>
     </MudGrid>
 </MudContainer>

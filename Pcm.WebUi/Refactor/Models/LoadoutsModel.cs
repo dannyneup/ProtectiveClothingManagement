@@ -5,32 +5,17 @@ using Pcm.Infrastructure.ResponseModels;
 
 namespace Pcm.WebUi.Refactor.Models;
 
-public class DataModel
+public class LoadoutsModel
 {
-    private readonly IRepository<TrainingResponse, TrainingRequest> _trainingRepository;
     private readonly IRepository<LoadOutPartResponse, LoadOutPartRequest> _loadoutRepository;
     private readonly IRepository<ItemCategoryResponse, ItemCategoryRequest> _itemCategoryRepository;
-    private List<TrainingResponse> _trainings = new();
-    private List<ItemCategoryResponse> _itemCategories = new();
     private List<LoadOutPartResponse> _loadOutParts = new();
+    private List<ItemCategoryResponse> _itemCategories = new();
+
     
-    public EventCallback<TrainingResponse> TrainingInsertRequestFinished { get; set; }
-    public EventCallback<LoadOutPartResponse> LoadoutInsertRequestFinished { get; set; }
+    public EventCallback<LoadOutPartResponse> LoadoutRequestFinished { get; set; }
     
-    public List<TrainingResponse> Trainings
-    {
-        get
-        {
-            if (_trainings.Count == 0)
-            {
-                _trainings = Task.Run(async () => await 
-                    _trainingRepository.GetAll()).GetAwaiter().GetResult().ToList();
-            }
-            return _trainings;
-        }
-    }
-    
-    public List<LoadOutPartResponse> Loadouts
+    public IEnumerable<LoadOutPartResponse> Loadouts
     {
         get
         {
@@ -55,26 +40,14 @@ public class DataModel
             return _itemCategories;
         }
     }
+    
 
-    public DataModel(IRepository<TrainingResponse, TrainingRequest> trainingRepository, 
-        IRepository<LoadOutPartResponse, LoadOutPartRequest> loadoutRepository, 
+    public LoadoutsModel(IRepository<LoadOutPartResponse, LoadOutPartRequest> loadoutRepository,
         IRepository<ItemCategoryResponse, ItemCategoryRequest> itemCategoryRepository)
     {
-        _trainingRepository = trainingRepository;
         _loadoutRepository = loadoutRepository;
         _itemCategoryRepository = itemCategoryRepository;
-    }
 
-    public async Task AddTraining(TrainingRequest request)
-    {
-        var trainingResponse = await _trainingRepository.Insert(request);
-        bool isSuccesful = trainingResponse.IsResponseSuccess;
-        if (isSuccesful)
-        {
-            _trainings.Add(trainingResponse);
-        }
-
-        await TrainingInsertRequestFinished.InvokeAsync(trainingResponse);
     }
     
     public async Task AddLoadout(LoadOutPartRequest request)
@@ -86,8 +59,19 @@ public class DataModel
             _loadOutParts.Add(loadoutResponse);
         }
 
-        await LoadoutInsertRequestFinished.InvokeAsync(loadoutResponse);
+        await LoadoutRequestFinished.InvokeAsync(loadoutResponse);
     }
     
-    
+    public async Task UpdateLoadout(LoadOutPartRequest request, int id)
+    {
+        var loadoutResponse = await _loadoutRepository.Update(request, id);
+        bool isSuccesful = loadoutResponse.IsResponseSuccess;
+        if (isSuccesful)
+        {
+            _loadOutParts.RemoveAll(x => x.Id == id);
+            _loadOutParts.Add(loadoutResponse);
+        }
+
+        await LoadoutRequestFinished.InvokeAsync(loadoutResponse);
+    }
 }

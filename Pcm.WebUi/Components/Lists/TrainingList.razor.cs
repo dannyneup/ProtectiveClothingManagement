@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.VisualBasic;
 using MudBlazor;
-using Pcm.Application.Models;
+using Pcm.Infrastructure.ResponseModels;
 using Pcm.WebUi.Controller;
 using Pcm.WebUi.Resources;
 
@@ -9,34 +8,34 @@ namespace Pcm.WebUi.Components.Lists;
 
 public partial class TrainingList : ComponentBase
 { 
-    [Parameter, EditorRequired] public List<Training> Trainings { get; set; } = Enumerable.Empty<Training>().ToList();
+    [Parameter, EditorRequired] public List<TrainingResponse> Trainings { get; set; } = Enumerable.Empty<TrainingResponse>().ToList();
     [Parameter] public string SearchString { get; set; } = "";
     [Parameter] public int Elevation { get; set; }
-    [Parameter] public EventCallback<Training> TrainingRowClicked { get; set; }
-    [Parameter] public EventCallback<Training> TrainingEditClicked { get; set; }
-    [Parameter] public EventCallback<Training> TrainingDeleteConfirmed { get; set; }
+    [Parameter] public EventCallback<TrainingResponse> TrainingRowClicked { get; set; }
+    [Parameter] public EventCallback<TrainingResponse> TrainingEditClicked { get; set; }
+    [Parameter] public EventCallback<TrainingResponse> TrainingDeleteConfirmed { get; set; }
 
     [Inject] public IDialogService DialogService { get; set; } = default!;
-    [Inject] public ListItemFilterService<Training> ListItemFilterService { get; set; } = default!;
+    [Inject] public ListItemFilterService<TrainingResponse> ListItemFilterService { get; set; } = default!;
 
 
-    private bool TrainingFilter(Training training)
+    private bool TrainingFilter(TrainingResponse training)
     {
         return ListItemFilterService.CheckIfStringMatchesProperties(training,
             SearchString);
     }
 
-    private async void OnRowClick(TableRowClickEventArgs<Training> rowClickEvent)
+    private async void OnRowClick(TableRowClickEventArgs<TrainingResponse> rowClickEvent)
     {
         await TrainingRowClicked.InvokeAsync(rowClickEvent.Item);
     }
 
-    private async Task OnRowEdit(Training training)
+    private async Task OnRowEdit(TrainingResponse training)
     {
         await TrainingEditClicked.InvokeAsync(training);
     }
 
-    private async Task OnRowDelete(Training training)
+    private async Task OnRowDelete(TrainingResponse training)
     {
         var dialogOptions = new DialogOptions
         {

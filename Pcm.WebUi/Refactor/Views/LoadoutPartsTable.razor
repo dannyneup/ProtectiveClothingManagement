@@ -1,0 +1,17 @@
+﻿@using Pcm.Infrastructure.ResponseModels
+<MudTable Style="padding: 12px;" Items="@Vm.GetCorrespondingToTrainingId(TrainingId)" 
+          Hover="true" 
+          Breakpoint="Breakpoint.Sm" 
+          OnRowClick="async (args) => await ElementSelected.InvokeAsync(args.Item)" 
+          T="LoadOutPartResponse">
+    <HeaderContent>
+        <MudTh>Id</MudTh>
+        <MudTh>Anzahl</MudTh>
+        <MudTh>Kategorie</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nr">@context.Id</MudTd>
+        <MudTd DataLabel="Sign">@context.Count</MudTd>
+        <MudTd DataLabel="Name">@context.CategoryName</MudTd>
+    </RowTemplate>
+</MudTable>

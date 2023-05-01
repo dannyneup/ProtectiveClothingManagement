@@ -24,7 +24,9 @@
             Min="2020"
             Max="@(DateTime.Now.Year)" 
             @bind-Value="Vm.TrainingRequest.YearStarted"/>
-        <MudSelect T="string" @bind-Value="Vm.TrainingRequest.Type">
+        <MudSelect T="string" 
+                   @bind-Value="Vm.TrainingRequest.Type"             
+                   Disabled="IsEnabled == false">
             <MudSelectItem Value="@("ausbildung")">Ausbildung</MudSelectItem>
             <MudSelectItem Value="@("dualesstudium")">Duales Studium</MudSelectItem>
         </MudSelect>

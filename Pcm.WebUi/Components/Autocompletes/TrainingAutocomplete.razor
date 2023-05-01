@@ -1,14 +1,14 @@
-@using Pcm.Application.Models
-<MudAutocomplete T="Training"
+@using Pcm.Infrastructure.ResponseModels
+<MudAutocomplete T="TrainingResponse"
                  Value="Training" ValueChanged="OnValueChanged"
                  Label="@Localization.training"
                  SearchFunc="@SearchAutocomplete" ResetValueOnEmptyText="true"
-                 ToStringFunc="x => x.Name"
+                 ToStringFunc="x => x.Title"
                  Required="Required">
     <ItemTemplate>
         <div class="itemTemplate">
             <div class="itemContainerText">
-                <MudText Typo="Typo.body1">@context.Name</MudText>
+                <MudText Typo="Typo.body1">@context.Title</MudText>
                 <MudText Typo="Typo.body2">@context.Type</MudText>
             </div>
         </div>

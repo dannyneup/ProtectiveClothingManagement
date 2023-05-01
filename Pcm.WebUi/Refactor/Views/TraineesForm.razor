@@ -1,0 +1,64 @@
+﻿<MudCard Elevation="25" Class="rounded-lg pb-4" Style="height: 100%; padding: 12px; display: flex; flex-direction: column;">
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h5" Align="Align.Center">3. Auszubildene hinzufügen</MudText>
+            <MudChip
+                Disabled="IsEnabled == false"
+                Style="display: flex;"
+                tyle="display: flex;"
+                Color="Vm.StatusColor">
+                @Vm.StatusText
+            </MudChip>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent Style="width: 100%;">
+        <MudTextField 
+            T="string" 
+            Label="@("Vorname")"
+            Disabled="IsEnabled == false"
+            @bind-Value="Vm.TraineeRequest.FirstName" />
+        <MudTextField 
+            T="string" 
+            Label="@("Nachname")"
+            Disabled="IsEnabled == false"
+            @bind-Value="Vm.TraineeRequest.LastName" />
+        <MudTextField 
+            T="string" 
+            Label="@("Mailadresse")"
+            Disabled="IsEnabled == false"
+            @bind-Value="Vm.TraineeRequest.EmailAddress" />
+        <MudNumericField 
+            T="int" 
+            Label="Personalnummer"
+            Disabled="IsEnabled == false"
+            Min="1000"
+            Max="9999" 
+            @bind-Value="Vm.TraineeRequest.PersonnelNumber"/>
+        <MudNumericField 
+            T="int" 
+            Label="gestartet (Jahr)"
+            Disabled="IsEnabled == false"
+            Min="2020"
+            Max="DateTime.Now.Year" 
+            @bind-Value="Vm.TraineeRequest.YearStarted"/>
+    </MudCardContent>
+    <MudCardActions Class="d-flex justify-center" Style="margin-bottom: 0; margin-top: auto; gap: 12px;">
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Secondary" 
+                   Disabled="Vm.IsLoading || IsEnabled == false"
+                   Size="Size.Large"
+                   OnClick="Vm.AddNewTrainee"
+                   Style="width:100%;">
+            hinzufügen
+        </MudButton>
+        
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   Size="Size.Large"
+                   Disabled="Vm.IsLoading || IsEnabled == false"
+                   OnClick="async () => await TraineeAddingDone.InvokeAsync(Vm.CountAdded)"
+                   Style="width:100%;">
+            fertig
+        </MudButton>
+    </MudCardActions>
+</MudCard>

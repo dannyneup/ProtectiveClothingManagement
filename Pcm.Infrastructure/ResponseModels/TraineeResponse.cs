@@ -1,16 +1,11 @@
 
 using Pcm.Core.Entities;
+using Pcm.Infrastructure.RequestModels;
 
 namespace Pcm.Infrastructure.ResponseModels;
 
-public record TraineeResponse : ResponseBase, IPerson
+public record TraineeResponse : TraineeRequest
 {
-    public int PersonnelNumber { get; init; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string EmailAddress { get; set; }
-    public int TrainingId { get; set; }
-    public string TrainingName { get; set; }
+    public string TrainingTitle { get; set; }
     public string TrainingType { get; set; }
-    public int YearStarted { get; set; }
 }

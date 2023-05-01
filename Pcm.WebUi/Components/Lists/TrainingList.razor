@@ -1,5 +1,5 @@
-@using Pcm.Application.Models
-<MudTable T="Training" 
+@using Pcm.Infrastructure.ResponseModels
+<MudTable T="TrainingResponse" 
           Items="Trainings" 
           Hover="true" 
           SortLabel="@Localization.sortBy"
@@ -9,16 +9,16 @@
           Context="rowObj">
     <HeaderContent>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<Training, object>(x => x.Name)">@Localization.name</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<TrainingResponse, object>(x => x.Title)">@Localization.name</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<Training, object>(x => x.Type)">@Localization.type</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<TrainingResponse, object>(x => x.Type)">@Localization.type</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<Training, object>(x => x.TraineeCount)">@Localization.traineeCount</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<TrainingResponse, object>(x => x.TraineeCount)">@Localization.traineeCount</MudTableSortLabel>
         </MudTh>
         <MudTh>
-            <MudTableSortLabel SortBy="new Func<Training, object>(x => x.YearCount)">@Localization.yearCount</MudTableSortLabel>
+            <MudTableSortLabel SortBy="new Func<TrainingResponse, object>(x => x.YearStarted)">@Localization.yearCount</MudTableSortLabel>
         </MudTh>
         <MudTd/>
     </HeaderContent>
@@ -30,10 +30,10 @@
         <col class="button-column"/>
     </ColGroup>
     <RowTemplate>
-        <MudTd DataLabel="@Localization.name">@rowObj.Name</MudTd>
+        <MudTd DataLabel="@Localization.name">@rowObj.Title</MudTd>
         <MudTd DataLabel="@Localization.type">@rowObj.Type</MudTd>
         <MudTd DataLabel="@Localization.traineeCount">@rowObj.TraineeCount</MudTd>
-        <MudTd DataLabel="@Localization.yearCount">@rowObj.YearCount</MudTd>
+        <MudTd DataLabel="@Localization.yearCount">@rowObj.YearStarted</MudTd>
         <MudTd>
             <MudMenu Icon="@Icons.Material.Filled.MoreHoriz"
                      Class="more-icon-button">

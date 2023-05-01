@@ -7,21 +7,19 @@ using Pcm.WebUi.Refactor.Models;
 
 namespace Pcm.WebUi.Refactor.ViewModels;
 
-public class TrainingFormViewModel
+public class TrainingFormViewModel : FormViewModel
 {
     public TrainingRequest TrainingRequest { get; } = new();
     public EventCallback<int> TrainingAdded { get; set; }
-    public string StatusText { get; private set; }
-    public bool IsLoading { get; private set; }
-    public Color StatusColor { get; private set; } = Color.Info;
-    private readonly DataModel _dataModel;
+    
+    private readonly TrainingModel _trainingModel;
 
-    public TrainingFormViewModel(DataModel dataModel)
+    public TrainingFormViewModel(TrainingModel trainingModel)
     {
-        _dataModel = dataModel;
-        _dataModel.TrainingInsertRequestFinished = EventCallback.Factory
+        _trainingModel = trainingModel;
+        _trainingModel.TrainingInsertRequestFinished = EventCallback.Factory
             .Create<TrainingResponse>(this, async (x) 
-                => await NewTrainingAdded(x));
+                => await UpdateStatus(x));
         StatusText = "Alle Felder sind erforderlich!";
         TrainingRequest.YearStarted = DateTime.Now.Year;
     }
@@ -30,11 +28,11 @@ public class TrainingFormViewModel
     {
         IsLoading = true;
         StatusColor = Color.Info;
-        StatusText = "Neues Training wird der Datenbank hinzugefügt";
-        await _dataModel.AddTraining(TrainingRequest);
+        StatusText = "Neues Training wird hinzugefügt";
+        await _trainingModel.AddTraining(TrainingRequest);
     }
 
-    private async Task NewTrainingAdded(TrainingResponse response)
+    private async Task UpdateStatus(TrainingResponse response)
     {
         if (response.IsResponseSuccess)
         {

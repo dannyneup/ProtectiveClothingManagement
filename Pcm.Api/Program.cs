@@ -83,6 +83,25 @@ app.MapGet("/loadouts", async (GetConnection connectionGetter) =>
 });
 
 
+app.MapPut("/loadouts/{id}", async (LoadOutPartRequest request, GetConnection connectionGetter, int id) =>
+{
+    using var con = await connectionGetter();
+    var sql = $@"UPDATE loadout 
+                    SET categoryFk = @CategoryId, trainingFk = @TrainingId, count = @Count
+                    WHERE id = {id};
+                SELECT loadout.id AS id, c.id as categoryId, c.description as categoryName, count, t.id AS trainingId
+                FROM loadout
+                JOIN category c on c.id = loadout.categoryFk
+                JOIN training t on t.id = loadout.trainingFk
+                WHERE loadout.id = {id};";
+    var result = await con.QueryFirstOrDefaultAsync<LoadOutPartResponse>(sql, request);
+
+    return result != null
+        ? Results.Accepted($"/loadouts/{result.Id}", result)
+        : Results.BadRequest();
+});
+
+
 app.MapPost("/loadouts", async (LoadOutPartRequest request, GetConnection connectionGetter) =>
 {
     using var con = await connectionGetter();
@@ -98,6 +117,38 @@ app.MapPost("/loadouts", async (LoadOutPartRequest request, GetConnection connec
     return result != null
         ? Results.Created($"/loadouts/{result.Id}", result)
         : Results.BadRequest();
+});
+
+
+app.MapGet("/trainees", async (GetConnection connectionGetter) =>
+{
+    using var con = await connectionGetter();
+    var sql = @"SELECT a.id AS personnelNumber, firstName, lastName, mail AS emailAddress, 
+                        a.yearStarted as yearStarted, trainingFk AS trainingId, t.description AS trainingTitle, 
+                        tt.type AS trainingType
+                FROM apprentice a
+                    JOIN training t on t.id = a.trainingFk
+                    JOIN training_type tt on tt.type = t.typeFk";
+    return con.Query<TraineeResponse>(sql);
+});
+
+
+app.MapPost("/trainees", async (TraineeRequest request, GetConnection connectionGetter) =>
+{
+    using var con = await connectionGetter();
+    var sql = $@"INSERT INTO apprentice (id, firstname, lastname, mail, trainingFk, yearStarted)
+                VALUES (@PersonnelNumber, @FirstName, @LastName, @EmailAddress, @TrainingId, @YearStarted);
+                SELECT a.id AS personnelNumber, firstName, lastName, mail AS emailAddress, a.yearStarted AS yearStarted, 
+                       trainingFk AS trainingId, t.description AS trainingTitle, tt.type AS trainingType
+                FROM apprentice a
+                    JOIN training t on t.id = a.trainingFk
+                    JOIN training_type tt on tt.type = t.typeFk
+                WHERE a.id = {request.PersonnelNumber};";
+    var result = await con.QueryFirstOrDefaultAsync<TraineeResponse>(sql, request);
+
+    return result != null
+      ? Results.Created($"/trainees/{result.PersonnelNumber}", result)
+      : Results.BadRequest();
 });
 
 
@@ -126,183 +177,6 @@ app.MapPost("/items/categories", async (ItemCategoryRequest request, GetConnecti
 });
 
 
-
-
-
-/*
-app.MapGet("/persons", async (GetConnection connectionGetter) =>
-{
-    using var con = await connectionGetter();
-    var sql = @"
-        select person.id as personId,
-               person.firstName as firstName,
-               person.lastName as lastName,
-               apprenticeship.name as apprenticeship,
-               person.emailAddress as emailAdress,
-               a.id as articleId,
-               T.name as type,
-               T.manufacturer as manufaturer,
-               T.style as style, 
-               aC.name as category,
-               a.size as size,
-               o.number as orderNumber,
-               o.date as orderDate,
-               a.status as status,
-               a.statusChanged as statusChanged
-        from person inner join apprenticeship on person.apprenticeship = apprenticeship.id
-            left join personOwnsArticle pOA on person.id = pOA.person
-            inner join article a on pOA.article = a.id
-            inner join articleType T on a.articleType = T.id
-            inner join articleCategory aC on T.category = aC.id
-            inner join `order` o on a.`order` = o.id;";
-
-    var lookup = new Dictionary<int, Person>();
-
-    return con.Query<Person, Article, Person>(sql, (p, a) =>
-    {
-        Person person;
-        if (!lookup.TryGetValue(p.Id, out person)) lookup.Add(p.Id, person = p);
-
-        person.OwnedArticles ??= new List<Article>();
-
-        person.OwnedArticles.Add(a);
-        return person;
-    }, splitOn: "articleId").Distinct();
-});
-
-app.MapGet("/persons/{id}", async (GetConnection connectionGetter, int id) =>
-{
-    using var con = await connectionGetter();
-    var sql = $@"
-        select person.id as personId,
-               person.firstName as firstName,
-               person.lastName as lastName,
-               apprenticeship.name as apprenticeship,
-               person.emailAddress as emailAdress,
-               a.id as articleId,
-               T.name as type,
-               T.manufacturer as manufaturer,
-               T.style as style, 
-               aC.name as category,
-               a.size as size,
-               o.number as orderNumber,
-               o.date as orderDate,
-               a.status as status,
-               a.statusChanged as statusChanged
-        from person inner join apprenticeship on person.apprenticeship = apprenticeship.id
-            left join personOwnsArticle pOA on person.id = pOA.person
-            inner join article a on pOA.article = a.id
-            inner join articleType T on a.articleType = T.id
-            inner join articleCategory aC on T.category = aC.id
-            inner join `order` o on a.`order` = o.id
-        where person.id = {id};";
-
-    var lookup = new Dictionary<int, Person>();
-
-    return con.Query<Person, Article, Person>(sql, (p, a) =>
-    {
-        Person person;
-        if (!lookup.TryGetValue(p.Id, out person)) lookup.Add(p.Id, person = p);
-
-        person.OwnedArticles ??= new List<Article>();
-
-        person.OwnedArticles.Add(a);
-        return person;
-    }, splitOn: "articleId").Distinct();
-});
-
-app.MapGet("/articles", async (GetConnection connectionGetter) =>
-{
-    using var con = await connectionGetter();
-    var sql = @"
-        select a.id as articleId,
-               T.name as articleType,
-               T.manufacturer as manufacturer,
-               T.style as style,
-               aC.name as category,
-               a.size as size,
-               o.number as orderNumber,
-               o.date as orderDate,
-               a.status as status,
-               a.statusChanged as statusChanged
-        from article a join articleType T on T.id = a.articleType
-            inner join articleCategory aC on T.category = aC.id
-            inner join `order` o on a.`order` = o.id";
-    return con.Query<Article>(sql);
-});
-
-app.MapGet("/articles/{id}", async (GetConnection connectionGetter, int id) =>
-{
-    using var con = await connectionGetter();
-    var sql = $@"
-        select person.id, 
-               person.firstName, 
-               person.lastName, 
-               a.name as apprenticeship,
-               person.emailAddress
-        from person join apprenticeship a on person.apprenticeship = a.id
-        where person.id = {id}";
-    return con.Query<Person>(sql);
-});
-
-app.MapGet("/apprenticeships", async (GetConnection connectionGetter) =>
-{
-    using var con = await connectionGetter();
-
-    var lookup = new Dictionary<int, Apprenticeship>();
-    var sql =
-        @"
-        select a.id as apprenticeshipId, 
-            a.name as apprenticeshipName,
-            aC.id as articleCategoryId, 
-            aC.name as articleCategoryName,
-            dAL.count as count
-        from apprenticeship a
-            inner join defaultApprenticeshipLoadout dAL on a.id = dAL.apprenticeship
-            inner join articleCategory aC on dAL.articleCategory = aC.id";
-
-    return con.Query<Apprenticeship, ArticleCategory, int, Apprenticeship>(sql, (a, aC, count) =>
-    {
-        Apprenticeship apprenticeship;
-        if (!lookup.TryGetValue(a.Id, out apprenticeship)) lookup.Add(a.Id, apprenticeship = a);
-
-        apprenticeship.DefaultLoadout ??= new Dictionary<string, int>();
-
-        apprenticeship.DefaultLoadout.Add(aC.Name, count);
-        return apprenticeship;
-    }, splitOn: "articleCategoryId, count").Distinct();
-});
-
-app.MapGet("/apprenticeships/{id}", async (GetConnection connectionGetter, int id) =>
-{
-    using var con = await connectionGetter();
-
-    var lookup = new Dictionary<int, Apprenticeship>();
-
-    var sql =
-        $@"
-        select a.id as apprenticeshipId, 
-            a.name as apprenticeshipName,
-            aC.id as articleCategoryId, 
-            aC.name as articleCategoryName,
-            daL.count as 'count'
-        from apprenticeship a
-            inner join defaultApprenticeshipLoadout dAL on a.id = dAL.apprenticeship
-            inner join articleCategory aC on dAL.articleCategory = aC.id
-        where a.id = {id}";
-
-    return con.Query<Apprenticeship, ArticleCategory, int, Apprenticeship>(sql, (a, aC, count) =>
-    {
-        Apprenticeship apprenticeship;
-        if (!lookup.TryGetValue(a.Id, out apprenticeship)) lookup.Add(a.Id, apprenticeship = a);
-
-        if (apprenticeship.DefaultLoadout == null) apprenticeship.DefaultLoadout = new Dictionary<string, int>();
-
-        apprenticeship.DefaultLoadout.Add(aC.Name, count);
-        return apprenticeship;
-    }, splitOn: "articleCategoryId, count").Distinct();
-});
-*/
 app.Run();
 
 namespace PcmBackendApi

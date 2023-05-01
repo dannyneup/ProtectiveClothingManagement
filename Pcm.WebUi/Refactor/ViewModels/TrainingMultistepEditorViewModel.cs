@@ -7,11 +7,11 @@ public class TrainingMultistepEditorViewModel
 {
     public TrainingEditStatus Status { get; private set; }
     public int AddedTrainingId { get; private set; }
-    private readonly DataModel _dataModel;
+    private readonly TrainingModel _trainingModel;
 
-    public TrainingMultistepEditorViewModel(DataModel dataModel)
+    public TrainingMultistepEditorViewModel(TrainingModel trainingModel)
     {
-        _dataModel = dataModel;
+        _trainingModel = trainingModel;
         //_trainingModel.InsertRequestFinished = EventCallback.Factory
           //  .Create<TrainingResponse>(this, async (x) 
             //    => await NewTrainingAdded(x));
@@ -28,9 +28,17 @@ public class TrainingMultistepEditorViewModel
     
     public async Task LoadoutEditingDone(int count)
     {
-        if (count != 0)
+        if (count > 0)
         {
             Status = TrainingEditStatus.AddApprentices;
+        }
+    }
+    
+    public async Task TraineeEditionDone(int count)
+    {
+        if (count > 0)
+        {
+            Status = TrainingEditStatus.Done;
         }
     }
 }

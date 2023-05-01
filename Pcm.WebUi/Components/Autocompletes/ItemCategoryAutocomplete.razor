@@ -1,16 +1,16 @@
-@using Pcm.Application.Models
-<MudAutocomplete T="ItemCategory"
+@using Pcm.Infrastructure.ResponseModels
+<!--<MudAutocomplete T="ItemCategoryResponse"
                  Value="ItemCategory" ValueChanged="OnValueChanged"
                  ResetValueOnEmptyText="true"
                  Label="@Localization.itemCategory"
                  SearchFunc="@SearchAutocomplete"
-                 ToStringFunc="x => x.Name"
+                 ToStringFunc="x => x.Title"
                  Required="Required">
     <ItemTemplate>
         <div class="itemTemplate">
             <div class="itemContainerText">
-                <MudText Typo="Typo.body1">@context.Name</MudText>
+                <MudText Typo="Typo.body1">@context.Title</MudText>
             </div>
         </div>
     </ItemTemplate>
-</MudAutocomplete>
+</MudAutocomplete>-->
