@@ -13,7 +13,10 @@ public partial class TrainingMultistepEditor
 
     protected override void OnParametersSet()
     {
-        Vm.AddedTrainingId = int.Parse(TrainingId);
+        if (TrainingId != null)
+        {
+            Vm.AddedTrainingId = int.Parse(TrainingId);
+        }
         base.OnParametersSet();
     }
 }

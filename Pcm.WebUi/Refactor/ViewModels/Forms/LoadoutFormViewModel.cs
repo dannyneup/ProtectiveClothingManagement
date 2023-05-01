@@ -10,7 +10,6 @@ public class LoadoutFormViewModel : FormViewModel
 {
     public LoadOutPartRequest LoadoutRequest { get; } = new();
     public int SelectedCategoryId { get; set; } = 1;
-    public int CountAdded { get; private set; }
     
     public List<ItemCategoryResponse> AvailableCategories => _loadoutsModel.ItemCategories;
     
@@ -50,7 +49,6 @@ public class LoadoutFormViewModel : FormViewModel
         LoadoutRequest.Count = loadout.Count;
         LoadoutRequest.CategoryId = loadout.CategoryId;
         TempLoadoutId = loadout.Id;
-        StatusColor = Color.Info;
         StatusText = "Ausstattung ändern?";
     }
 
@@ -58,7 +56,6 @@ public class LoadoutFormViewModel : FormViewModel
     {
         if (response.IsResponseSuccess)
         {
-            CountAdded++;
             StatusText = $"Ausstattung mit ID {response.Id} {(TempLoadoutId > 0 ? "geändert" : "hinzugefügt")}.";
             StatusColor = Color.Success;
             TempLoadoutId = 0;

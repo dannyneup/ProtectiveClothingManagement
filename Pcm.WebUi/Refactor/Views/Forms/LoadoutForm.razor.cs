@@ -42,6 +42,5 @@ public partial class LoadoutForm
     {
         Vm.UpdateRequestModel(responseModel);
         _isVisible = false;
-        //StateHasChanged();
     }
 }

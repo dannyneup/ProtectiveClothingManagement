@@ -7,7 +7,7 @@ public class TrainingMultistepEditorViewModel
 {
     public TrainingEditStatus Status { get; private set; }
     public int AddedTrainingId { get; set; }
-    private NavigationManager _navigationManager;
+    private readonly NavigationManager _navigationManager;
 
     public TrainingMultistepEditorViewModel(NavigationManager navigationManager)
     {
@@ -23,20 +23,14 @@ public class TrainingMultistepEditorViewModel
         }
     }
     
-    public async Task LoadoutEditingDone(int count)
+    public async Task LoadoutEditingDone()
     {
-        if (count > 0)
-        {
-            Status = TrainingEditStatus.AddApprentices;
-        }
+        Status = TrainingEditStatus.AddApprentices;
     }
     
-    public async Task TraineeEditionDone(int count)
+    public async Task TraineeEditionDone()
     {
-        if (count > 0)
-        {
-            Status = TrainingEditStatus.Done;
-            _navigationManager.NavigateTo("/");
-        }
+        Status = TrainingEditStatus.Done;
+        _navigationManager.NavigateTo("/");
     }
 }

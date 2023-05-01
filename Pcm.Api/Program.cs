@@ -72,7 +72,7 @@ app.MapGet("/loadouts", async (GetConnection connectionGetter) =>
 {
     using var con = await connectionGetter();
     var sql = @"
-                SELECT c.id as categoryId, c.description as categoryName, count, t.id AS trainingId
+                SELECT loadout.id as id, c.id as categoryId, c.description as categoryName, count, t.id AS trainingId
                 FROM loadout
                 JOIN category c on c.id = loadout.categoryFk
                 JOIN training t on t.id = loadout.trainingFk;";

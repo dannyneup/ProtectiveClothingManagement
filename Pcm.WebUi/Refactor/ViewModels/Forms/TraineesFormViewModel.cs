@@ -9,7 +9,6 @@ namespace Pcm.WebUi.Refactor.ViewModels.Forms;
 public class TraineesFormViewModel : FormViewModel
 {
     public TraineeRequest TraineeRequest { get; } = new();
-    public int CountAdded { get; private set; }
 
     private readonly PersonsModel _personModel;
     public int TempTraineeId { get; private set; }
@@ -50,7 +49,6 @@ public class TraineesFormViewModel : FormViewModel
         TraineeRequest.PersonnelNumber = trainee.PersonnelNumber;
         TraineeRequest.TrainingId = trainee.TrainingId;
         TempTraineeId = trainee.PersonnelNumber;
-        StatusColor = Color.Info;
         StatusText = "Daten ändern?";
     }
 
@@ -58,11 +56,11 @@ public class TraineesFormViewModel : FormViewModel
     {
         if (response.IsResponseSuccess)
         {
-            CountAdded++;
             TraineeRequest.YearStarted = DateTime.Now.Year;
             TraineeRequest.FirstName = "";
             TraineeRequest.LastName = "";
             TraineeRequest.EmailAddress = "";
+            TempTraineeId = 0;
             StatusText = $"{response.FirstName} {response.LastName} {(TempTraineeId > 0 ? "geändert" : "hinzugefügt")}.";
             StatusColor = Color.Success;
         }
