@@ -1,6 +1,4 @@
-﻿@using Pcm.WebUi.Refactor
-@using Pcm.Infrastructure.ResponseModels
-<MudCard Elevation="25" Class="rounded-lg pb-4" Style="height: 100%; padding: 12px; display: flex; flex-direction: column;">
+﻿<MudCard Elevation="25" Class="rounded-lg pb-4" Style="height: 100%; padding: 12px; display: flex; flex-direction: column;">
     <MudCardHeader>
         <CardHeaderContent>
             <MudText Typo="Typo.h5" Align="Align.Center">2. Ausstattung hinzufügen</MudText>
@@ -35,12 +33,13 @@
     <MudCardActions Class="d-flex justify-center" Style="margin-bottom: 0; margin-top: auto; gap: 12px;">
         <div style="display: flex; flex-direction: column; width: 100%; gap: 12px;">
             <div style="display: flex; gap:12px;">
-                <MudButton Variant="Variant.Filled"
-                           Color="Color.Secondary"
-                           Disabled="Vm.IsLoading || IsEnabled == false || Vm.TempLoadoutId != 0"
-                           Size="Size.Large"
-                           OnClick="Vm.AddNewLoadout"
-                           Style="width:100%;">
+                <MudButton
+                    Variant="Variant.Filled"
+                    Color="Color.Secondary"
+                    Disabled="Vm.IsLoading || IsEnabled == false || Vm.TempLoadoutId != 0"
+                    Size="Size.Large"
+                    OnClick="Vm.AddNewLoadout"
+                    Style="width:100%;">
                     hinzufügen
                 </MudButton>
                 <MudButton
@@ -64,5 +63,5 @@
     </MudCardActions>
 </MudCard>
 <MudOverlay @bind-Visible="_isVisible" DarkBackground="true" AutoClose="true">
-    <LoadoutPartsTable ElementSelected="Vm.UpdateRequestModel" TrainingId="TrainingId" />
+    <LoadoutPartsTable ElementSelected="CloseOverlay" TrainingId="TrainingId" />
 </MudOverlay>

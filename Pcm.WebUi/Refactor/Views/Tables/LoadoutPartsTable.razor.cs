@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Pcm.Infrastructure.ResponseModels;
-using Pcm.WebUi.Refactor.Models;
-using Pcm.WebUi.Refactor.ViewModels;
+using Pcm.WebUi.Refactor.ViewModels.Tables;
 
-namespace Pcm.WebUi.Refactor.Views;
+namespace Pcm.WebUi.Refactor.Views.Tables;
 
 public partial class LoadoutPartsTable
 {

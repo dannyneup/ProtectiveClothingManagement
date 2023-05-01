@@ -8,7 +8,9 @@ using Pcm.Infrastructure.RequestModels;
 using Pcm.Infrastructure.ResponseModels;
 using Pcm.WebUi.Controller;
 using Pcm.WebUi.Refactor.Models;
-using Pcm.WebUi.Refactor.ViewModels;
+using Pcm.WebUi.Refactor.ViewModels.Container;
+using Pcm.WebUi.Refactor.ViewModels.Forms;
+using Pcm.WebUi.Refactor.ViewModels.Tables;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,8 @@ builder.Services.AddScoped<LoadoutFormViewModel>();
 builder.Services.AddScoped<TrainingFormViewModel>();
 builder.Services.AddScoped<TraineesFormViewModel>();
 builder.Services.AddScoped<LoadOutTableViewModel>();
+builder.Services.AddScoped<TraineesTableViewModel>();
+builder.Services.AddScoped<TrainingsTableViewModel>();
 builder.Services.AddScoped<TrainingMultistepEditorViewModel>();
 
 builder.Services.AddSingleton<IRepository<TrainingResponse, TrainingRequest>, Repository<TrainingResponse, TrainingRequest>>();

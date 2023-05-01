@@ -1,7 +1,7 @@
 ﻿using Pcm.Infrastructure.ResponseModels;
 using Pcm.WebUi.Refactor.Models;
 
-namespace Pcm.WebUi.Refactor.ViewModels;
+namespace Pcm.WebUi.Refactor.ViewModels.Tables;
 
 public class LoadOutTableViewModel
 {

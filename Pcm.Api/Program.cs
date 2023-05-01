@@ -9,17 +9,15 @@ using PcmBackendApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<GetConnection>(sp =>
     async () =>
     {
-        var connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=example;Database=psadb;sslmode=none;";
+        // TODO: AllowPublicKeyRetrieval=true muss raus und ssl/tls aud required!
+        var connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=example;Database=psadb;AllowPublicKeyRetrieval=true;sslmode=none;";
         var connection = new MySqlConnection(connectionString);
         await connection.OpenAsync();
         return connection;
@@ -34,7 +32,6 @@ FluentMapper.Initialize(config =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -47,7 +44,7 @@ app.MapGet("/", () => "PcmApi");
 app.MapGet("/trainings", async (GetConnection connectionGetter) =>
 {
     using var con = await connectionGetter();
-    var sql = @"SELECT t.id, description AS title, typeFk as type, yearStarted, COUNT(a.id) AS traineeCount
+    var sql = @"SELECT t.id, description AS title, typeFk as type, t.yearStarted AS yearStarted, COUNT(a.id) AS traineeCount
                 FROM training t
                 LEFT JOIN apprentice a ON t.id = a.trainingFk
                 GROUP BY t.id;";
@@ -149,6 +146,26 @@ app.MapPost("/trainees", async (TraineeRequest request, GetConnection connection
     return result != null
       ? Results.Created($"/trainees/{result.PersonnelNumber}", result)
       : Results.BadRequest();
+});
+
+
+app.MapPut("/trainees/{id}", async (TraineeRequest request, GetConnection connectionGetter, int id) =>
+{
+    using var con = await connectionGetter();
+    var sql = $@"UPDATE apprentice 
+                    SET firstName = @FirstName, lastName = @LastName, mail = @EmailAddress, trainingFk = @TrainingId
+                    WHERE id = {id};
+                SELECT a.id AS personnelNumber, firstName, lastName, mail AS emailAddress, a.yearStarted AS yearStarted, 
+                       trainingFk AS trainingId, t.description AS trainingTitle, tt.type AS trainingType
+                FROM apprentice a
+                    JOIN training t on t.id = a.trainingFk
+                    JOIN training_type tt on tt.type = t.typeFk
+                WHERE a.id = {id};";
+    var result = await con.QueryFirstOrDefaultAsync<TraineeResponse>(sql, request);
+
+    return result != null
+        ? Results.Accepted($"/trainees/{result.PersonnelNumber}", result)
+        : Results.BadRequest();
 });
 
 

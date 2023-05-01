@@ -1,4 +1,7 @@
 ﻿@using Pcm.WebUi.Refactor.Enums
+@page "/editor"
+@page "/editor/{trainingId}"
+
 <MudContainer Class="mt-16">
     <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Latzhoseneditor</MudText>
     <MudText Align="Align.Center">Anleitung nach ISO 3599, wie man eine Inputform zu benutzen hat. </MudText>
@@ -6,6 +9,7 @@
         <MudItem xs="12" sm="6" md="4">
             <TrainingForm 
                 IsEnabled="Vm.Status == TrainingEditStatus.AddTraining"
+                TrainingId="Vm.AddedTrainingId"
                 TrainingAdded="Vm.TrainingEditingDone"/>
         </MudItem>
         <MudItem xs="12" sm="6" md="4">

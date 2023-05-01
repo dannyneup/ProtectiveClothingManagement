@@ -1,5 +1,3 @@
-using Pcm.Core.Entities;
-
 namespace Pcm.Infrastructure.RequestModels;
 
 public record TraineeRequest : ResponseBase

@@ -1,5 +1,3 @@
-
-using Pcm.Core.Entities;
 using Pcm.Infrastructure.RequestModels;
 
 namespace Pcm.Infrastructure.ResponseModels;

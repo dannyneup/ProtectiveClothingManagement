@@ -1,6 +1,6 @@
 ﻿using MudBlazor;
 
-namespace Pcm.WebUi.Refactor.ViewModels;
+namespace Pcm.WebUi.Refactor.ViewModels.Forms;
 
 public class FormViewModel
 {

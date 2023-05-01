@@ -15,7 +15,7 @@ public class PersonsModel
         _traineeRepository = traineeRepository;
     }
 
-    public EventCallback<TraineeResponse> TraineeInserRequestFinished { get; set; }
+    public EventCallback<TraineeResponse> TraineeRequestFinished { get; set; }
     
     public List<TraineeResponse> Trainees
     {
@@ -39,6 +39,19 @@ public class PersonsModel
             _trainees.Add(traineeResponse);
         }
 
-        await TraineeInserRequestFinished.InvokeAsync(traineeResponse);
+        await TraineeRequestFinished.InvokeAsync(traineeResponse);
+    }
+    
+    public async Task UpdateTrainee(TraineeRequest request, int personellNumber)
+    {
+        var traineeResponse = await _traineeRepository.Update(request, personellNumber);
+        bool isSuccesful = traineeResponse.IsResponseSuccess;
+        if (isSuccesful)
+        {
+            _trainees.RemoveAll(x => x.PersonnelNumber == personellNumber);
+            _trainees.Add(traineeResponse);
+        }
+
+        await TraineeRequestFinished.InvokeAsync(traineeResponse);
     }
 }

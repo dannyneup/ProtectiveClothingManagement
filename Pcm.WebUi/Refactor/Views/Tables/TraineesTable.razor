@@ -1,0 +1,36 @@
+﻿@using Pcm.Infrastructure.ResponseModels
+<MudTable Style="padding: 12px;" Items="@Vm.GetCorrespondingToTrainingId(TrainingId)" 
+          Breakpoint="Breakpoint.Sm" 
+          T="TraineeResponse">
+    <HeaderContent>
+        <MudTh>Vorname</MudTh>
+        <MudTh>Nachname</MudTh>
+        <MudTh>Mail</MudTh>
+        <MudTh>Personalnummer</MudTh>
+        <MudTh>Beginn</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Vorname">@context.FirstName</MudTd>
+        <MudTd DataLabel="Nachname">@context.LastName</MudTd>
+        <MudTd DataLabel="Mail">@context.EmailAddress</MudTd>
+        <MudTd DataLabel="Personalnummer">@context.PersonnelNumber</MudTd>
+        <MudTd DataLabel="Beginn">@context.YearStarted</MudTd>
+        <MudTd>
+            <MudStack Row>
+                <MudButton
+                    OnClick="async () => await ElementSelected.InvokeAsync(context)"
+                    Size="@Size.Small"
+                    Variant="@Variant.Filled"
+                    Color="@Color.Primary">
+                    bearbeiten
+                </MudButton>
+                <MudButton
+                    Size="@Size.Small"
+                    Variant="@Variant.Filled"
+                    Color="@Color.Error">
+                    entfernen
+                </MudButton>
+            </MudStack>
+        </MudTd>
+    </RowTemplate>
+</MudTable>

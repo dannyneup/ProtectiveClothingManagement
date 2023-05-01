@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor;
 using Pcm.Infrastructure.ResponseModels;
-using Pcm.WebUi.Refactor.ViewModels;
+using Pcm.WebUi.Refactor.ViewModels.Forms;
 
-namespace Pcm.WebUi.Refactor.Views;
+namespace Pcm.WebUi.Refactor.Views.Forms;
 
 public partial class LoadoutForm
 {
@@ -30,7 +29,8 @@ public partial class LoadoutForm
     {
         if (Vm.TempLoadoutId == 0)
         {
-            OpenOverlay();
+            _isVisible = true;
+            StateHasChanged();
         }
         else
         {
@@ -38,11 +38,10 @@ public partial class LoadoutForm
         }
     }
     
-
-    private void OpenOverlay()
+    private void CloseOverlay(LoadOutPartResponse responseModel)
     {
-        _isVisible = true;
-        StateHasChanged();
+        Vm.UpdateRequestModel(responseModel);
+        _isVisible = false;
+        //StateHasChanged();
     }
-    
 }

@@ -1,20 +1,17 @@
-﻿using Pcm.WebUi.Refactor.Enums;
-using Pcm.WebUi.Refactor.Models;
+﻿using Microsoft.AspNetCore.Components;
+using Pcm.WebUi.Refactor.Enums;
 
-namespace Pcm.WebUi.Refactor.ViewModels;
+namespace Pcm.WebUi.Refactor.ViewModels.Container;
 
 public class TrainingMultistepEditorViewModel
 {
     public TrainingEditStatus Status { get; private set; }
-    public int AddedTrainingId { get; private set; }
-    private readonly TrainingModel _trainingModel;
+    public int AddedTrainingId { get; set; }
+    private NavigationManager _navigationManager;
 
-    public TrainingMultistepEditorViewModel(TrainingModel trainingModel)
+    public TrainingMultistepEditorViewModel(NavigationManager navigationManager)
     {
-        _trainingModel = trainingModel;
-        //_trainingModel.InsertRequestFinished = EventCallback.Factory
-          //  .Create<TrainingResponse>(this, async (x) 
-            //    => await NewTrainingAdded(x));
+        _navigationManager = navigationManager;
     }
 
     public async Task TrainingEditingDone(int id)
@@ -39,6 +36,7 @@ public class TrainingMultistepEditorViewModel
         if (count > 0)
         {
             Status = TrainingEditStatus.Done;
+            _navigationManager.NavigateTo("/");
         }
     }
 }
