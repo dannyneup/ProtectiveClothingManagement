@@ -17,7 +17,8 @@ builder.Services.AddScoped<GetConnection>(sp =>
     async () =>
     {
         // TODO: AllowPublicKeyRetrieval=true muss raus und ssl/tls aud required!
-        var connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=example;Database=psadb;AllowPublicKeyRetrieval=true;sslmode=none;";
+        var connectionString =
+            "Server=localhost;Port=3306;Uid=root;Pwd=password;Database=PcmDbH;AllowPublicKeyRetrieval=true;sslmode=none;";
         var connection = new MySqlConnection(connectionString);
         await connection.OpenAsync();
         return connection;
@@ -44,7 +45,8 @@ app.MapGet("/", () => "PcmApi");
 app.MapGet("/trainings", async (GetConnection connectionGetter) =>
 {
     using var con = await connectionGetter();
-    var sql = @"SELECT t.id, description AS title, typeFk as type, t.yearStarted AS yearStarted, COUNT(a.id) AS traineeCount
+    var sql =
+        @"SELECT t.id, description AS title, typeFk as type, t.yearStarted AS yearStarted, COUNT(a.id) AS traineeCount
                 FROM training t
                 LEFT JOIN apprentice a ON t.id = a.trainingFk
                 GROUP BY t.id;";
@@ -144,8 +146,8 @@ app.MapPost("/trainees", async (TraineeRequest request, GetConnection connection
     var result = await con.QueryFirstOrDefaultAsync<TraineeResponse>(sql, request);
 
     return result != null
-      ? Results.Created($"/trainees/{result.PersonnelNumber}", result)
-      : Results.BadRequest();
+        ? Results.Created($"/trainees/{result.PersonnelNumber}", result)
+        : Results.BadRequest();
 });
 
 

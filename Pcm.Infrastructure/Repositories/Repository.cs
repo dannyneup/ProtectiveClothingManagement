@@ -31,7 +31,6 @@ public class Repository<TResponse, TRequest> : IRepository<TResponse, TRequest>
         }
         catch (Exception e) when (e is HttpRequestException or JsonException)
         {
-            
             Debug.WriteLine(e);
             return new List<TResponse> {new() {IsResponseSuccess = false}};
         }

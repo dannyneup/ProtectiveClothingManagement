@@ -1,0 +1,66 @@
+﻿@using Pcm.Infrastructure.ResponseModels
+<MudPaper Elevation="1"
+          Class="component">
+    @if (Extended)
+    {
+        <MudToolBar>
+            <MudText Typo="Typo.h5">
+                @Localization.trainees
+            </MudText>
+            <MudSpacer/>
+
+            <MudTextField @bind-Value="@Vm.SearchString"
+                          Placeholder="@Localization.search"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search"
+                          IconSize="Size.Medium"/>
+        </MudToolBar>
+    }
+    <MudDataGrid T="TraineeResponse"
+                 Items="@Vm.Trainees"
+                 Breakpoint="Breakpoint.Sm"
+                 QuickFilter="@Vm.Filter"
+                 Elevation="0">
+        <Columns>
+            @if (Extended)
+            {
+                <HierarchyColumn T="TrainingResponse"/>
+            }
+            <PropertyColumn Property="x => x.PersonnelNumber" Title="@Localization.personnelNumber"/>
+            <PropertyColumn Property="x => x.FirstName" Title="@Localization.firstName"/>
+            <PropertyColumn Property="x => x.LastName" Title="@Localization.lastName"/>
+            @if (Extended)
+            {
+                <PropertyColumn Property="x => x.EmailAddress" Title="@Localization.emailAddress"/>
+                <PropertyColumn Property="x => x.TrainingTitle" Title="@Localization.trainingName"/>
+                <PropertyColumn Property="x => x.TrainingType" Title="@Localization.trainingType"/>
+                <PropertyColumn Property="x => x.YearStarted" Title="@Localization.yearStarted"/>
+            }
+            @if (CanEdit)
+            {
+                <TemplateColumn CellStyle="right:0;"
+                                ShowColumnOptions="false"
+                                ShowFilterIcon="false">
+                    <CellTemplate>
+                        <EditButton OnEditClicked="async () => await ElementEditSelected.InvokeAsync(context.Item)"
+                                    OnDeleteClicked="async () => await ElementDeleteSelected.InvokeAsync(context.Item)"/>
+                    </CellTemplate>
+                </TemplateColumn>
+            }
+        </Columns>
+    <!--
+    <ChildRowContent>
+        <MudCard Elevation="0">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">@Localization.items</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <TraineesTable TrainingId="context.Item.Id"/>
+            </MudCardContent>
+        </MudCard>
+    </ChildRowContent>
+    -->
+    </MudDataGrid>
+</MudPaper>

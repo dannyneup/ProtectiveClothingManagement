@@ -5,6 +5,5 @@ namespace Pcm.Infrastructure;
 
 public record ResponseBase : IResponseBase
 {
-    [JsonIgnore] 
-    public bool IsResponseSuccess { get; init; } = true;
+    [JsonIgnore] public bool IsResponseSuccess { get; init; } = true;
 }

@@ -1,0 +1,29 @@
+﻿@using Pcm.Infrastructure.ResponseModels
+<MudTable Style="padding: 12px;"
+          Items="@Vm.GetCorrespondingToTrainingId(TrainingId)"
+          Hover="true"
+          Breakpoint="Breakpoint.Sm"
+          T="LoadOutPartResponse">
+    <HeaderContent>
+        <MudTh>@Localization.count</MudTh>
+        <MudTh>@Localization.category</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="@Localization.count">@context.Count</MudTd>
+        <MudTd DataLabel="@Localization.category">@context.CategoryName</MudTd>
+        @if (CanEdit)
+        {
+            <MudTd Style="text-align: right">
+                <MudMenu Icon="@Icons.Material.Filled.MoreHoriz"
+                         Class="more-icon-button">
+                    <MudMenuItem OnClick="async () => await ElementEditSelected.InvokeAsync(context)">
+                        @Localization.edit
+                    </MudMenuItem>
+                    <MudMenuItem>
+                        @Localization.delete
+                    </MudMenuItem>
+                </MudMenu>
+            </MudTd>
+        }
+    </RowTemplate>
+</MudTable>

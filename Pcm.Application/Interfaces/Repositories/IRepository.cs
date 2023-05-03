@@ -1,7 +1,7 @@
 namespace Pcm.Application.Interfaces.Repositories;
 
-public interface IRepository<TResponse, in TRequest> 
-    where TResponse : class, IResponseBase 
+public interface IRepository<TResponse, in TRequest>
+    where TResponse : class, IResponseBase
     where TRequest : class
 {
     Task<IEnumerable<TResponse>> GetAll(Dictionary<string, string> queries = default);

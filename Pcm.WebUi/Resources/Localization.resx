@@ -198,4 +198,7 @@
     <data name="itemCategories" xml:space="preserve">
         <value>Item categories</value>
     </data>
+    <data name="items" xml:space="preserve">
+        <value>Items</value>
+    </data>
 </root>

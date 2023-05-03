@@ -49,12 +49,21 @@
         <_ContentIncludedByDefault Remove="Components\ModelEditors\PersonEditor.razor" />
         <_ContentIncludedByDefault Remove="Components\ModelEditors\TrainingEditor.razor" />
         <_ContentIncludedByDefault Remove="Components\DetailViews\TrainingDetails.razor" />
+        <_ContentIncludedByDefault Remove="Refactor\Views\Forms\LoadoutForm.razor" />
+        <_ContentIncludedByDefault Remove="Refactor\Views\Forms\TraineesForm.razor" />
+        <_ContentIncludedByDefault Remove="Refactor\Views\Forms\TrainingForm.razor" />
+        <_ContentIncludedByDefault Remove="Refactor\Views\Tables\LoadoutPartsTable.razor" />
+        <_ContentIncludedByDefault Remove="Refactor\Views\Tables\TraineesTable.razor" />
+        <_ContentIncludedByDefault Remove="Refactor\Views\Tables\TrainingsTable.razor" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Components\" />
-      <Folder Include="Services\" />
-      <Folder Include="ViewModels\" />
+        <AdditionalFiles Include="Views\Forms\LoadoutForm.razor" />
+        <AdditionalFiles Include="Views\Forms\TraineesForm.razor" />
+        <AdditionalFiles Include="Views\Forms\TrainingForm.razor" />
+        <AdditionalFiles Include="Views\Tables\LoadoutPartsTable.razor" />
+        <AdditionalFiles Include="Views\Tables\TraineesTable.razor" />
+        <AdditionalFiles Include="Views\Tables\TrainingsTable.razor" />
     </ItemGroup>
 
 </Project>

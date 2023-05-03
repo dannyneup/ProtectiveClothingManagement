@@ -1,0 +1,67 @@
+﻿<MudCard Elevation="25" Class="rounded-lg pb-4" Style="height: 100%; padding: 12px; display: flex; flex-direction: column;">
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h5" Align="Align.Center">2. Ausstattung hinzufügen</MudText>
+            <MudChip
+                Style="display: flex;"
+                Disabled="IsEnabled == false"
+                Color="Vm.StatusColor">
+                @Vm.StatusText
+            </MudChip>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent Style="width: 100%;">
+        <MudNumericField
+            Disabled="IsEnabled == false"
+            T="int"
+            Label="Anzahl"
+            Min="1"
+            Max="10000"
+            @bind-Value="Vm.LoadoutRequest.Count"/>
+        <MudSelect T="int"
+                   @bind-Value="Vm.SelectedCategoryId"
+                   Disabled="IsEnabled == false">
+            @foreach (var category in Vm.AvailableCategories)
+            {
+                <MudSelectItem
+                    Value="@category.Id">
+                    @category.Title
+                </MudSelectItem>
+            }
+        </MudSelect>
+    </MudCardContent>
+    <MudCardActions Class="d-flex justify-center" Style="margin-bottom: 0; margin-top: auto; gap: 12px;">
+        <div style="display: flex; flex-direction: column; width: 100%; gap: 12px;">
+            <div style="display: flex; gap:12px;">
+                <MudButton
+                    Variant="Variant.Filled"
+                    Color="Color.Secondary"
+                    Disabled="Vm.IsLoading || IsEnabled == false || Vm.TempLoadoutId != 0"
+                    Size="Size.Large"
+                    OnClick="Vm.AddNewLoadout"
+                    Style="width:100%;">
+                    hinzufügen
+                </MudButton>
+                <MudButton
+                    Variant="Variant.Filled"
+                    Color="Color.Secondary"
+                    Disabled="Vm.IsLoading || IsEnabled == false"
+                    OnClick="ChooseOptionOnButtonClick">
+                    @(Vm.TempLoadoutId == 0 ? "ändern" : "speichern")
+                </MudButton>
+            </div>
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       Size="Size.Large"
+                       Disabled="Vm.IsLoading || IsEnabled == false"
+                       OnClick="async () => await LoadoutAddingDone.InvokeAsync()"
+                       Style="width:100%;">
+                fertig
+            </MudButton>
+        </div>
+
+    </MudCardActions>
+</MudCard>
+<MudOverlay @bind-Visible="_isVisible" DarkBackground="true" AutoClose="true">
+    <LoadoutPartsTable ElementSelected="CloseOverlay" TrainingId="TrainingId"/>
+</MudOverlay>

@@ -3,14 +3,13 @@ using MudBlazor;
 using MudBlazor.Services;
 using Pcm.Application.Interfaces.Repositories;
 using Pcm.Infrastructure;
+using Pcm.Infrastructure.Models;
 using Pcm.Infrastructure.Repositories;
 using Pcm.Infrastructure.RequestModels;
 using Pcm.Infrastructure.ResponseModels;
-using Pcm.WebUi.Controller;
-using Pcm.WebUi.Refactor.Models;
-using Pcm.WebUi.Refactor.ViewModels.Container;
-using Pcm.WebUi.Refactor.ViewModels.Forms;
-using Pcm.WebUi.Refactor.ViewModels.Tables;
+using Pcm.WebUi.ViewModels.Container;
+using Pcm.WebUi.ViewModels.Forms;
+using Pcm.WebUi.ViewModels.Tables;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,10 +26,9 @@ builder.Services.AddMudServices(config =>
 });
 builder.Services.AddHttpClient();
 builder.Services.AddLocalization();
-builder.Services.AddScoped<StringHandleService>();
 
-builder.Services.AddScoped<TrainingModel>();
-builder.Services.AddScoped<PersonsModel>();
+builder.Services.AddScoped<TrainingsModel>();
+builder.Services.AddScoped<TraineesModel>();
 builder.Services.AddScoped<LoadoutsModel>();
 builder.Services.AddScoped<FormViewModel>();
 builder.Services.AddScoped<LoadoutFormViewModel>();
@@ -41,10 +39,16 @@ builder.Services.AddScoped<TraineesTableViewModel>();
 builder.Services.AddScoped<TrainingsTableViewModel>();
 builder.Services.AddScoped<TrainingMultistepEditorViewModel>();
 
-builder.Services.AddSingleton<IRepository<TrainingResponse, TrainingRequest>, Repository<TrainingResponse, TrainingRequest>>();
-builder.Services.AddSingleton<IRepository<LoadOutPartResponse, LoadOutPartRequest>, Repository<LoadOutPartResponse, LoadOutPartRequest>>();
-builder.Services.AddSingleton<IRepository<ItemCategoryResponse, ItemCategoryRequest>, Repository<ItemCategoryResponse, ItemCategoryRequest>>();
-builder.Services.AddSingleton<IRepository<TraineeResponse, TraineeRequest>, Repository<TraineeResponse, TraineeRequest>>();
+builder.Services
+    .AddSingleton<IRepository<TrainingResponse, TrainingRequest>, Repository<TrainingResponse, TrainingRequest>>();
+builder.Services
+    .AddSingleton<IRepository<LoadOutPartResponse, LoadOutPartRequest>,
+        Repository<LoadOutPartResponse, LoadOutPartRequest>>();
+builder.Services
+    .AddSingleton<IRepository<ItemCategoryResponse, ItemCategoryRequest>,
+        Repository<ItemCategoryResponse, ItemCategoryRequest>>();
+builder.Services
+    .AddSingleton<IRepository<TraineeResponse, TraineeRequest>, Repository<TraineeResponse, TraineeRequest>>();
 
 var app = builder.Build();
 app.UseRequestLocalization(new RequestLocalizationOptions()

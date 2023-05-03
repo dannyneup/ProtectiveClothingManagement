@@ -392,5 +392,11 @@ namespace Pcm.WebUi.Resources {
                 return ResourceManager.GetString("itemCategories", resourceCulture);
             }
         }
+        
+        internal static string items {
+            get {
+                return ResourceManager.GetString("items", resourceCulture);
+            }
+        }
     }
 }
