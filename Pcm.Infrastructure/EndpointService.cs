@@ -10,9 +10,10 @@ public class EndpointService : IEndpointService
 
     public EndpointService(IConfiguration configurationRoot)
     {
-        _serviceUrl = (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PCM_SERVICE_URL"))
-            ? configurationRoot.GetSection("BackendServices")["Url"]
-            : FallbackUrl) ?? FallbackUrl;
+        _serviceUrl = Environment.GetEnvironmentVariable("BACKEND_URL")
+            ?? configurationRoot.GetSection("BackendServices")["Url"]
+            ?? FallbackUrl;
+        Console.WriteLine(_serviceUrl);
     }
 
     public string GetMappedUrl(Type responseModel)

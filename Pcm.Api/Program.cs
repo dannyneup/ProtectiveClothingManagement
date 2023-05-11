@@ -16,10 +16,35 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<GetConnection>(sp =>
     async () =>
     {
-        // TODO: AllowPublicKeyRetrieval=true muss raus und ssl/tls aud required!
-        var connectionString =
-            "Server=localhost;Port=3306;Uid=root;Pwd=password;Database=PcmDbH;AllowPublicKeyRetrieval=true;sslmode=none;";
-        var connection = new MySqlConnection(connectionString);
+        MySqlConnectionStringBuilder connectionStringBuilder;
+        if (builder.Configuration["ASPNETCORE_ENVIRONMENT"] == "Development")
+        {
+            connectionStringBuilder = new MySqlConnectionStringBuilder
+            {
+                Server = "localhost",
+                Port = 3307,
+                UserID = "root",
+                Password = "super-secret-password",
+                Database = "protective_clothing_management",
+                AllowPublicKeyRetrieval = true,
+                SslMode = MySqlSslMode.Disabled
+            };
+        }
+        else
+        {
+            // TODO: AllowPublicKeyRetrieval=true muss raus und ssl/tls aud required!
+            connectionStringBuilder = new MySqlConnectionStringBuilder
+            {
+                Server = Environment.GetEnvironmentVariable("DATABASE_HOST"),
+                Port = Convert.ToUInt32(Environment.GetEnvironmentVariable("DATABASE_PORT")),
+                UserID = Environment.GetEnvironmentVariable("DATABASE_USER") ?? "root",
+                Password = Environment.GetEnvironmentVariable("DATABASE_USER_PASSWORD"),
+                Database = Environment.GetEnvironmentVariable("DATABASE"),
+                AllowPublicKeyRetrieval = true,
+                SslMode = MySqlSslMode.Disabled
+            };
+        }
+        var connection = new MySqlConnection(connectionStringBuilder.ConnectionString);
         await connection.OpenAsync();
         return connection;
     });

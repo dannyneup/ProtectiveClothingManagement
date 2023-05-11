@@ -19,12 +19,12 @@
     </MudAppBar>
     <MudDrawer @bind-Open="@_isDrawerOpen" ClipMode="DrawerClipMode.Always" Elevation="1" Variant="@DrawerVariant.Responsive">
         <MudNavMenu>
-            <!-- <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.SpaceDashboard"/>
-            <MudNavLink Href="/persons" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person"/>
-            <MudNavLink Href="/articles" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Checkroom"/> -->
-            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.List">Ausbildungen</MudNavLink>
+            <MudNavLink Href="/trainees" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person"/>
+            <MudNavLink Href="/trainings" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.List"/>
             <MudNavLink Href="/editor" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Edit">Editor</MudNavLink>
-            <!-- <MudNavLink Href="/orders" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ShoppingBag"/>
+            <!-- <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.SpaceDashboard"/>
+            <MudNavLink Href="/articles" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Checkroom"/>
+            <MudNavLink Href="/orders" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ShoppingBag"/>
             <MudNavLink Href="/requests" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.NoteAdd"/> -->
         </MudNavMenu>
     </MudDrawer>
