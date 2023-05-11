@@ -27,10 +27,10 @@
     <data name="firstName" xml:space="preserve">
         <value>Vorname</value>
     </data>
-    <data name="LastName" xml:space="preserve">
+    <data name="lastName" xml:space="preserve">
         <value>Nachname</value>
     </data>
-    <data name="apprenticeship" xml:space="preserve">
+    <data name="trainingName" xml:space="preserve">
         <value>Aubildung/Studium</value>
     </data>
     <data name="emailAddress" xml:space="preserve">

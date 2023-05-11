@@ -27,11 +27,8 @@
     <data name="firstName" xml:space="preserve">
         <value>First name</value>
     </data>
-    <data name="LastName" xml:space="preserve">
-        <value>Last name</value>
-    </data>
-    <data name="apprenticeship" xml:space="preserve">
-        <value>Apprenticeship</value>
+    <data name="trainingName" xml:space="preserve">
+        <value>Training name</value>
     </data>
     <data name="emailAddress" xml:space="preserve">
         <value>E-mail address</value>
@@ -46,7 +43,7 @@
         <value>Saving</value>
     </data>
     <data name="personnelNumber" xml:space="preserve">
-        <value>Personnel Number</value>
+        <value>Personnel number</value>
     </data>
     <data name="category" xml:space="preserve">
         <value>Category</value>
@@ -61,7 +58,7 @@
         <value>Manufacturer</value>
     </data>
     <data name="orderNumber" xml:space="preserve">
-        <value>Order Number</value>
+        <value>Order number</value>
     </data>
     <data name="search" xml:space="preserve">
         <value>Search</value>
@@ -99,9 +96,6 @@
     <data name="dashboard" xml:space="preserve">
         <value>Dashboard</value>
     </data>
-    <data name="apprentices" xml:space="preserve">
-        <value>Apprentices</value>
-    </data>
     <data name="name" xml:space="preserve">
         <value>Name</value>
     </data>
@@ -114,10 +108,97 @@
     <data name="date" xml:space="preserve">
         <value>Date</value>
     </data>
-    <data name="belongingApprentices" xml:space="preserve">
-        <value>Belonging apprentices</value>
+    <data name="belongingTrainees" xml:space="preserve">
+        <value>Belonging trainees</value>
     </data>
     <data name="sortBy" xml:space="preserve">
         <value>Sort by</value>
+    </data>
+    <data name="trainingType" xml:space="preserve">
+        <value>Trainig-type</value>
+    </data>
+    <data name="training" xml:space="preserve">
+        <value>Training</value>
+    </data>
+    <data name="trainees" xml:space="preserve">
+        <value>Trainees</value>
+    </data>
+    <data name="lastName" xml:space="preserve">
+        <value>Last name</value>
+    </data>
+    <data name="trainings" xml:space="preserve">
+        <value>Trainings</value>
+    </data>
+    <data name="group" xml:space="preserve">
+        <value>Group</value>
+    </data>
+    <data name="defaultLoadout" xml:space="preserve">
+        <value>Default loadout</value>
+    </data>
+    <data name="itemCategory" xml:space="preserve">
+        <value>Item category</value>
+    </data>
+    <data name="count" xml:space="preserve">
+        <value>Count</value>
+    </data>
+    <data name="traineeCount" xml:space="preserve">
+        <value>Trainee count</value>
+    </data>
+    <data name="yearCount" xml:space="preserve">
+        <value>Year count</value>
+    </data>
+    <data name="trainingDetails" xml:space="preserve">
+        <value>Training details</value>
+    </data>
+    <data name="createNewT" xml:space="preserve">
+        <value>Create new {0}</value>
+    </data>
+    <data name="yearStarted" xml:space="preserve">
+        <value>Starting Year</value>
+    </data>
+    <data name="tWithNameSuccessfullyCreated" xml:space="preserve">
+        <value>{0} {1} successfully created.</value>
+    </data>
+    <data name="tWithNameNotSuccessfullyCreated" xml:space="preserve">
+        <value>{0} {1} not successfully created.</value>
+    </data>
+    <data name="editT" xml:space="preserve">
+        <value>Edit {0}</value>
+    </data>
+    <data name="edit" xml:space="preserve">
+        <value>Edit</value>
+    </data>
+    <data name="delete" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="reallyWantDeleteCannotBeUndone" xml:space="preserve">
+        <value>Do you really want to delete the selected entry? This can not be undone. </value>
+    </data>
+    <data name="warning" xml:space="preserve">
+        <value>Warning</value>
+    </data>
+    <data name="tWithNameNotSuccessfullyUpdated" xml:space="preserve">
+        <value>{0} {1} not successfully updated.</value>
+    </data>
+    <data name="tWithNameSuccessfullyUpdated" xml:space="preserve">
+        <value>{0} {1} successfully updated.</value>
+    </data>
+    <data name="tWithNameSuccessfullyDeleted" xml:space="preserve">
+        <value>{0} {1} successfully deleted.</value>
+    </data>
+    <data name="tWithNameNotSuccessfullyDeleted" xml:space="preserve">
+        <value>{0} {1} not successfully deleted.</value>
+    </data>
+    <data name="startingYear" xml:space="preserve">
+        <value>Starting Year</value>
+    </data>
+    <data name="TCouldNotLoadedSuccessfully" xml:space="preserve">
+        <value>{0} could not be loaded successfully.</value>
+    </data>
+    <data name="itemCategories" xml:space="preserve">
+        <value>Item categories</value>
+    </data>
+    <data name="items" xml:space="preserve">
+        <value>Items</value>
     </data>
 </root>

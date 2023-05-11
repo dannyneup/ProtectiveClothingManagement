@@ -1,29 +1,54 @@
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
+using MudBlazor;
 using MudBlazor.Services;
-using Pcm.Application.Interfaces;
-using Pcm.Core.Entities;
+using Pcm.Application.Interfaces.Repositories;
+using Pcm.Infrastructure;
+using Pcm.Infrastructure.Models;
 using Pcm.Infrastructure.Repositories;
-using Pcm.WebUi.ViewModels;
+using Pcm.Infrastructure.RequestModels;
+using Pcm.Infrastructure.ResponseModels;
+using Pcm.WebUi.ViewModels.Container;
+using Pcm.WebUi.ViewModels.Forms;
+using Pcm.WebUi.ViewModels.Tables;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<IEndpointService, EndpointService>();
 
 StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddMudServices();
+builder.Services.AddMudServices(config =>
+{
+    config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomRight;
+});
 builder.Services.AddHttpClient();
 builder.Services.AddLocalization();
 
-//Dependency injection
-builder.Services.AddScoped<IRepository<IPerson, int>, PersonRepository>();
-builder.Services.AddScoped<IRepository<IArticle, int>, ArticleRepository>();
-builder.Services.AddScoped<IRepository<IArticleCategory, int>, ArticleCategoryRepository>();
-builder.Services.AddScoped<IRepository<IArticleType, int>, ArticleTypeRepository>();
-builder.Services.AddScoped<IRepository<IOrder, int>, OrderRepository>();
-builder.Services.AddScoped<IRepository<IApprenticeship, int>, ApprenticeshipRepository>();
-builder.Services.AddScoped<INewArticleViewModel, NewArticleViewModel>();
+builder.Services.AddScoped<TrainingsModel>();
+builder.Services.AddScoped<TraineesModel>();
+builder.Services.AddScoped<LoadoutsModel>();
+builder.Services.AddScoped<FormViewModel>();
+builder.Services.AddScoped<LoadoutFormViewModel>();
+builder.Services.AddScoped<TrainingFormViewModel>();
+builder.Services.AddScoped<TraineesFormViewModel>();
+builder.Services.AddScoped<LoadOutTableViewModel>();
+builder.Services.AddScoped<TraineesTableViewModel>();
+builder.Services.AddScoped<TrainingsTableViewModel>();
+builder.Services.AddScoped<TrainingMultistepEditorViewModel>();
+
+builder.Services
+    .AddSingleton<IRepository<TrainingResponse, TrainingRequest>, Repository<TrainingResponse, TrainingRequest>>();
+builder.Services
+    .AddSingleton<IRepository<LoadOutPartResponse, LoadOutPartRequest>,
+        Repository<LoadOutPartResponse, LoadOutPartRequest>>();
+builder.Services
+    .AddSingleton<IRepository<ItemCategoryResponse, ItemCategoryRequest>,
+        Repository<ItemCategoryResponse, ItemCategoryRequest>>();
+builder.Services
+    .AddSingleton<IRepository<TraineeResponse, TraineeRequest>, Repository<TraineeResponse, TraineeRequest>>();
 
 var app = builder.Build();
 app.UseRequestLocalization(new RequestLocalizationOptions()
@@ -34,16 +59,12 @@ app.UseRequestLocalization(new RequestLocalizationOptions()
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 

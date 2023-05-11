@@ -8,8 +8,12 @@
         <RootNamespace>Pcm.WebUi</RootNamespace>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DefineConstants>TRACE</DefineConstants>
+    </PropertyGroup>
+
     <ItemGroup>
-        <PackageReference Include="MudBlazor" Version="6.1.7" />
+        <PackageReference Include="MudBlazor" Version="6.2.2" />
     </ItemGroup>
 
     <ItemGroup>
@@ -34,8 +38,32 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Pcm.Application\Pcm.Application.csproj" />
-        <ProjectReference Include="..\Pcm.Core\Pcm.Core.csproj" />
+        <ProjectReference Include="..\Core\Core.csproj" />
         <ProjectReference Include="..\Pcm.Infrastructure\Pcm.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <_ContentIncludedByDefault Remove="Components\Dialogs\Details\TrainingDetails.razor" />
+        <_ContentIncludedByDefault Remove="Components\Lists\Helpers\EditableTable.razor" />
+        <_ContentIncludedByDefault Remove="Components\Dialogs\Helpers\ModelEditorDialog.razor" />
+        <_ContentIncludedByDefault Remove="Components\ModelEditors\PersonEditor.razor" />
+        <_ContentIncludedByDefault Remove="Components\ModelEditors\TrainingEditor.razor" />
+        <_ContentIncludedByDefault Remove="Components\DetailViews\TrainingDetails.razor" />
+        <_ContentIncludedByDefault Remove="Refactor\Views\Forms\LoadoutForm.razor" />
+        <_ContentIncludedByDefault Remove="Refactor\Views\Forms\TraineesForm.razor" />
+        <_ContentIncludedByDefault Remove="Refactor\Views\Forms\TrainingForm.razor" />
+        <_ContentIncludedByDefault Remove="Refactor\Views\Tables\LoadoutPartsTable.razor" />
+        <_ContentIncludedByDefault Remove="Refactor\Views\Tables\TraineesTable.razor" />
+        <_ContentIncludedByDefault Remove="Refactor\Views\Tables\TrainingsTable.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="Views\Forms\LoadoutForm.razor" />
+        <AdditionalFiles Include="Views\Forms\TraineesForm.razor" />
+        <AdditionalFiles Include="Views\Forms\TrainingForm.razor" />
+        <AdditionalFiles Include="Views\Tables\LoadoutPartsTable.razor" />
+        <AdditionalFiles Include="Views\Tables\TraineesTable.razor" />
+        <AdditionalFiles Include="Views\Tables\TrainingsTable.razor" />
     </ItemGroup>
 
 </Project>

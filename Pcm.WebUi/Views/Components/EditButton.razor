@@ -1,0 +1,9 @@
+<MudMenu Icon="@Icons.Material.Filled.MoreHoriz"
+         Class="more-icon-button">
+    <MudMenuItem OnClick="async () => await OnEditClicked.InvokeAsync()">
+        @Localization.edit
+    </MudMenuItem>
+    <MudMenuItem OnClick="async () => await OnDeleteClicked.InvokeAsync()">
+        @Localization.delete
+    </MudMenuItem>
+</MudMenu>

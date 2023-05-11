@@ -1,0 +1,57 @@
+﻿@using Pcm.Infrastructure.ResponseModels
+<MudPaper Elevation="1"
+          Class="component"
+          MaxHeight="">
+    @if (Extended)
+    {
+        <MudToolBar>
+            <MudText Typo="Typo.h5">
+                @Localization.trainings
+            </MudText>
+            <MudSpacer/>
+
+            <MudTextField @bind-Value="@Vm.SearchString"
+                          Placeholder="@Localization.search"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search"
+                          IconSize="Size.Medium"/>
+        </MudToolBar>
+    }
+    <MudDataGrid T="TrainingResponse"
+                 Items="@Vm.Trainings"
+                 Breakpoint="Breakpoint.Sm"
+                 QuickFilter="@Vm.Filter"
+                 Elevation="0">
+        <Columns>
+            @if (Extended)
+            {
+                <HierarchyColumn T="TrainingResponse"/>
+            }
+            <PropertyColumn Property="x => x.Title" Title="@Localization.trainingName"/>
+            <PropertyColumn Property="x => x.Type" Title="@Localization.trainingType"/>
+            <PropertyColumn Property="x => x.TraineeCount" Title="@Localization.traineeCount"/>
+            <PropertyColumn Property="x => x.YearStarted" Title="@Localization.yearStarted"/>
+            @if (CanEdit)
+            {
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <EditButton OnEditClicked="async () => await ElementEditSelected.InvokeAsync(context.Item)"
+                                    OnDeleteClicked="async () => await ElementDeleteSelected.InvokeAsync(context.Item)"/>
+                    </CellTemplate>
+                </TemplateColumn>
+            }
+        </Columns>
+        <ChildRowContent>
+            <MudCard Elevation="0">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">@Localization.trainees</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <TraineesTable TrainingId="context.Item.Id"/>
+                </MudCardContent>
+            </MudCard>
+        </ChildRowContent>
+    </MudDataGrid>
+</MudPaper>

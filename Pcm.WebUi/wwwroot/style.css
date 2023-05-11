@@ -1,0 +1,13 @@
+div.more-icon-button{
+    display: flex;
+    justify-self: end;
+}
+
+.more-icon-button button {
+    padding: 12px;
+    margin: -12px;
+}
+
+.component {
+    padding: 12px;
+}

@@ -1,28 +1,39 @@
-﻿@inherits LayoutComponentBase
+﻿@using Colors = Pcm.Core.Colors
+@inherits LayoutComponentBase
 
 <MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" Theme="CustomTheme"/>
 <MudDialogProvider
-    CloseOnEscapeKey="true"/>
+    CloseButton="true"
+    FullWidth="true"
+    MaxWidth="MaxWidth.Large"/>
 <MudSnackbarProvider/>
 
 <MudLayout>
-    <MudDrawer Width="60px" Class="py-3" Elevation="1" Variant="DrawerVariant.Mini">
-        <div style="height: 52px">
-            <img src="logo.svg" width="40px" style="margin-left: 10px"/>
-        </div>
+    <MudAppBar Elevation="1" Dense="false">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer"/>
+        <MudSpacer/>
+        <img src="logo.svg"
+             width="40px"
+             class="appbar-icon"
+             alt="Logo -SWRAG"/>
+    </MudAppBar>
+    <MudDrawer @bind-Open="@_isDrawerOpen" ClipMode="DrawerClipMode.Always" Elevation="1" Variant="@DrawerVariant.Responsive">
         <MudNavMenu>
-            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.SpaceDashboard"/>
-            <MudNavLink Href="/persons" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person"/>
+            <MudNavLink Href="/trainees" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person"/>
+            <MudNavLink Href="/trainings" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.List"/>
+            <MudNavLink Href="/editor" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Edit">Editor</MudNavLink>
+            <!-- <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.SpaceDashboard"/>
             <MudNavLink Href="/articles" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Checkroom"/>
-            <MudNavLink Href="/apprenticeships" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.BusinessCenter"/>
             <MudNavLink Href="/orders" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ShoppingBag"/>
-            <MudNavLink Href="/requests" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.NoteAdd"/>
+            <MudNavLink Href="/requests" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.NoteAdd"/> -->
         </MudNavMenu>
     </MudDrawer>
     <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Large">
-            @Body
-        </MudContainer>
+        <div class="main-body">
+            <MudContainer MaxWidth="MaxWidth.Large">
+                @Body
+            </MudContainer>
+        </div>
     </MudMainContent>
 </MudLayout>
 
@@ -32,29 +43,22 @@
     {
         Palette = new Palette
         {
-            Primary = "#0087a8",
-            Secondary = "#bba590",
-            Tertiary = "#859d66",
-            AppbarBackground = "#0087a8"
+            Primary = Colors.Primary,
+            Secondary = Colors.Secondary,
+            Tertiary = Colors.Tertiary,
+            AppbarBackground = Colors.Primary
         },
         PaletteDark = new PaletteDark
         {
-            Primary = "#0087a8",
-            Secondary = "#bba590",
-            Tertiary = "#859d66"
+            Primary = Colors.Primary,
+            Secondary = Colors.Secondary,
+            Tertiary = Colors.Tertiary
         }
     };
 
-
-    bool _drawerOpen = true;
-
-    void DrawerToggle()
-    {
-        _drawerOpen = !_drawerOpen;
-    }
-
     private bool _isDarkMode;
-    private MudThemeProvider _mudThemeProvider;
+    private bool _isDrawerOpen = true;
+    private MudThemeProvider _mudThemeProvider = new();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -63,6 +67,11 @@
             _isDarkMode = await _mudThemeProvider.GetSystemPreference();
             StateHasChanged();
         }
+    }
+
+    void ToggleDrawer()
+    {
+        _isDrawerOpen = !_isDrawerOpen;
     }
 
 }

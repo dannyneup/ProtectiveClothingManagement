@@ -2,47 +2,55 @@ version: "3.7"
 services:
   database:
     container_name: database
-    image: mariadb:latest
-    expose: 
+    image: mysql:latest
+    expose:
       - 3306
-    ports:
-      - "127.0.0.1:3306:3306"
+    ports: 
+      - "3307:3306"
     volumes:
       - ./Database/data:/var/lib/mysql:rw
-      - ./Database/init/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./Database/init:/docker-entrypoint-initdb.d:ro
     environment:
-      MARIADB_ROOT_PASSWORD: password
-      MARIADB_USER: user
-      MARIADB_PASSWORD: userpassword
+      MYSQL_ROOT_PASSWORD: super-secret-password
     networks:
       - backend
     restart: always
-
+    
   backend:
     container_name: api
     expose:
-      - 80
+      - 80 
     ports:
-      - 127.0.0.1:80:80
+      - "8080:80"
     networks:
       - backend
     build:
-      context: ./PcmBackendApi
+      context: .
+      dockerfile: Pcm.Api/Dockerfile
+    environment:
+      DATABASE_HOST: database
+      DATABASE_PORT: 3306
+      DATABASE_USER: root
+      DATABASE_USER_PASSWORD: super-secret-password
+      DATABASE: protective_clothing_management
     restart: always
     
   frontend:
     container_name: webUi
     expose:
-      - 8080
+      - 80
     ports:
-      - 8080:8080
+      - "80:80"
     networks:
       - backend
+    environment:
+      BACKEND_URL: "http://backend"
     build:
-      context: ./PcmFrontendWebUi
+      context: .
+      dockerfile: Pcm.WebUi/Dockerfile
     restart: always
 
 networks:
   backend:
-    name: backend-nw
+    name: backend
     driver: bridge

@@ -2,21 +2,49 @@ using System.Data;
 using Dapper;
 using Dapper.FluentMap;
 using MySql.Data.MySqlClient;
+using Pcm.Infrastructure.RequestModels;
+using Pcm.Infrastructure.ResponseModels;
+using PcmBackendApi;
 using PcmBackendApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddScoped<GetConnection>(sp =>
     async () =>
     {
-        var connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=password;Database=psadb;sslmode=none;";
-        var connection = new MySqlConnection(connectionString);
+        MySqlConnectionStringBuilder connectionStringBuilder;
+        if (builder.Configuration["ASPNETCORE_ENVIRONMENT"] == "Development")
+        {
+            connectionStringBuilder = new MySqlConnectionStringBuilder
+            {
+                Server = "localhost",
+                Port = 3307,
+                UserID = "root",
+                Password = "super-secret-password",
+                Database = "protective_clothing_management",
+                AllowPublicKeyRetrieval = true,
+                SslMode = MySqlSslMode.Disabled
+            };
+        }
+        else
+        {
+            // TODO: AllowPublicKeyRetrieval=true muss raus und ssl/tls aud required!
+            connectionStringBuilder = new MySqlConnectionStringBuilder
+            {
+                Server = Environment.GetEnvironmentVariable("DATABASE_HOST"),
+                Port = Convert.ToUInt32(Environment.GetEnvironmentVariable("DATABASE_PORT")),
+                UserID = Environment.GetEnvironmentVariable("DATABASE_USER") ?? "root",
+                Password = Environment.GetEnvironmentVariable("DATABASE_USER_PASSWORD"),
+                Database = Environment.GetEnvironmentVariable("DATABASE"),
+                AllowPublicKeyRetrieval = true,
+                SslMode = MySqlSslMode.Disabled
+            };
+        }
+        var connection = new MySqlConnection(connectionStringBuilder.ConnectionString);
         await connection.OpenAsync();
         return connection;
     });
@@ -30,7 +58,6 @@ FluentMapper.Initialize(config =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -39,179 +66,164 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("/", () => "PcmApi");
 
-app.MapGet("/persons", async (GetConnection connectionGetter) =>
+
+app.MapGet("/trainings", async (GetConnection connectionGetter) =>
+{
+    using var con = await connectionGetter();
+    var sql =
+        @"SELECT t.id, description AS title, typeFk as type, t.yearStarted AS yearStarted, COUNT(a.id) AS traineeCount
+                FROM training t
+                LEFT JOIN apprentice a ON t.id = a.trainingFk
+                GROUP BY t.id;";
+    return con.Query<TrainingResponse>(sql);
+});
+
+
+app.MapPost("/trainings", async (TrainingRequest request, GetConnection connectionGetter) =>
+{
+    using var con = await connectionGetter();
+    var sql = @"INSERT INTO training (description, typeFk, yearStarted)
+                VALUES (@Title, @Type, @YearStarted);
+                SELECT id, description as title, typeFk as type, yearStarted
+                FROM training
+                WHERE id = LAST_INSERT_ID();";
+    var result = await con.QueryFirstOrDefaultAsync<TrainingResponse>(sql, request);
+
+    return result != null
+        ? Results.Created($"/trainings/{result.Id}", result)
+        : Results.BadRequest();
+});
+
+
+app.MapGet("/loadouts", async (GetConnection connectionGetter) =>
 {
     using var con = await connectionGetter();
     var sql = @"
-        select person.id as personId,
-               person.firstName as firstName,
-               person.lastName as lastName,
-               apprenticeship.name as apprenticeship,
-               person.emailAddress as emailAdress,
-               a.id as articleId,
-               T.name as type,
-               T.manufacturer as manufaturer,
-               T.style as style, 
-               aC.name as category,
-               a.size as size,
-               o.number as orderNumber,
-               o.date as orderDate,
-               a.status as status,
-               a.statusChanged as statusChanged
-        from person inner join apprenticeship on person.apprenticeship = apprenticeship.id
-            left join personOwnsArticle pOA on person.id = pOA.person
-            inner join article a on pOA.article = a.id
-            inner join articleType T on a.articleType = T.id
-            inner join articleCategory aC on T.category = aC.id
-            inner join `order` o on a.`order` = o.id;";
-
-    var lookup = new Dictionary<int, Person>();
-
-    return con.Query<Person, Article, Person>(sql, (p, a) =>
-    {
-        Person person;
-        if (!lookup.TryGetValue(p.Id, out person)) lookup.Add(p.Id, person = p);
-
-        person.OwnedArticles ??= new List<Article>();
-
-        person.OwnedArticles.Add(a);
-        return person;
-    }, splitOn: "articleId").Distinct();
+                SELECT loadout.id as id, c.id as categoryId, c.description as categoryName, count, t.id AS trainingId
+                FROM loadout
+                JOIN category c on c.id = loadout.categoryFk
+                JOIN training t on t.id = loadout.trainingFk;";
+    return con.Query<LoadOutPartResponse>(sql);
 });
 
-app.MapGet("/persons/{id}", async (GetConnection connectionGetter, int id) =>
+
+app.MapPut("/loadouts/{id}", async (LoadOutPartRequest request, GetConnection connectionGetter, int id) =>
 {
     using var con = await connectionGetter();
-    var sql = $@"
-        select person.id as personId,
-               person.firstName as firstName,
-               person.lastName as lastName,
-               apprenticeship.name as apprenticeship,
-               person.emailAddress as emailAdress,
-               a.id as articleId,
-               T.name as type,
-               T.manufacturer as manufaturer,
-               T.style as style, 
-               aC.name as category,
-               a.size as size,
-               o.number as orderNumber,
-               o.date as orderDate,
-               a.status as status,
-               a.statusChanged as statusChanged
-        from person inner join apprenticeship on person.apprenticeship = apprenticeship.id
-            left join personOwnsArticle pOA on person.id = pOA.person
-            inner join article a on pOA.article = a.id
-            inner join articleType T on a.articleType = T.id
-            inner join articleCategory aC on T.category = aC.id
-            inner join `order` o on a.`order` = o.id
-        where person.id = {id};";
+    var sql = $@"UPDATE loadout 
+                    SET categoryFk = @CategoryId, trainingFk = @TrainingId, count = @Count
+                    WHERE id = {id};
+                SELECT loadout.id AS id, c.id as categoryId, c.description as categoryName, count, t.id AS trainingId
+                FROM loadout
+                JOIN category c on c.id = loadout.categoryFk
+                JOIN training t on t.id = loadout.trainingFk
+                WHERE loadout.id = {id};";
+    var result = await con.QueryFirstOrDefaultAsync<LoadOutPartResponse>(sql, request);
 
-    var lookup = new Dictionary<int, Person>();
-
-    return con.Query<Person, Article, Person>(sql, (p, a) =>
-    {
-        Person person;
-        if (!lookup.TryGetValue(p.Id, out person)) lookup.Add(p.Id, person = p);
-
-        person.OwnedArticles ??= new List<Article>();
-
-        person.OwnedArticles.Add(a);
-        return person;
-    }, splitOn: "articleId").Distinct();
+    return result != null
+        ? Results.Accepted($"/loadouts/{result.Id}", result)
+        : Results.BadRequest();
 });
 
-app.MapGet("/articles", async (GetConnection connectionGetter) =>
+
+app.MapPost("/loadouts", async (LoadOutPartRequest request, GetConnection connectionGetter) =>
+{
+    using var con = await connectionGetter();
+    var sql = @"INSERT INTO loadout (categoryFk, trainingFk, count)
+                VALUES (@CategoryId, @TrainingId, @Count);
+                SELECT loadout.id AS id, c.id as categoryId, c.description as categoryName, count, t.id AS trainingId
+                FROM loadout
+                JOIN category c on c.id = loadout.categoryFk
+                JOIN training t on t.id = loadout.trainingFk
+                WHERE loadout.id = LAST_INSERT_ID();";
+    var result = await con.QueryFirstOrDefaultAsync<LoadOutPartResponse>(sql, request);
+
+    return result != null
+        ? Results.Created($"/loadouts/{result.Id}", result)
+        : Results.BadRequest();
+});
+
+
+app.MapGet("/trainees", async (GetConnection connectionGetter) =>
+{
+    using var con = await connectionGetter();
+    var sql = @"SELECT a.id AS personnelNumber, firstName, lastName, mail AS emailAddress, 
+                        a.yearStarted as yearStarted, trainingFk AS trainingId, t.description AS trainingTitle, 
+                        tt.type AS trainingType
+                FROM apprentice a
+                    JOIN training t on t.id = a.trainingFk
+                    JOIN training_type tt on tt.type = t.typeFk";
+    return con.Query<TraineeResponse>(sql);
+});
+
+
+app.MapPost("/trainees", async (TraineeRequest request, GetConnection connectionGetter) =>
+{
+    using var con = await connectionGetter();
+    var sql = $@"INSERT INTO apprentice (id, firstname, lastname, mail, trainingFk, yearStarted)
+                VALUES (@PersonnelNumber, @FirstName, @LastName, @EmailAddress, @TrainingId, @YearStarted);
+                SELECT a.id AS personnelNumber, firstName, lastName, mail AS emailAddress, a.yearStarted AS yearStarted, 
+                       trainingFk AS trainingId, t.description AS trainingTitle, tt.type AS trainingType
+                FROM apprentice a
+                    JOIN training t on t.id = a.trainingFk
+                    JOIN training_type tt on tt.type = t.typeFk
+                WHERE a.id = {request.PersonnelNumber};";
+    var result = await con.QueryFirstOrDefaultAsync<TraineeResponse>(sql, request);
+
+    return result != null
+        ? Results.Created($"/trainees/{result.PersonnelNumber}", result)
+        : Results.BadRequest();
+});
+
+
+app.MapPut("/trainees/{id}", async (TraineeRequest request, GetConnection connectionGetter, int id) =>
+{
+    using var con = await connectionGetter();
+    var sql = $@"UPDATE apprentice 
+                    SET firstName = @FirstName, lastName = @LastName, mail = @EmailAddress, trainingFk = @TrainingId
+                    WHERE id = {id};
+                SELECT a.id AS personnelNumber, firstName, lastName, mail AS emailAddress, a.yearStarted AS yearStarted, 
+                       trainingFk AS trainingId, t.description AS trainingTitle, tt.type AS trainingType
+                FROM apprentice a
+                    JOIN training t on t.id = a.trainingFk
+                    JOIN training_type tt on tt.type = t.typeFk
+                WHERE a.id = {id};";
+    var result = await con.QueryFirstOrDefaultAsync<TraineeResponse>(sql, request);
+
+    return result != null
+        ? Results.Accepted($"/trainees/{result.PersonnelNumber}", result)
+        : Results.BadRequest();
+});
+
+
+app.MapGet("/items/categories", async (GetConnection connectionGetter) =>
 {
     using var con = await connectionGetter();
     var sql = @"
-        select a.id as articleId,
-               T.name as articleType,
-               T.manufacturer as manufacturer,
-               T.style as style,
-               aC.name as category,
-               a.size as size,
-               o.number as orderNumber,
-               o.date as orderDate,
-               a.status as status,
-               a.statusChanged as statusChanged
-        from article a join articleType T on T.id = a.articleType
-            inner join articleCategory aC on T.category = aC.id
-            inner join `order` o on a.`order` = o.id";
-    return con.Query<Article>(sql);
+                SELECT id, description as title
+                FROM category;";
+    return con.Query<ItemCategoryResponse>(sql);
 });
 
-app.MapGet("/articles/{id}", async (GetConnection connectionGetter, int id) =>
+app.MapPost("/items/categories", async (ItemCategoryRequest request, GetConnection connectionGetter) =>
 {
     using var con = await connectionGetter();
-    var sql = $@"
-        select person.id, 
-               person.firstName, 
-               person.lastName, 
-               a.name as apprenticeship,
-               person.emailAddress
-        from person join apprenticeship a on person.apprenticeship = a.id
-        where person.id = {id}";
-    return con.Query<Person>(sql);
+    var sql = @"INSERT INTO category (description)
+                VALUES (@Title);
+                SELECT id, description as title
+                FROM category
+                WHERE id = LAST_INSERT_ID();";
+    var result = await con.QueryFirstOrDefaultAsync<ItemCategoryResponse>(sql, request);
+
+    return result != null
+        ? Results.Created($"/items/categories{result.Id}", result)
+        : Results.BadRequest();
 });
 
-app.MapGet("/apprenticeships", async (GetConnection connectionGetter) =>
-{
-    using var con = await connectionGetter();
-
-    var lookup = new Dictionary<int, Apprenticeship>();
-    var sql =
-        @"
-        select a.id as apprenticeshipId, 
-            a.name as apprenticeshipName,
-            aC.id as articleCategoryId, 
-            aC.name as articleCategoryName,
-            dAL.count as count
-        from apprenticeship a
-            inner join defaultApprenticeshipLoadout dAL on a.id = dAL.apprenticeship
-            inner join articleCategory aC on dAL.articleCategory = aC.id";
-
-    return con.Query<Apprenticeship, ArticleCategory, int, Apprenticeship>(sql, (a, aC, count) =>
-    {
-        Apprenticeship apprenticeship;
-        if (!lookup.TryGetValue(a.Id, out apprenticeship)) lookup.Add(a.Id, apprenticeship = a);
-
-        apprenticeship.DefaultLoadout ??= new Dictionary<string, int>();
-
-        apprenticeship.DefaultLoadout.Add(aC.Name, count);
-        return apprenticeship;
-    }, splitOn: "articleCategoryId, count").Distinct();
-});
-
-app.MapGet("/apprenticeships/{id}", async (GetConnection connectionGetter, int id) =>
-{
-    using var con = await connectionGetter();
-
-    var lookup = new Dictionary<int, Apprenticeship>();
-
-    var sql =
-        $@"
-        select a.id as apprenticeshipId, 
-            a.name as apprenticeshipName,
-            aC.id as articleCategoryId, 
-            aC.name as articleCategoryName,
-            daL.count as 'count'
-        from apprenticeship a
-            inner join defaultApprenticeshipLoadout dAL on a.id = dAL.apprenticeship
-            inner join articleCategory aC on dAL.articleCategory = aC.id
-        where a.id = {id}";
-
-    return con.Query<Apprenticeship, ArticleCategory, int, Apprenticeship>(sql, (a, aC, count) =>
-    {
-        Apprenticeship apprenticeship;
-        if (!lookup.TryGetValue(a.Id, out apprenticeship)) lookup.Add(a.Id, apprenticeship = a);
-
-        if (apprenticeship.DefaultLoadout == null) apprenticeship.DefaultLoadout = new Dictionary<string, int>();
-
-        apprenticeship.DefaultLoadout.Add(aC.Name, count);
-        return apprenticeship;
-    }, splitOn: "articleCategoryId, count").Distinct();
-});
 
 app.Run();
 
-public delegate Task<IDbConnection> GetConnection();
+namespace PcmBackendApi
+{
+    public delegate Task<IDbConnection> GetConnection();
+}
